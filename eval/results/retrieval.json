@@ -1,0 +1,3570 @@
+[
+  {
+    "summary": {
+      "strategy": "fixed",
+      "mode": "dense",
+      "reranker": "none",
+      "k": 5,
+      "hit@k": 0.65,
+      "recall@k": 0.7,
+      "mrr@10": 0.5521428571428572,
+      "precision@k": 0.28,
+      "p50_latency_ms": 37.0
+    },
+    "rows": [
+      {
+        "id": "U01",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 231.4,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.57",
+          "UBER p.58",
+          "UBER p.58",
+          "UBER p.58",
+          "UBER p.95"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "U02",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 47.4,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.62",
+          "UBER p.7",
+          "UBER p.53",
+          "UBER p.58",
+          "UBER p.58"
+        ],
+        "hit": 0.0,
+        "recall": 0.0,
+        "rr": 0.0,
+        "precision": 0.0
+      },
+      {
+        "id": "U03",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 42.8,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.57",
+          "UBER p.53",
+          "UBER p.58",
+          "UBER p.63",
+          "UBER p.53"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.2
+      },
+      {
+        "id": "U04",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 40.3,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.58",
+          "UBER p.21",
+          "UBER p.10",
+          "UBER p.58",
+          "UBER p.57"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.4
+      },
+      {
+        "id": "U05",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 41.3,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.64",
+          "UBER p.63",
+          "UBER p.64",
+          "UBER p.61",
+          "UBER p.64"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.2
+      },
+      {
+        "id": "U06",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 33.2,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.98",
+          "UBER p.91",
+          "UBER p.115",
+          "UBER p.144",
+          "UBER p.8"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.8
+      },
+      {
+        "id": "U07",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 31.1,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.95",
+          "UBER p.83",
+          "UBER p.108",
+          "UBER p.58",
+          "UBER p.66"
+        ],
+        "hit": 0.0,
+        "recall": 0.0,
+        "rr": 0.0,
+        "precision": 0.0
+      },
+      {
+        "id": "U08",
+        "year_rule": false,
+        "category": "multi-fact",
+        "latency_ms": 32.4,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.6",
+          "UBER p.26",
+          "UBER p.60",
+          "UBER p.53",
+          "UBER p.58"
+        ],
+        "hit": 0.0,
+        "recall": 0.0,
+        "rr": 0.0,
+        "precision": 0.0
+      },
+      {
+        "id": "U09",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 34.2,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.12",
+          "UBER p.84",
+          "UBER p.52",
+          "UBER p.76",
+          "UBER p.57"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "L01",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 34.7,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.64",
+          "LYFT p.56",
+          "LYFT p.89",
+          "LYFT p.58",
+          "LYFT p.63"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.2,
+        "precision": 0.2
+      },
+      {
+        "id": "L02",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 31.5,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.57",
+          "LYFT p.58",
+          "LYFT p.58",
+          "LYFT p.58",
+          "LYFT p.89"
+        ],
+        "hit": 0.0,
+        "recall": 0.0,
+        "rr": 0.0,
+        "precision": 0.0
+      },
+      {
+        "id": "L03",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 28.8,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.67",
+          "LYFT p.67",
+          "LYFT p.66",
+          "LYFT p.68",
+          "LYFT p.56"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.2,
+        "precision": 0.2
+      },
+      {
+        "id": "L04",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 32.5,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.57",
+          "LYFT p.76",
+          "LYFT p.96",
+          "LYFT p.65",
+          "LYFT p.72"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.6
+      },
+      {
+        "id": "L05",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 33.1,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.12",
+          "LYFT p.29",
+          "LYFT p.12",
+          "LYFT p.58",
+          "LYFT p.37"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "L06",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 30.2,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.71",
+          "LYFT p.56",
+          "LYFT p.71",
+          "LYFT p.71",
+          "LYFT p.84"
+        ],
+        "hit": 0.0,
+        "recall": 0.0,
+        "rr": 0.14285714285714285,
+        "precision": 0.0
+      },
+      {
+        "id": "L07",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 29.0,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.5",
+          "LYFT p.13",
+          "LYFT p.108",
+          "LYFT p.85",
+          "LYFT p.109"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.2
+      },
+      {
+        "id": "C01",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 61.2,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.57",
+          "LYFT p.64",
+          "UBER p.58",
+          "LYFT p.58",
+          "UBER p.58"
+        ],
+        "hit": 0.0,
+        "recall": 0.5,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "C02",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 62.9,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.16",
+          "LYFT p.108",
+          "UBER p.129",
+          "LYFT p.108",
+          "UBER p.51"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 1.0
+      },
+      {
+        "id": "C03",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 59.2,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.63",
+          "LYFT p.19",
+          "UBER p.61",
+          "LYFT p.66",
+          "UBER p.63"
+        ],
+        "hit": 0.0,
+        "recall": 0.5,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "A01",
+        "year_rule": false,
+        "category": "ambiguous",
+        "latency_ms": 60.7,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.57",
+          "LYFT p.57",
+          "UBER p.53",
+          "LYFT p.88",
+          "UBER p.58"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.4
+      },
+      {
+        "id": "X01",
+        "year_rule": true,
+        "category": "unanswerable",
+        "latency_ms": 37.0,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.57",
+          "UBER p.58",
+          "UBER p.58",
+          "UBER p.95",
+          "UBER p.58"
+        ]
+      },
+      {
+        "id": "X02",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 63.1,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.27",
+          "LYFT p.77",
+          "UBER p.149",
+          "LYFT p.13",
+          "UBER p.150"
+        ]
+      },
+      {
+        "id": "X03",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 37.9,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.51",
+          "LYFT p.53",
+          "LYFT p.103",
+          "LYFT p.53",
+          "LYFT p.35"
+        ]
+      },
+      {
+        "id": "X04",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 66.5,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.58",
+          "LYFT p.5",
+          "UBER p.27",
+          "LYFT p.32",
+          "UBER p.58"
+        ]
+      },
+      {
+        "id": "X05",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 34.4,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.121",
+          "UBER p.57",
+          "UBER p.58",
+          "UBER p.74",
+          "UBER p.58"
+        ]
+      }
+    ]
+  },
+  {
+    "summary": {
+      "strategy": "fixed",
+      "mode": "bm25",
+      "reranker": "none",
+      "k": 5,
+      "hit@k": 0.85,
+      "recall@k": 0.875,
+      "mrr@10": 0.80625,
+      "precision@k": 0.42,
+      "p50_latency_ms": 2.6
+    },
+    "rows": [
+      {
+        "id": "U01",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 3.1,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.129",
+          "UBER p.98",
+          "UBER p.102",
+          "UBER p.98",
+          "UBER p.98"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.8
+      },
+      {
+        "id": "U02",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 3.3,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.62",
+          "UBER p.53",
+          "UBER p.4",
+          "UBER p.46",
+          "UBER p.53"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.2
+      },
+      {
+        "id": "U03",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 3.0,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.53",
+          "UBER p.77",
+          "UBER p.65",
+          "UBER p.57",
+          "UBER p.78"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.6
+      },
+      {
+        "id": "U04",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 2.3,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.21",
+          "UBER p.10",
+          "UBER p.18",
+          "UBER p.121",
+          "UBER p.10"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "U05",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 2.6,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.63",
+          "UBER p.63",
+          "UBER p.53",
+          "UBER p.53",
+          "UBER p.64"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.8
+      },
+      {
+        "id": "U06",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 3.7,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.144",
+          "UBER p.132",
+          "UBER p.22",
+          "UBER p.54",
+          "UBER p.7"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.6
+      },
+      {
+        "id": "U07",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 3.9,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.30",
+          "UBER p.63",
+          "UBER p.57",
+          "UBER p.53",
+          "UBER p.39"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "U08",
+        "year_rule": false,
+        "category": "multi-fact",
+        "latency_ms": 3.4,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.26",
+          "UBER p.26",
+          "UBER p.26",
+          "UBER p.13",
+          "UBER p.26"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "U09",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 2.1,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.12",
+          "UBER p.50",
+          "UBER p.150",
+          "UBER p.150",
+          "UBER p.126"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "L01",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 1.9,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.86",
+          "LYFT p.12",
+          "LYFT p.102",
+          "LYFT p.56",
+          "LYFT p.119"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "L02",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 2.3,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.58",
+          "LYFT p.58",
+          "LYFT p.57",
+          "LYFT p.58",
+          "LYFT p.57"
+        ],
+        "hit": 0.0,
+        "recall": 0.0,
+        "rr": 0.0,
+        "precision": 0.0
+      },
+      {
+        "id": "L03",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 1.8,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.67",
+          "LYFT p.68",
+          "LYFT p.66",
+          "LYFT p.69",
+          "LYFT p.69"
+        ],
+        "hit": 0.0,
+        "recall": 0.0,
+        "rr": 0.125,
+        "precision": 0.0
+      },
+      {
+        "id": "L04",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 1.9,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.57",
+          "LYFT p.96",
+          "LYFT p.76",
+          "LYFT p.7",
+          "LYFT p.70"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.8
+      },
+      {
+        "id": "L05",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 2.5,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.29",
+          "LYFT p.37",
+          "LYFT p.12",
+          "LYFT p.12",
+          "LYFT p.114"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "L06",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 2.5,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.71",
+          "LYFT p.71",
+          "LYFT p.83",
+          "LYFT p.83",
+          "LYFT p.71"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.2
+      },
+      {
+        "id": "L07",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 1.8,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.13",
+          "LYFT p.55",
+          "LYFT p.1",
+          "LYFT p.1",
+          "LYFT p.28"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "C01",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 5.2,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.65",
+          "LYFT p.86",
+          "UBER p.53",
+          "LYFT p.20",
+          "UBER p.25"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.4
+      },
+      {
+        "id": "C02",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 5.7,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.16",
+          "LYFT p.108",
+          "UBER p.129",
+          "LYFT p.108",
+          "UBER p.130"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 1.0
+      },
+      {
+        "id": "C03",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 5.1,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.63",
+          "LYFT p.67",
+          "UBER p.63",
+          "LYFT p.66",
+          "UBER p.53"
+        ],
+        "hit": 0.0,
+        "recall": 0.5,
+        "rr": 1.0,
+        "precision": 0.6
+      },
+      {
+        "id": "A01",
+        "year_rule": false,
+        "category": "ambiguous",
+        "latency_ms": 3.3,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.57",
+          "LYFT p.121",
+          "UBER p.78",
+          "LYFT p.80",
+          "UBER p.65"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.6
+      },
+      {
+        "id": "X01",
+        "year_rule": true,
+        "category": "unanswerable",
+        "latency_ms": 1.6,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.17",
+          "UBER p.9",
+          "UBER p.114",
+          "UBER p.114",
+          "UBER p.114"
+        ]
+      },
+      {
+        "id": "X02",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 2.8,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.10",
+          "LYFT p.13",
+          "UBER p.8",
+          "LYFT p.85",
+          "UBER p.17"
+        ]
+      },
+      {
+        "id": "X03",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 2.0,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.115",
+          "LYFT p.51",
+          "LYFT p.52",
+          "LYFT p.52",
+          "LYFT p.90"
+        ]
+      },
+      {
+        "id": "X04",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 5.5,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.27",
+          "LYFT p.13",
+          "UBER p.141",
+          "LYFT p.19",
+          "UBER p.135"
+        ]
+      },
+      {
+        "id": "X05",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 2.4,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.57",
+          "UBER p.53",
+          "UBER p.136",
+          "UBER p.125",
+          "UBER p.106"
+        ]
+      }
+    ]
+  },
+  {
+    "summary": {
+      "strategy": "fixed",
+      "mode": "hybrid",
+      "reranker": "none",
+      "k": 5,
+      "hit@k": 0.8,
+      "recall@k": 0.825,
+      "mrr@10": 0.6884722222222223,
+      "precision@k": 0.39,
+      "p50_latency_ms": 39.0
+    },
+    "rows": [
+      {
+        "id": "U01",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 52.1,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.98",
+          "UBER p.90",
+          "UBER p.77",
+          "UBER p.90",
+          "UBER p.60"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.6
+      },
+      {
+        "id": "U02",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 36.3,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.62",
+          "UBER p.53",
+          "UBER p.4",
+          "UBER p.7",
+          "UBER p.84"
+        ],
+        "hit": 0.0,
+        "recall": 0.0,
+        "rr": 0.1111111111111111,
+        "precision": 0.0
+      },
+      {
+        "id": "U03",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 35.3,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.53",
+          "UBER p.57",
+          "UBER p.65",
+          "UBER p.53",
+          "UBER p.56"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.6
+      },
+      {
+        "id": "U04",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 34.1,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.21",
+          "UBER p.10",
+          "UBER p.95",
+          "UBER p.57",
+          "UBER p.121"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "U05",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 34.6,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.63",
+          "UBER p.64",
+          "UBER p.63",
+          "UBER p.64",
+          "UBER p.61"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "U06",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 34.8,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.144",
+          "UBER p.132",
+          "UBER p.91",
+          "UBER p.98",
+          "UBER p.54"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.8
+      },
+      {
+        "id": "U07",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 43.4,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.63",
+          "UBER p.63",
+          "UBER p.95",
+          "UBER p.30",
+          "UBER p.83"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.25,
+        "precision": 0.2
+      },
+      {
+        "id": "U08",
+        "year_rule": false,
+        "category": "multi-fact",
+        "latency_ms": 36.8,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.26",
+          "UBER p.6",
+          "UBER p.53",
+          "UBER p.61",
+          "UBER p.63"
+        ],
+        "hit": 0.0,
+        "recall": 0.0,
+        "rr": 0.125,
+        "precision": 0.0
+      },
+      {
+        "id": "U09",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 38.2,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.12",
+          "UBER p.84",
+          "UBER p.50",
+          "UBER p.52",
+          "UBER p.150"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "L01",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 36.1,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.86",
+          "LYFT p.58",
+          "LYFT p.56",
+          "LYFT p.64",
+          "LYFT p.63"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.6
+      },
+      {
+        "id": "L02",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 39.0,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.58",
+          "LYFT p.58",
+          "LYFT p.57",
+          "LYFT p.58",
+          "LYFT p.58"
+        ],
+        "hit": 0.0,
+        "recall": 0.0,
+        "rr": 0.0,
+        "precision": 0.0
+      },
+      {
+        "id": "L03",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 36.4,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.68",
+          "LYFT p.67",
+          "LYFT p.67",
+          "LYFT p.67",
+          "LYFT p.56"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.2,
+        "precision": 0.2
+      },
+      {
+        "id": "L04",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 36.1,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.57",
+          "LYFT p.76",
+          "LYFT p.96",
+          "LYFT p.7",
+          "LYFT p.65"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.6
+      },
+      {
+        "id": "L05",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 39.2,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.29",
+          "LYFT p.37",
+          "LYFT p.12",
+          "LYFT p.12",
+          "LYFT p.12"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "L06",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 43.0,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.71",
+          "LYFT p.71",
+          "LYFT p.71",
+          "LYFT p.71",
+          "LYFT p.84"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.3333333333333333,
+        "precision": 0.2
+      },
+      {
+        "id": "L07",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 41.7,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.13",
+          "LYFT p.85",
+          "LYFT p.5",
+          "LYFT p.55",
+          "LYFT p.108"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "C01",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 74.3,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.65",
+          "LYFT p.58",
+          "UBER p.61",
+          "LYFT p.57",
+          "UBER p.57"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.25,
+        "precision": 0.4
+      },
+      {
+        "id": "C02",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 76.6,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.16",
+          "LYFT p.108",
+          "UBER p.129",
+          "LYFT p.108",
+          "UBER p.51"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 1.0
+      },
+      {
+        "id": "C03",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 69.7,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.63",
+          "LYFT p.66",
+          "UBER p.63",
+          "LYFT p.67",
+          "UBER p.64"
+        ],
+        "hit": 0.0,
+        "recall": 0.5,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "A01",
+        "year_rule": false,
+        "category": "ambiguous",
+        "latency_ms": 89.7,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.57",
+          "LYFT p.121",
+          "UBER p.53",
+          "LYFT p.63",
+          "UBER p.56"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.6
+      },
+      {
+        "id": "X01",
+        "year_rule": true,
+        "category": "unanswerable",
+        "latency_ms": 44.1,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.53",
+          "UBER p.98",
+          "UBER p.57",
+          "UBER p.17",
+          "UBER p.58"
+        ]
+      },
+      {
+        "id": "X02",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 78.6,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.12",
+          "LYFT p.10",
+          "UBER p.73",
+          "LYFT p.77",
+          "UBER p.27"
+        ]
+      },
+      {
+        "id": "X03",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 34.3,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.53",
+          "LYFT p.90",
+          "LYFT p.53",
+          "LYFT p.55",
+          "LYFT p.113"
+        ]
+      },
+      {
+        "id": "X04",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 69.9,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.27",
+          "LYFT p.19",
+          "UBER p.58",
+          "LYFT p.13",
+          "UBER p.141"
+        ]
+      },
+      {
+        "id": "X05",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 34.8,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.57",
+          "UBER p.74",
+          "UBER p.118",
+          "UBER p.63",
+          "UBER p.121"
+        ]
+      }
+    ]
+  },
+  {
+    "summary": {
+      "strategy": "fixed",
+      "mode": "hybrid",
+      "reranker": "local",
+      "k": 5,
+      "hit@k": 0.9,
+      "recall@k": 0.925,
+      "mrr@10": 0.835,
+      "precision@k": 0.46,
+      "p50_latency_ms": 2400.6,
+      "threshold": 0.6,
+      "refusal_recall": 1.0,
+      "false_refusal_rate": 0.0,
+      "refusal_recall_with_year_rule": 1.0
+    },
+    "rows": [
+      {
+        "id": "U01",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 2645.2,
+        "top_score": 0.8189664006233215,
+        "top_pages": [
+          "UBER p.77",
+          "UBER p.57",
+          "UBER p.60",
+          "UBER p.129",
+          "UBER p.90"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.8
+      },
+      {
+        "id": "U02",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 2438.7,
+        "top_score": 0.724755267913525,
+        "top_pages": [
+          "UBER p.53",
+          "UBER p.62",
+          "UBER p.4",
+          "UBER p.7",
+          "UBER p.7"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "U03",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 2400.6,
+        "top_score": 0.8522256016731262,
+        "top_pages": [
+          "UBER p.53",
+          "UBER p.53",
+          "UBER p.53",
+          "UBER p.57",
+          "UBER p.65"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.6
+      },
+      {
+        "id": "U04",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 2431.9,
+        "top_score": 0.7621107161045074,
+        "top_pages": [
+          "UBER p.10",
+          "UBER p.21",
+          "UBER p.58",
+          "UBER p.95",
+          "UBER p.58"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "U05",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 2345.3,
+        "top_score": 0.8032085537910463,
+        "top_pages": [
+          "UBER p.63",
+          "UBER p.53",
+          "UBER p.128",
+          "UBER p.61",
+          "UBER p.63"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.6
+      },
+      {
+        "id": "U06",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 2270.0,
+        "top_score": 0.7639336675405503,
+        "top_pages": [
+          "UBER p.144",
+          "UBER p.132",
+          "UBER p.54",
+          "UBER p.7",
+          "UBER p.91"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.8
+      },
+      {
+        "id": "U07",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 2182.1,
+        "top_score": 0.7337917812845924,
+        "top_pages": [
+          "UBER p.30",
+          "UBER p.63",
+          "UBER p.53",
+          "UBER p.63",
+          "UBER p.26"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "U08",
+        "year_rule": false,
+        "category": "multi-fact",
+        "latency_ms": 2003.1,
+        "top_score": 0.7662632004572796,
+        "top_pages": [
+          "UBER p.26",
+          "UBER p.26",
+          "UBER p.53",
+          "UBER p.61",
+          "UBER p.6"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "U09",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 2451.5,
+        "top_score": 0.6612236160039902,
+        "top_pages": [
+          "UBER p.12",
+          "UBER p.84",
+          "UBER p.49",
+          "UBER p.76",
+          "UBER p.6"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "L01",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 2449.2,
+        "top_score": 0.8241610080003738,
+        "top_pages": [
+          "LYFT p.89",
+          "LYFT p.86",
+          "LYFT p.79",
+          "LYFT p.63",
+          "LYFT p.97"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.6
+      },
+      {
+        "id": "L02",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 1963.1,
+        "top_score": 0.7189891725778579,
+        "top_pages": [
+          "LYFT p.58",
+          "LYFT p.57",
+          "LYFT p.58",
+          "LYFT p.58",
+          "LYFT p.58"
+        ],
+        "hit": 0.0,
+        "recall": 0.0,
+        "rr": 0.0,
+        "precision": 0.0
+      },
+      {
+        "id": "L03",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 1581.0,
+        "top_score": 0.7457774400711059,
+        "top_pages": [
+          "LYFT p.57",
+          "LYFT p.56",
+          "LYFT p.66",
+          "LYFT p.68",
+          "LYFT p.69"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "L04",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 2099.7,
+        "top_score": 0.810756510921887,
+        "top_pages": [
+          "LYFT p.96",
+          "LYFT p.57",
+          "LYFT p.7",
+          "LYFT p.65",
+          "LYFT p.97"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.6
+      },
+      {
+        "id": "L05",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 2005.4,
+        "top_score": 0.6680730432271957,
+        "top_pages": [
+          "LYFT p.29",
+          "LYFT p.12",
+          "LYFT p.89",
+          "LYFT p.58",
+          "LYFT p.108"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "L06",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 2367.9,
+        "top_score": 0.7210203737020493,
+        "top_pages": [
+          "LYFT p.71",
+          "LYFT p.71",
+          "LYFT p.71",
+          "LYFT p.56",
+          "LYFT p.78"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.4
+      },
+      {
+        "id": "L07",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 1934.4,
+        "top_score": 0.6400593739748001,
+        "top_pages": [
+          "LYFT p.13",
+          "LYFT p.85",
+          "LYFT p.5",
+          "LYFT p.14",
+          "LYFT p.108"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "C01",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 4350.7,
+        "top_score": 0.6473969608545302,
+        "top_pages": [
+          "UBER p.65",
+          "LYFT p.58",
+          "UBER p.61",
+          "LYFT p.89",
+          "UBER p.57"
+        ],
+        "hit": 0.0,
+        "recall": 0.5,
+        "rr": 0.2,
+        "precision": 0.2
+      },
+      {
+        "id": "C02",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 3871.2,
+        "top_score": 0.7558096796274185,
+        "top_pages": [
+          "UBER p.8",
+          "LYFT p.108",
+          "UBER p.16",
+          "LYFT p.26",
+          "UBER p.129"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 1.0
+      },
+      {
+        "id": "C03",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 4287.4,
+        "top_score": 0.6538765013217926,
+        "top_pages": [
+          "UBER p.53",
+          "LYFT p.57",
+          "UBER p.65",
+          "LYFT p.56",
+          "UBER p.63"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.8
+      },
+      {
+        "id": "A01",
+        "year_rule": false,
+        "category": "ambiguous",
+        "latency_ms": 4522.5,
+        "top_score": 0.7869523257017136,
+        "top_pages": [
+          "UBER p.126",
+          "LYFT p.121",
+          "UBER p.35",
+          "LYFT p.56",
+          "UBER p.53"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.6
+      },
+      {
+        "id": "X01",
+        "year_rule": true,
+        "category": "unanswerable",
+        "latency_ms": 2218.2,
+        "top_score": 0.54285529255867,
+        "top_pages": [
+          "UBER p.57",
+          "UBER p.53",
+          "UBER p.60",
+          "UBER p.98",
+          "UBER p.98"
+        ]
+      },
+      {
+        "id": "X02",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 3702.1,
+        "top_score": 0.3559992931783199,
+        "top_pages": [
+          "UBER p.10",
+          "LYFT p.124",
+          "UBER p.8",
+          "LYFT p.13",
+          "UBER p.17"
+        ]
+      },
+      {
+        "id": "X03",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 1844.8,
+        "top_score": 0.5618278965353966,
+        "top_pages": [
+          "LYFT p.51",
+          "LYFT p.53",
+          "LYFT p.53",
+          "LYFT p.35",
+          "LYFT p.117"
+        ]
+      },
+      {
+        "id": "X04",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 4196.5,
+        "top_score": 0.46136257946491244,
+        "top_pages": [
+          "UBER p.27",
+          "LYFT p.19",
+          "UBER p.38",
+          "LYFT p.13",
+          "UBER p.107"
+        ]
+      },
+      {
+        "id": "X05",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 2497.6,
+        "top_score": 0.5840346217155457,
+        "top_pages": [
+          "UBER p.77",
+          "UBER p.57",
+          "UBER p.118",
+          "UBER p.65",
+          "UBER p.53"
+        ]
+      }
+    ]
+  },
+  {
+    "summary": {
+      "strategy": "semantic",
+      "mode": "dense",
+      "reranker": "none",
+      "k": 5,
+      "hit@k": 0.85,
+      "recall@k": 0.875,
+      "mrr@10": 0.6141666666666666,
+      "precision@k": 0.32,
+      "p50_latency_ms": 40.2
+    },
+    "rows": [
+      {
+        "id": "U01",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 45.0,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.57",
+          "UBER p.58",
+          "UBER p.58",
+          "UBER p.58",
+          "UBER p.98"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "U02",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 37.7,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.62",
+          "UBER p.62",
+          "UBER p.7",
+          "UBER p.4",
+          "UBER p.7"
+        ],
+        "hit": 0.0,
+        "recall": 0.0,
+        "rr": 0.0,
+        "precision": 0.0
+      },
+      {
+        "id": "U03",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 33.6,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.53",
+          "UBER p.60",
+          "UBER p.65",
+          "UBER p.78",
+          "UBER p.58"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "U04",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 34.0,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.21",
+          "UBER p.58",
+          "UBER p.58",
+          "UBER p.58",
+          "UBER p.57"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "U05",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 33.3,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.64",
+          "UBER p.60",
+          "UBER p.61",
+          "UBER p.64",
+          "UBER p.61"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.2,
+        "precision": 0.2
+      },
+      {
+        "id": "U06",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 34.2,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.61",
+          "UBER p.8",
+          "UBER p.57",
+          "UBER p.91",
+          "UBER p.53"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.25,
+        "precision": 0.4
+      },
+      {
+        "id": "U07",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 40.2,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.95",
+          "UBER p.108",
+          "UBER p.58",
+          "UBER p.83",
+          "UBER p.59"
+        ],
+        "hit": 0.0,
+        "recall": 0.0,
+        "rr": 0.0,
+        "precision": 0.0
+      },
+      {
+        "id": "U08",
+        "year_rule": false,
+        "category": "multi-fact",
+        "latency_ms": 33.0,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.26",
+          "UBER p.53",
+          "UBER p.6",
+          "UBER p.61",
+          "UBER p.6"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "U09",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 43.6,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.12",
+          "UBER p.84",
+          "UBER p.52",
+          "UBER p.76",
+          "UBER p.53"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "L01",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 45.6,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.58",
+          "LYFT p.89",
+          "LYFT p.63",
+          "LYFT p.57",
+          "LYFT p.86"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.3333333333333333,
+        "precision": 0.4
+      },
+      {
+        "id": "L02",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 44.7,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.58",
+          "LYFT p.57",
+          "LYFT p.58",
+          "LYFT p.58",
+          "LYFT p.89"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.2
+      },
+      {
+        "id": "L03",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 43.4,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.67",
+          "LYFT p.66",
+          "LYFT p.57",
+          "LYFT p.67",
+          "LYFT p.66"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.3333333333333333,
+        "precision": 0.2
+      },
+      {
+        "id": "L04",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 55.0,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.96",
+          "LYFT p.57",
+          "LYFT p.62",
+          "LYFT p.65",
+          "LYFT p.70"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.8
+      },
+      {
+        "id": "L05",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 33.2,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.58",
+          "LYFT p.12",
+          "LYFT p.89",
+          "LYFT p.12",
+          "LYFT p.29"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.4
+      },
+      {
+        "id": "L06",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 39.0,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.58",
+          "LYFT p.84",
+          "LYFT p.71",
+          "LYFT p.71",
+          "LYFT p.71"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.3333333333333333,
+        "precision": 0.2
+      },
+      {
+        "id": "L07",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 36.3,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.13",
+          "LYFT p.85",
+          "LYFT p.108",
+          "LYFT p.3",
+          "LYFT p.101"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "C01",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 65.1,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.57",
+          "LYFT p.58",
+          "UBER p.60",
+          "LYFT p.63",
+          "UBER p.58"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "C02",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 67.3,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.51",
+          "LYFT p.108",
+          "UBER p.8",
+          "LYFT p.108",
+          "UBER p.16"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 1.0
+      },
+      {
+        "id": "C03",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 64.6,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.61",
+          "LYFT p.67",
+          "UBER p.61",
+          "LYFT p.19",
+          "UBER p.64"
+        ],
+        "hit": 0.0,
+        "recall": 0.5,
+        "rr": 0.3333333333333333,
+        "precision": 0.2
+      },
+      {
+        "id": "A01",
+        "year_rule": false,
+        "category": "ambiguous",
+        "latency_ms": 66.9,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.60",
+          "LYFT p.80",
+          "UBER p.53",
+          "LYFT p.57",
+          "UBER p.78"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.6
+      },
+      {
+        "id": "X01",
+        "year_rule": true,
+        "category": "unanswerable",
+        "latency_ms": 34.6,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.57",
+          "UBER p.58",
+          "UBER p.58",
+          "UBER p.58",
+          "UBER p.98"
+        ]
+      },
+      {
+        "id": "X02",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 65.1,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.3",
+          "LYFT p.124",
+          "UBER p.27",
+          "LYFT p.13",
+          "UBER p.150"
+        ]
+      },
+      {
+        "id": "X03",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 31.9,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.53",
+          "LYFT p.121",
+          "LYFT p.113",
+          "LYFT p.51",
+          "LYFT p.51"
+        ]
+      },
+      {
+        "id": "X04",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 65.7,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.63",
+          "LYFT p.13",
+          "UBER p.27",
+          "LYFT p.26",
+          "UBER p.58"
+        ]
+      },
+      {
+        "id": "X05",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 32.9,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.121",
+          "UBER p.58",
+          "UBER p.58",
+          "UBER p.58",
+          "UBER p.60"
+        ]
+      }
+    ]
+  },
+  {
+    "summary": {
+      "strategy": "semantic",
+      "mode": "bm25",
+      "reranker": "none",
+      "k": 5,
+      "hit@k": 0.9,
+      "recall@k": 0.925,
+      "mrr@10": 0.8088095238095238,
+      "precision@k": 0.38,
+      "p50_latency_ms": 2.2
+    },
+    "rows": [
+      {
+        "id": "U01",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 2.5,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.129",
+          "UBER p.98",
+          "UBER p.98",
+          "UBER p.73",
+          "UBER p.149"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.6
+      },
+      {
+        "id": "U02",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 2.9,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.53",
+          "UBER p.62",
+          "UBER p.4",
+          "UBER p.46",
+          "UBER p.19"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "U03",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 2.6,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.77",
+          "UBER p.65",
+          "UBER p.53",
+          "UBER p.65",
+          "UBER p.63"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.6
+      },
+      {
+        "id": "U04",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 2.2,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.21",
+          "UBER p.10",
+          "UBER p.10",
+          "UBER p.18",
+          "UBER p.121"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "U05",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 1.6,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.63",
+          "UBER p.63",
+          "UBER p.128",
+          "UBER p.53",
+          "UBER p.53"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "U06",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 2.5,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.144",
+          "UBER p.143",
+          "UBER p.7",
+          "UBER p.54",
+          "UBER p.132"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.6
+      },
+      {
+        "id": "U07",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 4.2,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.30",
+          "UBER p.63",
+          "UBER p.57",
+          "UBER p.53",
+          "UBER p.106"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "U08",
+        "year_rule": false,
+        "category": "multi-fact",
+        "latency_ms": 2.8,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.26",
+          "UBER p.26",
+          "UBER p.6",
+          "UBER p.26",
+          "UBER p.63"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "U09",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 1.9,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.12",
+          "UBER p.150",
+          "UBER p.150",
+          "UBER p.126",
+          "UBER p.49"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "L01",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 1.6,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.86",
+          "LYFT p.12",
+          "LYFT p.70",
+          "LYFT p.122",
+          "LYFT p.103"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "L02",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 2.1,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.58",
+          "LYFT p.58",
+          "LYFT p.57",
+          "LYFT p.58",
+          "LYFT p.57"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.2,
+        "precision": 0.2
+      },
+      {
+        "id": "L03",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 1.6,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.67",
+          "LYFT p.68",
+          "LYFT p.66",
+          "LYFT p.69",
+          "LYFT p.67"
+        ],
+        "hit": 0.0,
+        "recall": 0.0,
+        "rr": 0.14285714285714285,
+        "precision": 0.0
+      },
+      {
+        "id": "L04",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 1.6,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.96",
+          "LYFT p.57",
+          "LYFT p.70",
+          "LYFT p.76",
+          "LYFT p.65"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.8
+      },
+      {
+        "id": "L05",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 2.1,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.29",
+          "LYFT p.37",
+          "LYFT p.12",
+          "LYFT p.36",
+          "LYFT p.72"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "L06",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 2.2,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.71",
+          "LYFT p.71",
+          "LYFT p.84",
+          "LYFT p.83",
+          "LYFT p.83"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.2
+      },
+      {
+        "id": "L07",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 1.6,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.13",
+          "LYFT p.124",
+          "LYFT p.124",
+          "LYFT p.14",
+          "LYFT p.28"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "C01",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 4.2,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.65",
+          "LYFT p.86",
+          "UBER p.53",
+          "LYFT p.19",
+          "UBER p.10"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.4
+      },
+      {
+        "id": "C02",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 6.2,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.16",
+          "LYFT p.22",
+          "UBER p.8",
+          "LYFT p.108",
+          "UBER p.51"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 1.0
+      },
+      {
+        "id": "C03",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 5.2,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.63",
+          "LYFT p.67",
+          "UBER p.63",
+          "LYFT p.66",
+          "UBER p.65"
+        ],
+        "hit": 0.0,
+        "recall": 0.5,
+        "rr": 0.3333333333333333,
+        "precision": 0.2
+      },
+      {
+        "id": "A01",
+        "year_rule": false,
+        "category": "ambiguous",
+        "latency_ms": 3.4,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.78",
+          "LYFT p.121",
+          "UBER p.77",
+          "LYFT p.80",
+          "UBER p.126"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.8
+      },
+      {
+        "id": "X01",
+        "year_rule": true,
+        "category": "unanswerable",
+        "latency_ms": 1.7,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.17",
+          "UBER p.114",
+          "UBER p.114",
+          "UBER p.110",
+          "UBER p.9"
+        ]
+      },
+      {
+        "id": "X02",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 2.4,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.8",
+          "LYFT p.85",
+          "UBER p.17",
+          "LYFT p.14",
+          "UBER p.10"
+        ]
+      },
+      {
+        "id": "X03",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 2.0,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.115",
+          "LYFT p.52",
+          "LYFT p.51",
+          "LYFT p.90",
+          "LYFT p.52"
+        ]
+      },
+      {
+        "id": "X04",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 5.4,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.27",
+          "LYFT p.13",
+          "UBER p.141",
+          "LYFT p.72",
+          "UBER p.121"
+        ]
+      },
+      {
+        "id": "X05",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 2.1,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.53",
+          "UBER p.135",
+          "UBER p.78",
+          "UBER p.65",
+          "UBER p.35"
+        ]
+      }
+    ]
+  },
+  {
+    "summary": {
+      "strategy": "semantic",
+      "mode": "hybrid",
+      "reranker": "none",
+      "k": 5,
+      "hit@k": 0.85,
+      "recall@k": 0.875,
+      "mrr@10": 0.74125,
+      "precision@k": 0.4,
+      "p50_latency_ms": 37.8
+    },
+    "rows": [
+      {
+        "id": "U01",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 39.1,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.98",
+          "UBER p.57",
+          "UBER p.77",
+          "UBER p.129",
+          "UBER p.58"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.8
+      },
+      {
+        "id": "U02",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 37.8,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.62",
+          "UBER p.4",
+          "UBER p.62",
+          "UBER p.7",
+          "UBER p.7"
+        ],
+        "hit": 0.0,
+        "recall": 0.0,
+        "rr": 0.125,
+        "precision": 0.0
+      },
+      {
+        "id": "U03",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 40.3,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.53",
+          "UBER p.77",
+          "UBER p.65",
+          "UBER p.78",
+          "UBER p.82"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "U04",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 37.2,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.21",
+          "UBER p.10",
+          "UBER p.95",
+          "UBER p.57",
+          "UBER p.58"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "U05",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 36.1,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.64",
+          "UBER p.63",
+          "UBER p.61",
+          "UBER p.128",
+          "UBER p.60"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.2
+      },
+      {
+        "id": "U06",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 38.8,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.54",
+          "UBER p.132",
+          "UBER p.144",
+          "UBER p.8",
+          "UBER p.136"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "U07",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 35.6,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.53",
+          "UBER p.63",
+          "UBER p.86",
+          "UBER p.95",
+          "UBER p.30"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.2,
+        "precision": 0.2
+      },
+      {
+        "id": "U08",
+        "year_rule": false,
+        "category": "multi-fact",
+        "latency_ms": 37.5,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.26",
+          "UBER p.6",
+          "UBER p.53",
+          "UBER p.61",
+          "UBER p.26"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "U09",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 38.4,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.12",
+          "UBER p.84",
+          "UBER p.2",
+          "UBER p.150",
+          "UBER p.52"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "L01",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 36.6,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.86",
+          "LYFT p.58",
+          "LYFT p.63",
+          "LYFT p.56",
+          "LYFT p.79"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.8
+      },
+      {
+        "id": "L02",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 38.4,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.58",
+          "LYFT p.58",
+          "LYFT p.57",
+          "LYFT p.58",
+          "LYFT p.58"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.3333333333333333,
+        "precision": 0.2
+      },
+      {
+        "id": "L03",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 35.6,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.67",
+          "LYFT p.67",
+          "LYFT p.66",
+          "LYFT p.67",
+          "LYFT p.66"
+        ],
+        "hit": 0.0,
+        "recall": 0.0,
+        "rr": 0.16666666666666666,
+        "precision": 0.0
+      },
+      {
+        "id": "L04",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 34.8,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.96",
+          "LYFT p.57",
+          "LYFT p.70",
+          "LYFT p.65",
+          "LYFT p.76"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.8
+      },
+      {
+        "id": "L05",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 36.2,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.29",
+          "LYFT p.12",
+          "LYFT p.12",
+          "LYFT p.58",
+          "LYFT p.37"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "L06",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 38.9,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.84",
+          "LYFT p.71",
+          "LYFT p.71",
+          "LYFT p.71",
+          "LYFT p.106"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.2
+      },
+      {
+        "id": "L07",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 35.0,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.13",
+          "LYFT p.85",
+          "LYFT p.97",
+          "LYFT p.84",
+          "LYFT p.124"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "C01",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 72.4,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.61",
+          "LYFT p.86",
+          "UBER p.57",
+          "LYFT p.63",
+          "UBER p.53"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.6
+      },
+      {
+        "id": "C02",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 74.7,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.51",
+          "LYFT p.108",
+          "UBER p.16",
+          "LYFT p.22",
+          "UBER p.8"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 1.0
+      },
+      {
+        "id": "C03",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 75.5,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.63",
+          "LYFT p.66",
+          "UBER p.64",
+          "LYFT p.67",
+          "UBER p.65"
+        ],
+        "hit": 0.0,
+        "recall": 0.5,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "A01",
+        "year_rule": false,
+        "category": "ambiguous",
+        "latency_ms": 73.6,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.78",
+          "LYFT p.80",
+          "UBER p.53",
+          "LYFT p.121",
+          "UBER p.126"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.8
+      },
+      {
+        "id": "X01",
+        "year_rule": true,
+        "category": "unanswerable",
+        "latency_ms": 34.9,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.98",
+          "UBER p.57",
+          "UBER p.17",
+          "UBER p.58",
+          "UBER p.114"
+        ]
+      },
+      {
+        "id": "X02",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 72.8,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.8",
+          "LYFT p.13",
+          "UBER p.131",
+          "LYFT p.124",
+          "UBER p.3"
+        ]
+      },
+      {
+        "id": "X03",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 37.1,
+        "top_score": null,
+        "top_pages": [
+          "LYFT p.53",
+          "LYFT p.111",
+          "LYFT p.55",
+          "LYFT p.113",
+          "LYFT p.52"
+        ]
+      },
+      {
+        "id": "X04",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 78.8,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.27",
+          "LYFT p.13",
+          "UBER p.38",
+          "LYFT p.27",
+          "UBER p.63"
+        ]
+      },
+      {
+        "id": "X05",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 36.7,
+        "top_score": null,
+        "top_pages": [
+          "UBER p.59",
+          "UBER p.53",
+          "UBER p.107",
+          "UBER p.121",
+          "UBER p.58"
+        ]
+      }
+    ]
+  },
+  {
+    "summary": {
+      "strategy": "semantic",
+      "mode": "hybrid",
+      "reranker": "local",
+      "k": 5,
+      "hit@k": 0.95,
+      "recall@k": 0.975,
+      "mrr@10": 0.8708333333333333,
+      "precision@k": 0.45,
+      "p50_latency_ms": 2404.3,
+      "threshold": 0.6,
+      "refusal_recall": 0.8,
+      "false_refusal_rate": 0.0,
+      "refusal_recall_with_year_rule": 1.0
+    },
+    "rows": [
+      {
+        "id": "U01",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 2771.8,
+        "top_score": 0.8189664006233215,
+        "top_pages": [
+          "UBER p.77",
+          "UBER p.98",
+          "UBER p.57",
+          "UBER p.53",
+          "UBER p.60"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.6
+      },
+      {
+        "id": "U02",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 2310.2,
+        "top_score": 0.724755267913525,
+        "top_pages": [
+          "UBER p.53",
+          "UBER p.62",
+          "UBER p.4",
+          "UBER p.62",
+          "UBER p.7"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "U03",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 2354.4,
+        "top_score": 0.8319927096366884,
+        "top_pages": [
+          "UBER p.53",
+          "UBER p.57",
+          "UBER p.65",
+          "UBER p.77",
+          "UBER p.77"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "U04",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 2283.5,
+        "top_score": 0.7561294317245484,
+        "top_pages": [
+          "UBER p.10",
+          "UBER p.21",
+          "UBER p.98",
+          "UBER p.95",
+          "UBER p.58"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "U05",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 2259.7,
+        "top_score": 0.7948360741138458,
+        "top_pages": [
+          "UBER p.61",
+          "UBER p.53",
+          "UBER p.61",
+          "UBER p.65",
+          "UBER p.63"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.6
+      },
+      {
+        "id": "U06",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 2162.0,
+        "top_score": 0.7533613532781601,
+        "top_pages": [
+          "UBER p.144",
+          "UBER p.132",
+          "UBER p.54",
+          "UBER p.7",
+          "UBER p.91"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.8
+      },
+      {
+        "id": "U07",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 2563.5,
+        "top_score": 0.7476150371811607,
+        "top_pages": [
+          "UBER p.30",
+          "UBER p.53",
+          "UBER p.63",
+          "UBER p.57",
+          "UBER p.26"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "U08",
+        "year_rule": false,
+        "category": "multi-fact",
+        "latency_ms": 2461.1,
+        "top_score": 0.8164881901099131,
+        "top_pages": [
+          "UBER p.26",
+          "UBER p.26",
+          "UBER p.53",
+          "UBER p.6",
+          "UBER p.61"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "U09",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 2404.3,
+        "top_score": 0.6660354244709015,
+        "top_pages": [
+          "UBER p.12",
+          "UBER p.84",
+          "UBER p.49",
+          "UBER p.76",
+          "UBER p.77"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "L01",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 2551.9,
+        "top_score": 0.8253304660320282,
+        "top_pages": [
+          "LYFT p.89",
+          "LYFT p.86",
+          "LYFT p.79",
+          "LYFT p.63",
+          "LYFT p.58"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.5,
+        "precision": 0.6
+      },
+      {
+        "id": "L02",
+        "year_rule": false,
+        "category": "numeric-table",
+        "latency_ms": 2270.8,
+        "top_score": 0.7246651887893676,
+        "top_pages": [
+          "LYFT p.58",
+          "LYFT p.58",
+          "LYFT p.58",
+          "LYFT p.57",
+          "LYFT p.58"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.25,
+        "precision": 0.2
+      },
+      {
+        "id": "L03",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 2116.6,
+        "top_score": 0.748898622393608,
+        "top_pages": [
+          "LYFT p.57",
+          "LYFT p.66",
+          "LYFT p.56",
+          "LYFT p.70",
+          "LYFT p.68"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "L04",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 2108.8,
+        "top_score": 0.8146897946085249,
+        "top_pages": [
+          "LYFT p.96",
+          "LYFT p.57",
+          "LYFT p.7",
+          "LYFT p.65",
+          "LYFT p.97"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.6
+      },
+      {
+        "id": "L05",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 2089.6,
+        "top_score": 0.6550145000219345,
+        "top_pages": [
+          "LYFT p.29",
+          "LYFT p.12",
+          "LYFT p.72",
+          "LYFT p.89",
+          "LYFT p.58"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "L06",
+        "year_rule": false,
+        "category": "numeric-prose",
+        "latency_ms": 2355.9,
+        "top_score": 0.7158407151699067,
+        "top_pages": [
+          "LYFT p.71",
+          "LYFT p.84",
+          "LYFT p.71",
+          "LYFT p.56",
+          "LYFT p.78"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.4
+      },
+      {
+        "id": "L07",
+        "year_rule": false,
+        "category": "entity",
+        "latency_ms": 1941.8,
+        "top_score": 0.6464105170965194,
+        "top_pages": [
+          "LYFT p.13",
+          "LYFT p.85",
+          "LYFT p.14",
+          "LYFT p.97",
+          "LYFT p.109"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.2
+      },
+      {
+        "id": "C01",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 4960.6,
+        "top_score": 0.659364652633667,
+        "top_pages": [
+          "UBER p.61",
+          "LYFT p.58",
+          "UBER p.57",
+          "LYFT p.89",
+          "UBER p.57"
+        ],
+        "hit": 0.0,
+        "recall": 0.5,
+        "rr": 0.3333333333333333,
+        "precision": 0.4
+      },
+      {
+        "id": "C02",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 3998.0,
+        "top_score": 0.7552328854799271,
+        "top_pages": [
+          "UBER p.12",
+          "LYFT p.108",
+          "UBER p.16",
+          "LYFT p.26",
+          "UBER p.8"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 1.0
+      },
+      {
+        "id": "C03",
+        "year_rule": false,
+        "category": "comparison",
+        "latency_ms": 4762.3,
+        "top_score": 0.6563521653413773,
+        "top_pages": [
+          "UBER p.61",
+          "LYFT p.66",
+          "UBER p.53",
+          "LYFT p.57",
+          "UBER p.61"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 0.3333333333333333,
+        "precision": 0.6
+      },
+      {
+        "id": "A01",
+        "year_rule": false,
+        "category": "ambiguous",
+        "latency_ms": 4940.7,
+        "top_score": 0.7861836940050125,
+        "top_pages": [
+          "UBER p.126",
+          "LYFT p.121",
+          "UBER p.35",
+          "LYFT p.56",
+          "UBER p.78"
+        ],
+        "hit": 1.0,
+        "recall": 1.0,
+        "rr": 1.0,
+        "precision": 0.6
+      },
+      {
+        "id": "X01",
+        "year_rule": true,
+        "category": "unanswerable",
+        "latency_ms": 2536.9,
+        "top_score": 0.6209599077701569,
+        "top_pages": [
+          "UBER p.77",
+          "UBER p.98",
+          "UBER p.57",
+          "UBER p.57",
+          "UBER p.60"
+        ]
+      },
+      {
+        "id": "X02",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 3965.3,
+        "top_score": 0.35764742121100423,
+        "top_pages": [
+          "UBER p.10",
+          "LYFT p.2",
+          "UBER p.8",
+          "LYFT p.124",
+          "UBER p.17"
+        ]
+      },
+      {
+        "id": "X03",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 2089.1,
+        "top_score": 0.5628287762403488,
+        "top_pages": [
+          "LYFT p.53",
+          "LYFT p.51",
+          "LYFT p.35",
+          "LYFT p.53",
+          "LYFT p.21"
+        ]
+      },
+      {
+        "id": "X04",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 4239.1,
+        "top_score": 0.44977602511644366,
+        "top_pages": [
+          "UBER p.27",
+          "LYFT p.19",
+          "UBER p.38",
+          "LYFT p.13",
+          "UBER p.107"
+        ]
+      },
+      {
+        "id": "X05",
+        "year_rule": false,
+        "category": "unanswerable",
+        "latency_ms": 2549.0,
+        "top_score": 0.5840346217155457,
+        "top_pages": [
+          "UBER p.77",
+          "UBER p.78",
+          "UBER p.53",
+          "UBER p.59",
+          "UBER p.65"
+        ]
+      }
+    ]
+  }
+]

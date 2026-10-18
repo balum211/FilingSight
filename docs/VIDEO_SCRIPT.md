@@ -1,0 +1,12 @@
+# Demo video script (under 5 minutes)
+
+Record with Loom or the Windows Game Bar (Win + G). Have the app running (`run.bat`) with `NEBIUS_API_KEY` in `.env`, and the GitHub repo open in another tab.
+
+| Time | Show | Say |
+|---|---|---|
+| 0:00-0:30 | README on GitHub | "This is FilingSight, my Week 2 RAG app. It answers questions about Uber's and Lyft's 2021 annual reports with page citations, and refuses when the filings don't have the answer. I did Project 2, Financial Document Intelligence, on the LangChain + LangGraph track." |
+| 0:30-1:15 | "How it works" tab | "My one-liner: it helps retail investors and junior analysts answer metric, risk and strategy questions from 275 pages of 10-K filings, targeting 90% faithfulness and 90% retrieval relevance within 8 seconds. Ingestion cleans the PDFs: I drop exhibits, rebuild table rows and tag every page with its 10-K Item. Retrieval is hybrid, Chroma plus BM25 fused with reciprocal rank fusion, one search per company, then a reranker, then a LangGraph flow with a refusal path." |
+| 1:15-2:30 | Ask tab | Click *"What was Uber's total revenue in 2021?"* → point at the [n] citations and open **Sources** (page numbers, Item, score). Ask *"Compare Uber's and Lyft's revenue growth in 2021"* → "the question is split into one sub-query per company, so both filings show up." Ask *"What did Lyft sell to Woven Planet?"* |
+| 2:30-3:10 | Ask tab | Ask *"What was Uber's revenue in 2023?"* → "refused by the year rule; the filings only cover 2019 to 2021." Ask *"Who is the CEO of DoorDash?"* → "refused by the confidence gate: best relevance 0.36, below 0.60. Designing the refusal first matters more than the happy path." |
+| 3:10-4:20 | Evaluation tab | "I wrote 25 questions with evidence labels, including comparisons and five unanswerable ones. Semantic chunking beat fixed-size chunking in every mode, for example 0.85 vs 0.65 hit@5 for dense retrieval, because tables and topics stay together. Reranking added 10 points: 0.85 to 0.95 hit@5 on semantic chunks. All five unanswerable questions were refused, with no false refusals." Mention the one remaining miss (C01, Lyft side). |
+| 4:20-4:55 | VS Code / `docs/PROMPTS.md` | "I built this with Claude Code as my AI coding agent: I gave it the handout and course repos, and we iterated on real failures, like switching from pypdf to PyMuPDF, fixing comparison questions that lost a company after reranking, and tuning the refusal threshold. Code, tests and the evaluation are on GitHub. Thanks!" |

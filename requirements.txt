@@ -1,0 +1,12 @@
+# Core RAG stack (Track 2: LangChain + LangGraph)
+langchain-core>=1.0
+langchain-text-splitters>=1.0
+langchain-chroma>=1.0
+langchain-openai>=1.0
+langgraph>=1.0
+chromadb>=1.0          # vector store + bundled ONNX all-MiniLM-L6-v2 embeddings (no PyTorch)
+rank-bm25>=0.2.2       # sparse / keyword retrieval
+pymupdf>=1.24          # PDF text extraction (only needed to rebuild the index)
+numpy>=1.26
+python-dotenv>=1.0
+streamlit>=1.40,<2

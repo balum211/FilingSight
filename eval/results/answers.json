@@ -1,0 +1,567 @@
+{
+  "summary": {
+    "generator": "extractive (no LLM)",
+    "strategy": "semantic",
+    "reranker": "local",
+    "refusal_accuracy": 1,
+    "false_refusal_rate": 0,
+    "cited_evidence_rate": 0.9,
+    "p50_latency_ms": 3223,
+    "p95_latency_ms": 5901
+  },
+  "rows": [
+    {
+      "id": "U01",
+      "category": "numeric-table",
+      "question": "What was Uber's total revenue in 2021?",
+      "reference": "$17,455 million (about $17.5 billion), up 57% from $11,139 million in 2020.",
+      "answer": "Most relevant passages from the filings (no LLM key set, so this is extractive):\n- Year Ended December 31, | 2019 | 2020 | 2021 \u203a Mobility revenue | $10,707 | $6,089 | $6,953 [2]\n- 2020 to 2021 % Change \u203a Revenue | $11,139 | $17,455 | 57 % [3]\n- Year Ended December 31, | 2019 | 2020 | 2021 \u203a Total revenue | $13,000 | $11,139 | $17,455 [2]\n- 2020 to 2021 % Change \u203a Percentage of revenue | \u2014 % | \u2014 % [5]",
+      "route": "answered",
+      "refusal_reason": "",
+      "citations": [
+        2,
+        3,
+        5
+      ],
+      "sources": [
+        "[1] Uber p.77 (Item 8)",
+        "[2] Uber p.98 (Item 8)",
+        "[3] Uber p.57 (Item 7)",
+        "[4] Uber p.53 (Item 7)",
+        "[5] Uber p.60 (Item 7)"
+      ],
+      "latency_ms": 6172,
+      "cited_evidence": true
+    },
+    {
+      "id": "U02",
+      "category": "numeric-table",
+      "question": "How many Monthly Active Platform Consumers (MAPCs) did Uber have at the end of 2021?",
+      "reference": "118 million MAPCs in Q4 2021, up 27% from 93 million.",
+      "answer": "Most relevant passages from the filings (no LLM key set, so this is extractive):\n- 2020 to 2021 % Change \u203a Monthly Active Platform Consumers (\"MAPCs\") | 93 | 118 | 27 % [1]\n- \u2022 our expectations regarding future operating performance, including but not limited to our expectations regarding future Monthly Active Platform Consumers (\"MAPCs\"), Trips, Gross Bookings, and Take Rate; [3]\n- Monthly Active Platform Consumers. [2]\n- During November 2021, we launched Uber One in the United States as our single cross-platform membership program that brings together the best of Uber. [5]",
+      "route": "answered",
+      "refusal_reason": "",
+      "citations": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "sources": [
+        "[1] Uber p.53 (Item 7)",
+        "[2] Uber p.62 (Item 7)",
+        "[3] Uber p.4 (Item Cover)",
+        "[4] Uber p.62 (Item 7)",
+        "[5] Uber p.7 (Item 1)"
+      ],
+      "latency_ms": 3223,
+      "cited_evidence": true
+    },
+    {
+      "id": "U03",
+      "category": "numeric-table",
+      "question": "What was Uber's net loss attributable to Uber Technologies in 2021?",
+      "reference": "$496 million, a 93% improvement from a $6,768 million loss in 2020.",
+      "answer": "Most relevant passages from the filings (no LLM key set, so this is extractive):\n- Costs and expenses \u203a Net loss attributable to Uber Technologies, Inc. | (61)% | (3)% [2]\n- Net loss attributable to Uber Technologies, Inc. also included $1.2 billion of stock-based compensation expense. [1]\n- Net loss attributable to Uber Technologies, Inc. was $496 million, a 93% improvement year-over-year, driven by a $1.6 billion pre-tax gain on the sale of our ATG Business to Aurora, a $1.6 billion pre-tax net benefit relating to Uber's equity investments, as well as reductions in our fixed cost structure and increased variable cost efficiencies. [1]\n- Loss from equity method investments | (34) | (34) | (37) \u203a Net loss attributable to Uber Technologies, Inc. | $(8,506) | $(6,768) | $(496) [5]",
+      "route": "answered",
+      "refusal_reason": "",
+      "citations": [
+        1,
+        2,
+        5
+      ],
+      "sources": [
+        "[1] Uber p.53 (Item 7)",
+        "[2] Uber p.57 (Item 7)",
+        "[3] Uber p.65 (Item 7)",
+        "[4] Uber p.77 (Item 8)",
+        "[5] Uber p.77 (Item 8)"
+      ],
+      "latency_ms": 3576,
+      "cited_evidence": true
+    },
+    {
+      "id": "U04",
+      "category": "numeric-prose",
+      "question": "How many employees did Uber have as of December 31, 2021?",
+      "reference": "Approximately 29,300 employees globally.",
+      "answer": "Most relevant passages from the filings (no LLM key set, so this is extractive):\n- Year Ended December 31, | 2019 | 2020 | 2021 \u203a Mobility revenue | $10,707 | $6,089 | $6,953 [3]\n- We are a global company and as of December 31, 2021, we and our subsidiaries had approximately 29,300 employees globally and operations in approximately 72 countries and approximately 10,500 cities around the world. [1]\n- As our operations have expanded, we have grown from 159 employees as of December 31, 2012 to approximately 29,300 global employees as of December 31, 2021, of whom approximately 12,300 were located outside the United States. [2]\n- Year Ended December 31, | 2019 | 2020 | 2021 \u203a Delivery revenue | 1,401 | 3,904 | 8,362 [3]",
+      "route": "answered",
+      "refusal_reason": "",
+      "citations": [
+        1,
+        2,
+        3
+      ],
+      "sources": [
+        "[1] Uber p.10 (Item 1)",
+        "[2] Uber p.21 (Item 1A)",
+        "[3] Uber p.98 (Item 8)",
+        "[4] Uber p.95 (Item 8)",
+        "[5] Uber p.58 (Item 7)"
+      ],
+      "latency_ms": 3005,
+      "cited_evidence": true
+    },
+    {
+      "id": "U05",
+      "category": "numeric-prose",
+      "question": "What was Uber's Adjusted EBITDA for 2021?",
+      "reference": "An Adjusted EBITDA loss of $774 million, improving $1.8 billion from 2020.",
+      "answer": "Most relevant passages from the filings (no LLM key set, so this is extractive):\n- 2020 to 2021 % Change \u203a Mobility Adjusted EBITDA | $1,169 | $1,596 | 37 % [2]\n- 2020 to 2021 % Change \u203a Adjusted EBITDA | $(2,528) | $(774) | 69 % [1]\n- 2020 to 2021 % Change \u203a Delivery Adjusted EBITDA | $(873) | $(348) | 60 % [2]\n- For the year ended December 31, 2021 compared to the same period in 2020, Mobility revenue increased $864 million, or 14% and Mobility adjusted EBITDA profit increased $427 million, or 37%. [3]",
+      "route": "answered",
+      "refusal_reason": "",
+      "citations": [
+        1,
+        2,
+        3
+      ],
+      "sources": [
+        "[1] Uber p.61 (Item 7)",
+        "[2] Uber p.53 (Item 7)",
+        "[3] Uber p.61 (Item 7)",
+        "[4] Uber p.65 (Item 7)",
+        "[5] Uber p.63 (Item 7)"
+      ],
+      "latency_ms": 3164,
+      "cited_evidence": true
+    },
+    {
+      "id": "U06",
+      "category": "entity",
+      "question": "Which company did Uber acquire in 2021 to expand its Freight business?",
+      "reference": "Transplace (Tupelo Parent, Inc.), acquired in an all-cash transaction in Q4 2021.",
+      "answer": "Most relevant passages from the filings (no LLM key set, so this is extractive):\n- On November 12, 2021, we completed the acquisition of Transplace in an all-cash transaction, allowing us to expand our Uber Freight business through Transplace's expertise in transportation management. [1]\n- In July 2021, we entered into a Freight Series A preferred stock purchase agreement and sold shares of Freight Series A to The Public Investment Fund, which is an investor in Uber. [2]\n- The acquisition of Transplace is expected to allow us to expand our Uber Freight business through Transplace's expertise in transportation management. [3]\n- (\"Transplace\") during the fourth quarter of 2021, our Freight revenue also includes revenue from transportation management. [5]",
+      "route": "answered",
+      "refusal_reason": "",
+      "citations": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "sources": [
+        "[1] Uber p.144 (Item 8)",
+        "[2] Uber p.132 (Item 8)",
+        "[3] Uber p.54 (Item 7)",
+        "[4] Uber p.7 (Item 1)",
+        "[5] Uber p.91 (Item 8)"
+      ],
+      "latency_ms": 2898,
+      "cited_evidence": true
+    },
+    {
+      "id": "U07",
+      "category": "numeric-prose",
+      "question": "What share of Uber's Gross Bookings was paid by credit or debit card in 2021?",
+      "reference": "74% of Gross Bookings.",
+      "answer": "Most relevant passages from the filings (no LLM key set, so this is extractive):\n- In 2021, 74% of our Gross Bookings were paid by either credit card or debit card. [1]\n- Overall Gross Bookings increased by $32.5 billion in 2021, up 56%, or 53% on a constant currency basis, compared to 2020. [2]\n- Mobility Gross Bookings grew 36%, on a constant currency basis, from 2020, due to increases in Trip volumes as the business recovers from the impacts of COVID-19. [2]\n- In 2021, we derived 23% of our Mobility Gross Bookings from five metropolitan areas\u2014Chicago, Miami, and New York City in the United States, Sao Paulo in Brazil, and London in the United Kingdom. [5]",
+      "route": "answered",
+      "refusal_reason": "",
+      "citations": [
+        1,
+        2,
+        5
+      ],
+      "sources": [
+        "[1] Uber p.30 (Item 1A)",
+        "[2] Uber p.53 (Item 7)",
+        "[3] Uber p.63 (Item 7)",
+        "[4] Uber p.57 (Item 7)",
+        "[5] Uber p.26 (Item 1A)"
+      ],
+      "latency_ms": 3020,
+      "cited_evidence": true
+    },
+    {
+      "id": "U08",
+      "category": "multi-fact",
+      "question": "Which metropolitan areas generated 23% of Uber's Mobility Gross Bookings in 2021?",
+      "reference": "Chicago, Miami and New York City in the US, Sao Paulo in Brazil and London in the UK.",
+      "answer": "Most relevant passages from the filings (no LLM key set, so this is extractive):\n- In 2021, we derived 23% of our Mobility Gross Bookings from five metropolitan areas\u2014Chicago, Miami, and New York City in the United States, Sao Paulo in Brazil, and London in the United Kingdom. [1]\n- In 2021, we generated 11% of our Mobility Gross Bookings from trips that either started or were completed at an airport. [2]\n- Mobility Gross Bookings grew 36%, on a constant currency basis, from 2020, due to increases in Trip volumes as the business recovers from the impacts of COVID-19. [3]\n- For example, in most cases we divide our Mobility Gross Bookings by our estimates of total ridesharing Gross Bookings generated by us and other companies with similar ridesharing products. [4]",
+      "route": "answered",
+      "refusal_reason": "",
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "sources": [
+        "[1] Uber p.26 (Item 1A)",
+        "[2] Uber p.26 (Item 1A)",
+        "[3] Uber p.53 (Item 7)",
+        "[4] Uber p.6 (Item 1)",
+        "[5] Uber p.61 (Item 7)"
+      ],
+      "latency_ms": 3180,
+      "cited_evidence": true
+    },
+    {
+      "id": "U09",
+      "category": "entity",
+      "question": "When was Uber founded and under what original name was it incorporated?",
+      "reference": "Founded in 2009 and incorporated as Ubercab, Inc. (Delaware) in July 2010; renamed Uber Technologies in February 2011.",
+      "answer": "Most relevant passages from the filings (no LLM key set, so this is extractive):\n- We were founded in 2009 and incorporated as Ubercab, Inc., a Delaware corporation, in July 2010. [1]\n- (\"Uber,\" \"we,\" \"our,\" or \"us\") was incorporated in Delaware in July 2010, and is headquartered in San Francisco, California. [2]\n- In February 2011, we changed our name to Uber Technologies, Inc. [1]\n- Uber is a technology platform that uses a massive network, leading technology, operational excellence and product expertise to power movement from point A to point B. [2]",
+      "route": "answered",
+      "refusal_reason": "",
+      "citations": [
+        1,
+        2
+      ],
+      "sources": [
+        "[1] Uber p.12 (Item 1)",
+        "[2] Uber p.84 (Item 8)",
+        "[3] Uber p.49 (Item 3)",
+        "[4] Uber p.76 (Item 8)",
+        "[5] Uber p.77 (Item 8)"
+      ],
+      "latency_ms": 3530,
+      "cited_evidence": true
+    },
+    {
+      "id": "L01",
+      "category": "numeric-table",
+      "question": "What was Lyft's total revenue in 2021?",
+      "reference": "$3,208.3 million (about $3.2 billion), up 36% year over year.",
+      "answer": "Most relevant passages from the filings (no LLM key set, so this is extractive):\n- For the years ended December 31, 2021, 2020 and 2019, in relation to the driver, rider, Light Vehicle riders and Lyft Rentals renters incentive programs, the Company recorded $1.3 billion, $390.8 million and $560.3 million as a reduction to revenue and $64.7 million, $135.0 million and $381.5 million as sales and marketing expense, respectively. [1]\n- Year Ended December 31, | 2021 | 2020 | 2019 \u203a Total revenue | $3,208,323 $2,364,681 | $3,615,960 [2]\n- Revenue per Active Rider | 2021 | 2020 | 2019 [5]\n- Revenue in 2021 also benefited from revenues from licensing and data access agreements, beginning in the [4]",
+      "route": "answered",
+      "refusal_reason": "",
+      "citations": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "sources": [
+        "[1] Lyft p.89 (Item 8)",
+        "[2] Lyft p.86 (Item 8)",
+        "[3] Lyft p.79 (Item 8)",
+        "[4] Lyft p.63 (Item 7)",
+        "[5] Lyft p.58 (Item 7)"
+      ],
+      "latency_ms": 3343,
+      "cited_evidence": true
+    },
+    {
+      "id": "L02",
+      "category": "numeric-table",
+      "question": "How many Active Riders did Lyft have in the fourth quarter of 2021?",
+      "reference": "18,728 thousand (about 18.7 million), up 49.2% year over year.",
+      "answer": "Most relevant passages from the filings (no LLM key set, so this is extractive):\n- Revenue per Active Rider represents our ability to drive usage and monetization of our platform. \u203a Active Riders | 2021 | 2020 | 2019 [4]\n- Revenue per Active Rider reached an all-time high in the three months ended December 31, 2021, increasing compared to the three months ended September 30, 2021. [1]\n- This update resulted in a 0.01% increase, or an additional 927 Active Riders in the fourth quarter of 2020. [2]\n- Beginning in the fourth quarter of 2020, some riders were able to access their Concierge rides in the Lyft App if they already had a Lyft account. [3]",
+      "route": "answered",
+      "refusal_reason": "",
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "sources": [
+        "[1] Lyft p.58 (Item 7)",
+        "[2] Lyft p.58 (Item 7)",
+        "[3] Lyft p.58 (Item 7)",
+        "[4] Lyft p.57 (Item 7)",
+        "[5] Lyft p.58 (Item 7)"
+      ],
+      "latency_ms": 2981,
+      "cited_evidence": true
+    },
+    {
+      "id": "L03",
+      "category": "numeric-prose",
+      "question": "What was Lyft's Adjusted EBITDA in 2021?",
+      "reference": "$92.9 million, the company's first annual Adjusted EBITDA profit.",
+      "answer": "Most relevant passages from the filings (no LLM key set, so this is extractive):\n- Adjusted EBITDA in 2021 was $92.9 million, marking our first annual Adjusted EBITDA profitability. [1]\n- The following table provides a reconciliation of net loss to Adjusted EBITDA (in millions): \u203a Year Ended December 31, | 2021 | 2020 | 2019 [4]\n- (in millions, except for percentages) \u203a Adjusted EBITDA | $92.9 | $(755.2) | $(678.9) | 112.3 % | (11.2)% [2]\n- Adjusted EBITDA was $92.9 million, marking the Company's first annual Adjusted EBITDA profit. [3]",
+      "route": "answered",
+      "refusal_reason": "",
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "sources": [
+        "[1] Lyft p.57 (Item 7)",
+        "[2] Lyft p.66 (Item 7)",
+        "[3] Lyft p.56 (Item 5)",
+        "[4] Lyft p.70 (Item 7)",
+        "[5] Lyft p.68 (Item 7)"
+      ],
+      "latency_ms": 3408,
+      "cited_evidence": true
+    },
+    {
+      "id": "L04",
+      "category": "entity",
+      "question": "What did Lyft sell to Woven Planet in 2021?",
+      "reference": "Certain assets of its self-driving division, Level 5, plus commercial data agreements; Woven Planet is a Toyota subsidiary.",
+      "answer": "Most relevant passages from the filings (no LLM key set, so this is extractive):\n- On July 13, 2021, the Company completed a multi-element transaction with Woven Planet, a subsidiary of Toyota Motor Corporation, for the divestiture of certain assets related to the Company's self-driving vehicle division, Level 5, as well as commercial agreements for the utilization of Lyft rideshare and fleet data to accelerate the safety and commercialization of the automated-driving vehicles that Woven Planet is developing. [1]\n- On July 13, 2021, we completed a multi-element transaction with Woven Planet, a subsidiary of Toyota Motor Corporation, for the divestiture of certain assets related to our self-driving vehicle division, Level 5, as well as commercial agreements for the utilization of Lyft rideshare and fleet data to accelerate the safety and commercialization of the automated-driving vehicles that Woven Planet is developing. [2]\n- In July 2021, we completed a multi-element transaction with Woven Planet, a subsidiary of Toyota Motor Corporation, for the divestiture of certain assets related to our self-driving vehicle division, Level 5, as well as commercial agreements for the utilization of Lyft rideshare and fleet data to accelerate the safety and commercialization of the automated-driving vehicles that Woven Planet is developing. [3]\n- impacted by our transaction with Woven Planet in the third quarter of 2021. [4]",
+      "route": "answered",
+      "refusal_reason": "",
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "sources": [
+        "[1] Lyft p.96 (Item 8)",
+        "[2] Lyft p.57 (Item 7)",
+        "[3] Lyft p.7 (Item 1)",
+        "[4] Lyft p.65 (Item 7)",
+        "[5] Lyft p.97 (Item 8)"
+      ],
+      "latency_ms": 2890,
+      "cited_evidence": true
+    },
+    {
+      "id": "L05",
+      "category": "numeric-prose",
+      "question": "How many full-time employees did Lyft have at the end of 2021?",
+      "reference": "4,453 full-time employees as of December 31, 2021.",
+      "answer": "Most relevant passages from the filings (no LLM key set, so this is extractive):\n- The number of our full-time employees increased from 2,708 as of December 31, 2017, to 4,453 as of December 31, 2021. [1]\n- As of December 31, 2021, we had 4,453 employees in approximately 119 offices and additional locations, including Driver Hubs, Driver Centers, and Service Desks. [2]\n- For the years ended December 31, 2021, 2020 and 2019, in relation to the driver, rider, Light Vehicle riders and Lyft Rentals renters incentive programs, the Company recorded $1.3 billion, $390.8 million and $560.3 million as a reduction to revenue and $64.7 million, $135.0 million and $381.5 million as sales and marketing expense, respectively. [4]\n- Incentives offered to Light Vehicle riders and Lyft Rentals renters were not material for the years ended December 31, 2021 and 2020. [4]",
+      "route": "answered",
+      "refusal_reason": "",
+      "citations": [
+        1,
+        2,
+        4
+      ],
+      "sources": [
+        "[1] Lyft p.29 (Item 1A)",
+        "[2] Lyft p.12 (Item 1)",
+        "[3] Lyft p.72 (Item 7)",
+        "[4] Lyft p.89 (Item 8)",
+        "[5] Lyft p.58 (Item 7)"
+      ],
+      "latency_ms": 2695,
+      "cited_evidence": true
+    },
+    {
+      "id": "L06",
+      "category": "numeric-prose",
+      "question": "How much cash did Lyft use in operating activities in 2021?",
+      "reference": "$101.7 million.",
+      "answer": "Most relevant passages from the filings (no LLM key set, so this is extractive):\n- Cash used in operating activities was $101.7 million for the year ended December 31, 2021. [1]\n- Cash used in operating activities was $1.4 billion for the year ended December 31, 2020. [1]\n- (in thousands) \u203a Net cash used in operating activities | $(101,721) | $(1,378,899) [3]\n- Cash used in operating activities was $101.7 million. [4]",
+      "route": "answered",
+      "refusal_reason": "",
+      "citations": [
+        1,
+        3,
+        4
+      ],
+      "sources": [
+        "[1] Lyft p.71 (Item 7)",
+        "[2] Lyft p.84 (Item 8)",
+        "[3] Lyft p.71 (Item 7)",
+        "[4] Lyft p.56 (Item 5)",
+        "[5] Lyft p.78 (Item 8)"
+      ],
+      "latency_ms": 3747,
+      "cited_evidence": true
+    },
+    {
+      "id": "L07",
+      "category": "entity",
+      "question": "Under what name was Lyft originally incorporated, and when?",
+      "reference": "Bounder Web, Inc., a Delaware corporation, in 2007 (renamed Zimride in 2008, Lyft in 2013).",
+      "answer": "Most relevant passages from the filings (no LLM key set, so this is extractive):\n- We founded Lyft in 2012 and changed our name to Lyft, Inc. in 2013 when we sold the assets related to our Zimride operations. [1]\n- (the \"Company\" or \"Lyft\") is incorporated in Delaware with its headquarters in San Francisco, California. [2]\n- The commercial agreements for the utilization of Lyft rideshare and fleet data by Woven Planet is accounted for under ASC 606 and the Company recorded a deferred revenue liability of $42.5 million related to the performance obligations under these commercial agreements as part of the transaction at closing. [4]\n- The Company is currently named as a defendant in a number of matters related to accidents or other incidents involving drivers on the Lyft Platform, other riders, renters and third parties. [5]",
+      "route": "answered",
+      "refusal_reason": "",
+      "citations": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "sources": [
+        "[1] Lyft p.13 (Item 1)",
+        "[2] Lyft p.85 (Item 8)",
+        "[3] Lyft p.14 (Item 1)",
+        "[4] Lyft p.97 (Item 8)",
+        "[5] Lyft p.109 (Item 8)"
+      ],
+      "latency_ms": 2657,
+      "cited_evidence": true
+    },
+    {
+      "id": "C01",
+      "category": "comparison",
+      "question": "Compare Uber's and Lyft's revenue growth in 2021.",
+      "reference": "Uber revenue grew 57% to $17.5B; Lyft revenue grew 36% to $3.2B.",
+      "answer": "Most relevant passages from the filings (no LLM key set, so this is extractive):\n- **Uber:** For the year ended December 31, 2021 compared to the same period in 2020, Mobility revenue increased $864 million, or 14% and Mobility adjusted EBITDA profit increased $427 million, or 37%. [1]\n- **Lyft:** For the years ended December 31, 2021, 2020 and 2019, in relation to the driver, rider, Light Vehicle riders and Lyft Rentals renters incentive programs, the Company recorded $1.3 billion, $390.8 million and $560.3 million as a reduction to revenue and $64.7 million, $135.0 million and $381.5 million as sales and marketing expense, respectively. [4]\n- **Uber:** 2020 to 2021 % Change \u203a Revenue | $11,139 | $17,455 | 57 % [5]\n- **Lyft:** This was driven by an increase in ride frequency as well as a shift toward higher revenue rides such as airport rides, reflecting the increased travel experienced in the fourth quarter in 2021 nationwide. [2]",
+      "route": "answered",
+      "refusal_reason": "",
+      "citations": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "sources": [
+        "[1] Uber p.61 (Item 7)",
+        "[2] Lyft p.58 (Item 7)",
+        "[3] Uber p.57 (Item 7)",
+        "[4] Lyft p.89 (Item 8)",
+        "[5] Uber p.57 (Item 7)"
+      ],
+      "latency_ms": 5901,
+      "cited_evidence": false
+    },
+    {
+      "id": "C02",
+      "category": "comparison",
+      "question": "How do Uber and Lyft each describe the impact of California's Proposition 22?",
+      "reference": "Both say Prop 22 lets drivers stay independent contractors in California while adding costs for new earnings guarantees and benefits.",
+      "answer": "Most relevant passages from the filings (no LLM key set, so this is extractive):\n- **Uber:** In California, we welcomed the passage of Proposition 22, which introduced new requirements for platform companies like Uber to provide benefits, including healthcare stipends, injury protection insurance, and safety training, and implemented its requirements. [1]\n- **Lyft:** Subsequently, voters in California approved Proposition 22, a state ballot initiative that provided a framework for drivers utilizing platforms like Lyft to maintain their status as independent contractors under California law. [2]\n- **Uber:** Proposition 22 went into effect in December 2020 and we expect that Drivers will be able to maintain their status as independent contractors under California law and that we and our competitors will be required to comply with the provisions of Proposition 22. [5]\n- **Lyft:** The passage of Proposition 22 in California has enabled us to provide additional earning opportunities to drivers in California, including guaranteed earnings. [4]",
+      "route": "answered",
+      "refusal_reason": "",
+      "citations": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "sources": [
+        "[1] Uber p.12 (Item 1)",
+        "[2] Lyft p.108 (Item 8)",
+        "[3] Uber p.16 (Item 1A)",
+        "[4] Lyft p.26 (Item 1A)",
+        "[5] Uber p.8 (Item 1)"
+      ],
+      "latency_ms": 4457,
+      "cited_evidence": true
+    },
+    {
+      "id": "C03",
+      "category": "comparison",
+      "question": "Which company had the better Adjusted EBITDA in 2021, Uber or Lyft?",
+      "reference": "Lyft: +$92.9M Adjusted EBITDA vs an Adjusted EBITDA loss of $774M at Uber (different scale businesses).",
+      "answer": "Most relevant passages from the filings (no LLM key set, so this is extractive):\n- **Uber:** 2020 to 2021 % Change \u203a Mobility Adjusted EBITDA | $1,169 | $1,596 | 37 % [3]\n- **Lyft:** Adjusted EBITDA in 2021 was $92.9 million, marking our first annual Adjusted EBITDA profitability. [4]\n- **Uber:** For the year ended December 31, 2021 compared to the same period in 2020, Mobility revenue increased $864 million, or 14% and Mobility adjusted EBITDA profit increased $427 million, or 37%. [1]\n- **Lyft:** (in millions, except for percentages) \u203a Adjusted EBITDA | $92.9 | $(755.2) | $(678.9) | 112.3 % | (11.2)% [2]",
+      "route": "answered",
+      "refusal_reason": "",
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "sources": [
+        "[1] Uber p.61 (Item 7)",
+        "[2] Lyft p.66 (Item 7)",
+        "[3] Uber p.53 (Item 7)",
+        "[4] Lyft p.57 (Item 7)",
+        "[5] Uber p.61 (Item 7)"
+      ],
+      "latency_ms": 5842,
+      "cited_evidence": true
+    },
+    {
+      "id": "A01",
+      "category": "ambiguous",
+      "question": "What was the net loss in 2021?",
+      "reference": "Ambiguous (no company named): Uber $496M attributable to Uber; Lyft about $1.0 billion ($1,009.4M).",
+      "answer": "Most relevant passages from the filings (no LLM key set, so this is extractive):\n- **Uber:** As of December 31, 2021, we also had foreign net operating loss carryforwards of $10.6 billion, of which $507 million will begin to expire in 2023. [3]\n- **Lyft:** Year Ended December 31, | 2021 | 2020 | 2019 \u203a Net loss | $(1,009,359) | $(1,752,857) | $(2,602,241) [2]\n- **Uber:** As of December 31, 2021, we had net operating loss carryforwards for U.S. federal income tax purposes and state income tax purposes of $14.9 billion and $12.4 billion, respectively, available to offset future taxable income. [3]\n- **Lyft:** Year Ended December 31, | 2021 | 2020 | 2019 \u203a Net loss per share, basic and diluted | $(3.02) | $(5.61) | $(11.44) [2]",
+      "route": "answered",
+      "refusal_reason": "",
+      "citations": [
+        2,
+        3
+      ],
+      "sources": [
+        "[1] Uber p.126 (Item 8)",
+        "[2] Lyft p.121 (Item 8)",
+        "[3] Uber p.35 (Item 1A)",
+        "[4] Lyft p.56 (Item 5)",
+        "[5] Uber p.78 (Item 8)"
+      ],
+      "latency_ms": 5603,
+      "cited_evidence": false
+    },
+    {
+      "id": "X01",
+      "category": "unanswerable",
+      "question": "What was Uber's revenue in 2023?",
+      "reference": "REFUSE",
+      "answer": "I could not find this in the Uber and Lyft FY2021 10-K filings.",
+      "route": "refused",
+      "refusal_reason": "The corpus is the FY2021 10-Ks, which report 2019\u20132021; 2023 is not covered.",
+      "citations": [],
+      "sources": [],
+      "latency_ms": 1
+    },
+    {
+      "id": "X02",
+      "category": "unanswerable",
+      "question": "Who is the CEO of DoorDash?",
+      "reference": "REFUSE",
+      "answer": "I could not find this in the Uber and Lyft FY2021 10-K filings.",
+      "route": "refused",
+      "refusal_reason": "Best passage relevance 0.36 is below the confidence threshold 0.60, so the filings probably do not answer this.",
+      "citations": [],
+      "sources": [
+        "[1] Uber p.10 (Item 1)",
+        "[2] Lyft p.2 (Item Cover)",
+        "[3] Uber p.8 (Item 1)",
+        "[4] Lyft p.124 (Item 14)",
+        "[5] Uber p.17 (Item 1A)"
+      ],
+      "latency_ms": 4013
+    },
+    {
+      "id": "X03",
+      "category": "unanswerable",
+      "question": "What is the analyst price target for Lyft stock?",
+      "reference": "REFUSE",
+      "answer": "I could not find this in the Uber and Lyft FY2021 10-K filings.",
+      "route": "refused",
+      "refusal_reason": "Best passage relevance 0.56 is below the confidence threshold 0.60, so the filings probably do not answer this.",
+      "citations": [],
+      "sources": [
+        "[1] Lyft p.53 (Item 1A)",
+        "[2] Lyft p.51 (Item 1A)",
+        "[3] Lyft p.35 (Item 1A)",
+        "[4] Lyft p.53 (Item 1A)",
+        "[5] Lyft p.21 (Item 1A)"
+      ],
+      "latency_ms": 1917
+    },
+    {
+      "id": "X04",
+      "category": "unanswerable",
+      "question": "How many vehicles does Tesla plan to deliver next year?",
+      "reference": "REFUSE",
+      "answer": "I could not find this in the Uber and Lyft FY2021 10-K filings.",
+      "route": "refused",
+      "refusal_reason": "Best passage relevance 0.45 is below the confidence threshold 0.60, so the filings probably do not answer this.",
+      "citations": [],
+      "sources": [
+        "[1] Uber p.27 (Item 1A)",
+        "[2] Lyft p.19 (Item 1A)",
+        "[3] Uber p.38 (Item 1A)",
+        "[4] Lyft p.13 (Item 1)",
+        "[5] Uber p.107 (Item 8)"
+      ],
+      "latency_ms": 4137
+    },
+    {
+      "id": "X05",
+      "category": "unanswerable",
+      "question": "What was Uber's Net Promoter Score in 2021?",
+      "reference": "REFUSE",
+      "answer": "I could not find this in the Uber and Lyft FY2021 10-K filings.",
+      "route": "refused",
+      "refusal_reason": "Best passage relevance 0.58 is below the confidence threshold 0.60, so the filings probably do not answer this.",
+      "citations": [],
+      "sources": [
+        "[1] Uber p.77 (Item 8)",
+        "[2] Uber p.78 (Item 8)",
+        "[3] Uber p.53 (Item 7)",
+        "[4] Uber p.59 (Item 7)",
+        "[5] Uber p.65 (Item 7)"
+      ],
+      "latency_ms": 2520
+    }
+  ]
+}

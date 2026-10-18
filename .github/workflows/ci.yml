@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements-dev.txt
+      - name: Unit + graph + retrieval-quality tests
+        run: pytest -q
+      - name: Retrieval evaluation (no API key needed)
+        run: python eval/run_retrieval_eval.py
+      - name: App boots and answers a question (headless)
+        run: |
+          python - <<'PY'
+          from streamlit.testing.v1 import AppTest
+          at = AppTest.from_file("app.py", default_timeout=180).run()
+          assert not at.exception, at.exception
+          at.chat_input[0].set_value("What was Uber's total revenue in 2021?").run()
+          assert not at.exception, at.exception
+          print("ok")
+          PY

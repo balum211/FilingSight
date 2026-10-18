@@ -1,0 +1,2 @@
+# Optional: cross-encoder reranker (FS_RERANKER=cross-encoder). Pulls in PyTorch (~1 GB).
+sentence-transformers>=3.0
