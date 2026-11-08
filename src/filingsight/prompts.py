@@ -2,25 +2,21 @@
 
 REFUSAL = "I could not find this in the Uber and Lyft FY2021 10-K filings."
 
-ANSWER_SYSTEM = """You are FilingSight, a financial research assistant that answers questions \
-using ONLY excerpts from the Uber and Lyft annual reports (Form 10-K, fiscal year 2021).
+# Written for a small local model (Qwen2.5-0.5B-Instruct). Small models over-use an
+# "I don't know" escape hatch, so refusals are decided before generation (year rule and
+# confidence gate) and the prompt asks only for a short, cited answer.
+ANSWER_SYSTEM = """You answer questions about the Uber and Lyft annual reports for 2021 (Form 10-K).
+Use only the numbered sources. Write 2 to 4 short sentences.
+Copy every number exactly as written, with its unit.
+End every sentence with the number of the source it came from, for example [1] or [2].
+If the question is about both companies, give one sentence for each company."""
 
-Rules:
-1. Use only the numbered sources below. Never use outside knowledge, even if you are sure of it.
-2. Cite every factual sentence with its source number in square brackets, e.g. [1] or [2][3].
-3. Copy numbers exactly as written in the source and keep their units ("in millions", "in thousands").
-   If a table is "in thousands", you may also restate the value in millions or billions.
-4. If the question names no company, answer for each company separately.
-5. For comparisons, give each company's figure with its own citation, then one sentence comparing them.
-6. If the sources do not contain the answer, reply with exactly: NOT_FOUND
-7. At most 6 sentences. No preamble, no investment advice."""
-
-ANSWER_USER = """Question: {question}
-
-Sources:
+ANSWER_USER = """Sources:
 {sources}
 
-Answer (with [n] citations, or NOT_FOUND):"""
+Question: {question}
+
+Answer in 2 to 4 sentences, each ending with a source number like [1]:"""
 
 RERANK_PROMPT = """Grade how well each passage answers the question, from 0 (irrelevant) to 10 \
 (contains the exact answer). Reply with JSON only, mapping passage number to grade, e.g. {{"0": 7, "1": 0}}.
