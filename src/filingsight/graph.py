@@ -55,6 +55,7 @@ class RAGState(TypedDict, total=False):
     refusal_reason: str
     attempts: int
     generator: str  # "llm" | "extractive"
+    llm_error: str  # set when the LLM call failed and the answer fell back to extractive
     timings_ms: dict[str, float]
 
 
@@ -149,11 +150,12 @@ def extractive_answer(question: str, sources: list[dict], max_sentences: int = 4
                     break
             if len(picked) >= max_sentences:
                 break
-    return "Most relevant passages from the filings (no LLM key set, so this is extractive):\n" + "\n".join(picked)
+    return "Most relevant passages from the filings (extractive answer, written without the LLM):\n" + "\n".join(picked)
 
 
 def generate(state: RAGState) -> RAGState:
     t = time.perf_counter()
+    llm_error = ""
     use_llm = state.get("use_llm", config.llm_available()) and config.llm_available()
     if use_llm:
         from .llm import get_chat_model
@@ -165,14 +167,24 @@ def generate(state: RAGState) -> RAGState:
             ("system", system),
             ("user", ANSWER_USER.format(question=state["question"], sources=format_sources(state["sources"]))),
         ]
-        answer = str(get_chat_model(temperature=0).invoke(msgs).content).strip()
-        generator = "llm"
+        try:
+            answer = str(get_chat_model(temperature=0).invoke(msgs).content).strip()
+            generator = "llm"
+        except Exception as exc:  # noqa: BLE001 - never lose the answer because the provider failed
+            from .llm import explain_error
+
+            llm_error = explain_error(exc)
+            answer = extractive_answer(state["question"], state["sources"])
+            generator = "extractive"
     else:
         answer = extractive_answer(state["question"], state["sources"])
         generator = "extractive"
     timings = dict(state.get("timings_ms", {}))
     timings["generate"] = (time.perf_counter() - t) * 1000
-    return {"answer": answer, "generator": generator, "attempts": state.get("attempts", 0) + 1, "timings_ms": timings}
+    out: RAGState = {"answer": answer, "generator": generator, "attempts": state.get("attempts", 0) + 1, "timings_ms": timings}
+    if llm_error:
+        out["llm_error"] = llm_error
+    return out
 
 
 def validate_citations(state: RAGState) -> RAGState:

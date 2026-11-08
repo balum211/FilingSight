@@ -5,14 +5,15 @@ import os
 from dataclasses import dataclass, field
 from pathlib import Path
 
-try:  # optional: load a local .env when python-dotenv is installed
+ROOT = Path(__file__).resolve().parents[2]
+
+try:  # optional: load the project's .env when python-dotenv is installed.
+    # Load it by absolute path so it works no matter which folder Streamlit is started from.
     from dotenv import load_dotenv
 
-    load_dotenv()
+    load_dotenv(ROOT / ".env")
 except ImportError:  # pragma: no cover
     pass
-
-ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = ROOT / "data"
 RAW_DIR = DATA_DIR / "raw"
 EVAL_DIR = DATA_DIR / "eval"
@@ -81,21 +82,86 @@ MIN_CONFIDENCE_CE = _env_float("FS_MIN_CONFIDENCE_CE", 0.05)  # cross-encoder si
 # Default strategy used by the app (the evaluation picks the winner).
 DEFAULT_CHUNKING = os.getenv("FS_CHUNKING", "semantic")
 
-# LLM (OpenAI-compatible). Nebius is the default provider for the course.
-NEBIUS_API_KEY = os.getenv("NEBIUS_API_KEY", "")
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
-LLM_BASE_URL = os.getenv("FS_LLM_BASE_URL", "https://api.studio.nebius.com/v1/" if NEBIUS_API_KEY else "")
-LLM_MODEL = os.getenv("FS_LLM_MODEL", "meta-llama/Llama-3.3-70B-Instruct" if NEBIUS_API_KEY else "gpt-4.1-mini")
+# LLM (OpenAI-compatible). Nebius (Token Factory, formerly AI Studio) is the
+# default provider for the course and serves the Llama 3.3 70B model.
+NEBIUS_BASE_URL = "https://api.tokenfactory.nebius.com/v1/"
+# Older Nebius AI Studio endpoint, tried automatically if the new one is unreachable.
+NEBIUS_LEGACY_BASE_URL = "https://api.studio.nebius.com/v1/"
+DEFAULT_NEBIUS_MODEL = "meta-llama/Llama-3.3-70B-Instruct"
+
+_PLACEHOLDERS = {"", "your_key_here", "your-nebius-key", "changeme", "xxx", "sk-..."}
+
+
+def _clean_key(value: str | None) -> str:
+    """Strip whitespace and stray quotes that sneak in when keys are pasted into .env."""
+    key = (value or "").strip().strip('"').strip("'").strip()
+    return "" if key.lower() in _PLACEHOLDERS else key
+
+
+NEBIUS_API_KEY = _clean_key(os.getenv("NEBIUS_API_KEY"))
+OPENAI_API_KEY = _clean_key(os.getenv("OPENAI_API_KEY"))
+LLM_BASE_URL = os.getenv("FS_LLM_BASE_URL", "").strip()
+LLM_MODEL = os.getenv("FS_LLM_MODEL", "").strip() or (DEFAULT_NEBIUS_MODEL if NEBIUS_API_KEY or not OPENAI_API_KEY else "gpt-4.1-mini")
 JUDGE_MODEL = os.getenv("FS_JUDGE_MODEL", LLM_MODEL)
 LLM_TIMEOUT = _env_float("FS_LLM_TIMEOUT", 60)
 
-# Latency budget from the one-liner (seconds, end to end).
-LATENCY_BUDGET_S = _env_float("FS_LATENCY_BUDGET_S", 8)
+
+def set_runtime_key(api_key: str, provider: str = "nebius") -> None:
+    """Use a key entered at runtime (for example pasted into the app sidebar)."""
+    global NEBIUS_API_KEY, OPENAI_API_KEY, LLM_MODEL
+    key = _clean_key(api_key)
+    if provider == "openai":
+        OPENAI_API_KEY, NEBIUS_API_KEY = key, ""
+        if LLM_MODEL == DEFAULT_NEBIUS_MODEL:
+            LLM_MODEL = "gpt-4.1-mini"
+    else:
+        NEBIUS_API_KEY = key
+        if not os.getenv("FS_LLM_MODEL"):
+            LLM_MODEL = DEFAULT_NEBIUS_MODEL
 
 
 def llm_api_key() -> str:
     return NEBIUS_API_KEY or OPENAI_API_KEY
 
 
+def llm_provider() -> str:
+    if NEBIUS_API_KEY:
+        return "Nebius"
+    if OPENAI_API_KEY:
+        return "OpenAI"
+    return "none"
+
+
+def llm_base_urls() -> list[str]:
+    """Endpoints to try, in order. An explicit FS_LLM_BASE_URL always wins."""
+    if LLM_BASE_URL:
+        return [LLM_BASE_URL]
+    if NEBIUS_API_KEY:
+        return [NEBIUS_BASE_URL, NEBIUS_LEGACY_BASE_URL]
+    return [""]  # OpenAI default endpoint
+
+
 def llm_available() -> bool:
     return bool(llm_api_key())
+
+
+def missing_key_hint() -> str:
+    """Explain why no key was found, including the common .env.example mistake."""
+    env_file = ROOT / ".env"
+    example = ROOT / ".env.example"
+    example_has_key = False
+    if example.exists():
+        for line in example.read_text(encoding="utf-8", errors="ignore").splitlines():
+            if line.strip().startswith("NEBIUS_API_KEY=") and _clean_key(line.split("=", 1)[1]):
+                example_has_key = True
+    if example_has_key and not (env_file.exists() and "NEBIUS_API_KEY" in env_file.read_text(errors="ignore")):
+        return ("A key is in .env.example, but the app only reads .env. Copy .env.example to .env "
+                "(and remove the key from .env.example so it is not pushed to GitHub).")
+    if not env_file.exists():
+        return "No .env file found. Copy .env.example to .env and set NEBIUS_API_KEY."
+    return "NEBIUS_API_KEY is empty in .env. Paste your Nebius key after the = sign."
+
+
+# Latency budget from the one-liner (seconds, end to end).
+LATENCY_BUDGET_S = _env_float("FS_LATENCY_BUDGET_S", 8)
+

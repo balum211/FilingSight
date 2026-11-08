@@ -4,6 +4,8 @@ Run:  streamlit run app.py
 """
 from __future__ import annotations
 
+import html
+import json
 import sys
 from pathlib import Path
 
@@ -11,27 +13,215 @@ import streamlit as st
 
 sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
 
-from filingsight import config  # noqa: E402
+from filingsight import config, llm  # noqa: E402
 from filingsight.embeddings import EMBEDDING_MODEL_NAME  # noqa: E402
 from filingsight.graph import ask  # noqa: E402
+from filingsight.icons import icon  # noqa: E402
 from filingsight.index import load_index  # noqa: E402
 
-st.set_page_config(page_title="FilingSight · 10-K RAG", page_icon="📑", layout="wide")
+st.set_page_config(page_title="FilingSight · 10-K answers with citations", page_icon="📑", layout="wide")
 
-RESULTS = Path(__file__).resolve().parent / "eval" / "results"
+ROOT = Path(__file__).resolve().parent
+RESULTS = ROOT / "eval" / "results"
 SAMPLES = [
-    "What was Uber's total revenue in 2021?",
-    "How many Active Riders did Lyft have in Q4 2021?",
-    "Compare Uber's and Lyft's revenue growth in 2021.",
-    "What did Lyft sell to Woven Planet?",
-    "How do Uber and Lyft describe the impact of Proposition 22?",
-    "What was Uber's revenue in 2023?",
+    ("Metric", "What was Uber's total revenue in 2021?"),
+    ("Metric", "How many Active Riders did Lyft have in Q4 2021?"),
+    ("Compare", "Compare Uber's and Lyft's revenue growth in 2021."),
+    ("Strategy", "What did Lyft sell to Woven Planet?"),
+    ("Risk", "How do Uber and Lyft describe the impact of Proposition 22?"),
+    ("Out of scope", "What was Uber's revenue in 2023?"),
 ]
+
+# ---------------------------------------------------------------- theme
+# Visual system follows elayadesign/ai-design-skills (landing-page-design, Part B):
+# one typeface (Manrope, Geist Mono for numbers), flat dark surfaces from the
+# approved palette, Tailwind type and spacing steps, nested radii, Phosphor icons,
+# cubic-bezier(0.22,1,0.36,1) motion and reduced-motion support.
+CSS = """
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#181818; --surface:#1F1F1F; --card:#272727; --line:#313131; --deep:#131209;
+  --text:#EDEDED; --muted:#9B9B9B; --faint:#6B6B6B;
+  --accent:#7C9DFF; --accent-soft:rgba(124,157,255,.14);
+  --ok:#5BD69A; --ok-soft:rgba(91,214,154,.14);
+  --warn:#F2C35B; --warn-soft:rgba(242,195,91,.14);
+  --bad:#F07A7A; --bad-soft:rgba(240,122,122,.14);
+  --uber:#EDEDED; --lyft:#FF6FD8;
+  --ease:cubic-bezier(0.22,1,0.36,1);
+}
+html, body, .stApp, .stApp p, .stApp label, .stApp li, .stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp div[data-testid="stMarkdownContainer"],
+.stApp input, .stApp textarea, .stApp button{font-family:'Manrope',system-ui,sans-serif !important;}
+code, pre, .mono{font-family:'Geist Mono',ui-monospace,monospace !important;}
+em, i{font-style:normal;}
+.stApp{background:var(--bg);}
+[data-testid="stHeader"]{background:transparent;}
+.block-container{padding-top:32px; padding-bottom:96px; max-width:1200px;}
+h1,h2,h3,h4{text-wrap:balance; font-weight:600 !important; letter-spacing:-0.01em;}
+p, li{text-wrap:pretty;}
+.ph{display:inline-block; vertical-align:-3px; flex:none;}
+
+/* sidebar */
+[data-testid="stSidebar"]{background:var(--surface); border-right:1px solid var(--line);}
+[data-testid="stSidebar"] .block-container{padding-top:24px;}
+.brand{display:flex; gap:12px; align-items:center; margin-bottom:4px;}
+.brand-mark{width:40px; height:40px; border-radius:12px; background:var(--accent-soft); color:var(--accent);
+  display:flex; align-items:center; justify-content:center; border:1px solid rgba(124,157,255,.28);}
+.brand-name{font-size:20px; line-height:28px; font-weight:600; color:var(--text);}
+.brand-sub{font-size:12px; line-height:16px; color:var(--muted); font-weight:500;}
+.side-label{font-size:12px; line-height:16px; font-weight:600; color:var(--muted); text-transform:uppercase;
+  letter-spacing:.06em; margin:24px 0 8px;}
+
+/* status card */
+.status{border:1px solid var(--line); background:var(--card); border-radius:16px; padding:12px; display:flex; flex-direction:column; gap:8px; margin-bottom:12px;}
+.status-head{display:flex; align-items:center; gap:8px; font-size:14px; line-height:20px; font-weight:600; color:var(--text);}
+.dot{width:8px; height:8px; border-radius:999px; flex:none;}
+.dot.ok{background:var(--ok); box-shadow:0 0 0 4px var(--ok-soft);}
+.dot.warn{background:var(--warn); box-shadow:0 0 0 4px var(--warn-soft);}
+.dot.bad{background:var(--bad); box-shadow:0 0 0 4px var(--bad-soft);}
+.status-model{font-size:12px; line-height:16px; color:var(--muted); font-family:'Geist Mono',monospace; word-break:break-all;}
+.status-msg{font-size:12px; line-height:16px; color:var(--text); background:var(--surface); border:1px solid var(--line);
+  border-radius:4px; padding:8px;}
+
+/* hero */
+.hero{padding:16px 0 32px;}
+.eyebrow{display:inline-flex; align-items:center; gap:8px; padding:4px 12px; border-radius:999px; border:1px solid var(--line);
+  background:var(--surface); color:var(--muted); font-size:12px; line-height:16px; font-weight:500; margin-bottom:16px;}
+.hero h1{font-size:48px; line-height:48px; margin:0 0 16px; max-width:680px; padding:0;
+  background:linear-gradient(90deg,#FFFFFF,#9B9B9B); -webkit-background-clip:text; background-clip:text; color:transparent;}
+.hero p{font-size:18px; line-height:28px; color:var(--muted); max-width:680px; margin:0;}
+
+/* kpi cards */
+.kpis{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 32px;}
+.kpi{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px; display:flex; flex-direction:column; gap:8px;
+  transition:transform .5s var(--ease), border-color .3s var(--ease);}
+.kpi:hover{transform:translateY(-2px); border-color:#3d3d3d;}
+.kpi-top{display:flex; align-items:center; justify-content:space-between; color:var(--muted); font-size:12px; line-height:16px; font-weight:500;}
+.kpi-icon{width:32px; height:32px; border-radius:8px; background:var(--card); color:var(--accent); display:flex; align-items:center; justify-content:center;}
+.kpi-value{font-size:30px; line-height:36px; font-weight:600; color:var(--text); font-family:'Geist Mono',monospace !important;}
+.kpi-note{font-size:12px; line-height:16px; color:var(--faint);}
+@media (max-width:900px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr));} .hero h1{font-size:36px; line-height:40px;}}
+
+/* tabs */
+[data-baseweb="tab-list"]{gap:4px; background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:4px; width:fit-content;}
+[data-baseweb="tab"]{height:36px; padding:0 16px; border-radius:8px; color:var(--muted); font-weight:600; font-size:14px;
+  transition:background-color .3s var(--ease), color .3s var(--ease);}
+[data-baseweb="tab"]:hover{color:var(--text);}
+[data-baseweb="tab"][aria-selected="true"]{background:var(--card); color:var(--text);}
+[data-baseweb="tab-highlight"], [data-baseweb="tab-border"]{display:none;}
+[data-testid="stTabs"] [role="tabpanel"]{padding-top:24px;}
+
+/* buttons */
+.stButton > button{border-radius:12px; border:1px solid var(--line); background:var(--surface); color:var(--text);
+  padding:8px 12px; font-weight:600; font-size:14px; line-height:20px;
+  transition:transform .5s var(--ease), background-color .3s var(--ease), border-color .3s var(--ease);}
+.stButton > button:hover{background:var(--card); border-color:var(--accent); color:var(--text); transform:translateY(-1px);}
+.stButton > button:active{transform:scale(0.98);}
+.stButton > button:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+[class*="st-key-sample"] .stButton > button{min-height:88px; text-align:left; justify-content:flex-start; align-items:flex-start;
+  padding:16px; font-weight:500; font-size:14px; line-height:20px; border-radius:16px; white-space:normal;}
+[class*="st-key-sample"] .stButton > button > div{justify-content:flex-start; width:100%;}
+[class*="st-key-sample"] .stButton > button p{text-align:left; white-space:normal; overflow:visible; text-overflow:clip;}
+.sample-tag{display:inline-flex; align-items:center; gap:4px; font-size:12px; line-height:16px; font-weight:600; color:var(--accent);
+  margin:0 0 -4px 4px;}
+
+/* chat */
+[data-testid="stChatMessage"]{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px;
+  animation:rise .6s var(--ease) both;}
+[data-testid="stChatInput"]{border-radius:16px;}
+[data-testid="stChatInput"] textarea{font-size:16px;}
+@keyframes rise{from{opacity:0; transform:translateY(32px);} to{opacity:1; transform:none;}}
+
+.meta{display:flex; flex-wrap:wrap; gap:8px; margin:12px 0;}
+.chip{display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:999px; border:1px solid var(--line);
+  background:var(--card); color:var(--muted); font-size:12px; line-height:16px; font-weight:500;}
+.chip.llm{color:var(--accent); background:var(--accent-soft); border-color:rgba(124,157,255,.3);}
+.chip.ext{color:var(--warn); background:var(--warn-soft); border-color:rgba(242,195,91,.3);}
+.chip.ref{color:var(--bad); background:var(--bad-soft); border-color:rgba(240,122,122,.3);}
+.notice{display:flex; gap:12px; align-items:flex-start; padding:12px; border-radius:12px; margin-bottom:12px;
+  font-size:14px; line-height:20px; border:1px solid var(--line);}
+.notice.warn{background:var(--warn-soft); border-color:rgba(242,195,91,.3); color:#F7DCA0;}
+.notice.bad{background:var(--bad-soft); border-color:rgba(240,122,122,.3); color:#F6B4B4;}
+.notice b{color:var(--text); font-weight:600;}
+
+/* sources */
+[data-testid="stExpander"] details{border:1px solid var(--line); border-radius:12px; background:var(--bg);}
+[data-testid="stExpander"] summary{font-weight:600; font-size:14px;}
+.src{border:1px solid var(--line); background:var(--surface); border-radius:8px; padding:12px; margin-bottom:8px;}
+.src.cited{border-color:rgba(124,157,255,.45);}
+.src-head{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-bottom:8px; font-size:14px; line-height:20px; font-weight:600; color:var(--text);}
+.src-n{font-family:'Geist Mono',monospace; font-size:12px; color:var(--accent); background:var(--accent-soft); border-radius:4px; padding:0 4px;}
+.co{font-size:12px; line-height:16px; font-weight:600; padding:0 8px; border-radius:999px; border:1px solid var(--line);}
+.co.Uber{color:var(--uber);} .co.Lyft{color:var(--lyft); border-color:rgba(255,111,216,.35);}
+.src-item{font-size:12px; line-height:16px; color:var(--muted); font-weight:500;}
+.src-text{font-size:14px; line-height:20px; color:#C9C9C9; white-space:pre-wrap; max-height:160px; overflow:auto;}
+.bar{height:4px; border-radius:999px; background:var(--card); width:96px; overflow:hidden; display:inline-block; vertical-align:middle;}
+.bar > span{display:block; height:100%; background:var(--accent); border-radius:999px;}
+
+/* empty state */
+.empty{border:1px solid var(--line); background:var(--surface); border-radius:16px; padding:24px; margin-bottom:16px; display:flex; gap:16px; align-items:center;}
+.empty-icon{width:48px; height:48px; border-radius:12px; background:var(--accent-soft); color:var(--accent); display:flex; align-items:center; justify-content:center; flex:none;}
+.empty h3{font-size:18px; line-height:28px; margin:0; padding:0; font-weight:600;}
+.empty p{font-size:14px; line-height:20px; margin:0; color:var(--muted);}
+
+/* section + tables */
+.section-title{display:flex; align-items:center; gap:8px; font-size:20px; line-height:28px; font-weight:600; color:var(--text); margin:0 0 4px;}
+.section-sub{font-size:14px; line-height:20px; color:var(--muted); margin:0 0 16px;}
+.tbl{width:100%; border-collapse:separate; border-spacing:0; border:1px solid var(--line); border-radius:16px; overflow:hidden; margin-bottom:32px; font-size:14px;}
+.tbl th{background:var(--surface); color:var(--muted); font-weight:600; font-size:12px; line-height:16px; text-transform:uppercase; letter-spacing:.04em; text-align:left; padding:12px; border:none;}
+.tbl td{padding:12px; border:none; border-top:1px solid var(--line); color:var(--text);}
+.tbl td.num{font-family:'Geist Mono',monospace; text-align:right;}
+.tbl th.num{text-align:right;}
+.tbl tr.best td{background:var(--accent-soft);}
+.stMarkdown table:not(.tbl){border-collapse:collapse; font-size:13px;}
+.stMarkdown table:not(.tbl) th{background:var(--surface);}
+
+/* pipeline */
+.steps{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-bottom:32px;}
+.step{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px; display:flex; flex-direction:column; gap:8px;}
+.step-top{display:flex; align-items:center; gap:12px;}
+.step-icon{width:40px; height:40px; border-radius:12px; background:var(--card); color:var(--accent); display:flex; align-items:center; justify-content:center;}
+.step-n{font-family:'Geist Mono',monospace; font-size:12px; color:var(--faint);}
+.step h4{font-size:16px; line-height:24px; margin:0; padding:0; font-weight:600;}
+.step p{font-size:14px; line-height:20px; color:var(--muted); margin:0;}
+.step .exit{font-size:12px; line-height:16px; color:var(--bad); display:flex; gap:4px; align-items:center;}
+@media (max-width:900px){.steps{grid-template-columns:1fr;}}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important; transition:opacity .2s linear !important;}
+  .kpi:hover, .stButton > button:hover{transform:none;}
+}
+</style>
+"""
+st.markdown(CSS, unsafe_allow_html=True)
+
+
+def h(text) -> str:
+    return html.escape(str(text))
+
+
+def md_safe(text: str) -> str:
+    """Escape $ so Streamlit does not render dollar amounts as LaTeX."""
+    return text.replace("$", "\\$")
 
 
 @st.cache_resource(show_spinner="Loading the search index (first run only)...")
 def warm(strategy: str):
     return len(load_index(strategy).docs)
+
+
+@st.cache_data
+def eval_summary():
+    retr, ans = [], {}
+    try:
+        retr = [r["summary"] for r in json.loads((RESULTS / "retrieval.json").read_text(encoding="utf-8"))]
+    except Exception:  # noqa: BLE001 - results are optional
+        pass
+    try:
+        ans = json.loads((RESULTS / "answers.json").read_text(encoding="utf-8"))["summary"]
+    except Exception:  # noqa: BLE001
+        pass
+    return retr, ans
 
 
 def reranker_options() -> list[str]:
@@ -47,132 +237,260 @@ def reranker_options() -> list[str]:
     return opts
 
 
+def llm_status(force: bool = False) -> llm.LLMStatus:
+    """Check the Llama connection once per session (or on demand) and remember the result."""
+    key = (config.llm_provider(), config.LLM_MODEL, config.llm_api_key()[-6:])
+    cached = st.session_state.get("llm_status")
+    if force or not cached or cached[0] != key:
+        if config.llm_available():
+            with st.spinner("Checking the Llama connection..."):
+                status = llm.check_llm()
+        else:
+            status = llm.check_llm()  # no network call, returns the setup hint
+        st.session_state["llm_status"] = (key, status)
+    return st.session_state["llm_status"][1]
+
+
+def status_card(status: llm.LLMStatus) -> str:
+    if status.ok:
+        dot, title, msg = "ok", f"{status.provider} connected", ""
+    elif config.llm_available():
+        dot, title, msg = "bad", "Llama not reachable", status.message
+    else:
+        dot, title, msg = "warn", "No API key found", status.message
+    model = status.model if config.llm_available() else config.DEFAULT_NEBIUS_MODEL
+    body = f'<div class="status-msg">{h(msg)}</div>' if msg else ""
+    return (f'<div class="status"><div class="status-head"><span class="dot {dot}"></span>{h(title)}</div>'
+            f'<div class="status-model">{icon("cpu", 14)} {h(model)}</div>{body}</div>')
+
+
 # ---------------------------------------------------------------- sidebar
 with st.sidebar:
-    st.title("📑 FilingSight")
-    st.caption("Cited answers from the Uber and Lyft FY2021 Form 10-K filings.")
+    st.markdown(
+        f'<div class="brand"><div class="brand-mark">{icon("file-text", 22)}</div>'
+        f'<div><div class="brand-name">FilingSight</div><div class="brand-sub">Cited answers from 10-K filings</div></div></div>',
+        unsafe_allow_html=True,
+    )
+
+    st.markdown('<div class="side-label">Language model</div>', unsafe_allow_html=True)
+    status = llm_status()
+    st.markdown(status_card(status), unsafe_allow_html=True)
+    with st.expander("Paste a key for this session", expanded=not config.llm_available()):
+        typed = st.text_input("Nebius API key", type="password", key="runtime_key",
+                              help="Kept in memory for this browser session only. For a permanent setup put it in .env.")
+        if typed and typed != st.session_state.get("_applied_key"):
+            config.set_runtime_key(typed)
+            llm.reset()
+            st.session_state["_applied_key"] = typed
+            st.session_state.pop("llm_status", None)
+            st.rerun()
+    if config.llm_available() and st.button("Test connection", use_container_width=True):
+        llm.reset()
+        llm_status(force=True)
+        st.rerun()
+
+    llm_on = config.llm_available()
+    use_llm = st.toggle("Write answers with Llama", value=llm_on and status.ok, disabled=not llm_on,
+                        help="Off: answers are the top cited sentences (extractive), no LLM call.")
+
+    st.markdown('<div class="side-label">Retrieval</div>', unsafe_allow_html=True)
     strategy = st.radio(
         "Chunking strategy", ["semantic", "fixed"], index=0 if config.DEFAULT_CHUNKING == "semantic" else 1,
-        help="semantic = embedding-breakpoint chunks; fixed = 900-char recursive splitter",
+        horizontal=True, help="semantic: embedding breakpoint chunks. fixed: 900 character recursive splitter.",
     )
-    reranker = st.selectbox("Reranker", reranker_options(), help="local needs no download; none shows raw hybrid order")
-    llm_on = config.llm_available()
-    use_llm = st.toggle("Use LLM for answers", value=llm_on, disabled=not llm_on)
-    if llm_on:
-        st.success(f"LLM: {config.LLM_MODEL}", icon="✅")
-    else:
-        st.info("No NEBIUS_API_KEY set, so answers are extractive (top cited passages). Add a key in .env "
-                "or Streamlit secrets for written answers.", icon="ℹ️")
+    reranker = st.selectbox("Reranker", reranker_options(), help="local needs no download. none shows the raw hybrid order.")
     n_chunks = warm(strategy)
-    st.divider()
-    st.markdown(
-        f"**Corpus:** Uber 10-K (150 pp.) + Lyft 10-K (125 pp.), FY2021  \n"
-        f"**Chunks:** {n_chunks:,} ({strategy})  \n"
-        f"**Embeddings:** {EMBEDDING_MODEL_NAME}  \n"
-        f"**Retrieval:** Chroma dense + BM25, RRF fusion, top-{config.TOP_K}"
-    )
-    if st.button("Clear chat"):
+
+    st.markdown('<div class="side-label">Session</div>', unsafe_allow_html=True)
+    if st.button("Clear chat", use_container_width=True):
         st.session_state.pop("history", None)
 
-chat_tab, eval_tab, how_tab = st.tabs(["💬 Ask the filings", "📊 Evaluation", "🧭 How it works"])
+retr, ans = eval_summary()
+best = max(retr, key=lambda r: r.get("hit@k", 0)) if retr else {}
+
+# ---------------------------------------------------------------- hero
+st.markdown(
+    f"""<div class="hero"><div class="eyebrow">{icon("book-open", 14)} Uber and Lyft · FY2021 Form 10-K</div>
+<h1>Ask the annual reports.<br>Get answers you can cite.</h1>
+<p>Hybrid search, reranking and a refusal gate over 275 filing pages,
+so every number points back to the page it came from.</p></div>""",
+    unsafe_allow_html=True,
+)
 
 
-def md_safe(text: str) -> str:
-    """Escape $ so Streamlit does not render dollar amounts as LaTeX."""
-    return text.replace("$", "\\$")
+def kpi(ic: str, label: str, value: str, note: str) -> str:
+    return (f'<div class="kpi"><div class="kpi-top"><span>{h(label)}</span><span class="kpi-icon">{icon(ic, 16)}</span></div>'
+            f'<div class="kpi-value">{h(value)}</div><div class="kpi-note">{h(note)}</div></div>')
+
+
+st.markdown(
+    '<div class="kpis">'
+    + kpi("target", "Retrieval hit@5", f"{best.get('hit@k', 0):.2f}" if best else "n/a",
+          f"{best.get('strategy', '')} · {best.get('mode', '')} · {best.get('reranker', '')} rerank" if best else "run the eval")
+    + kpi("shield-check", "Unanswerable refused", f"{ans.get('refusal_accuracy', 0):.0%}" if ans else "n/a", "5 out of scope questions")
+    + kpi("stack", "Chunks indexed", f"{n_chunks:,}", f"{strategy} chunking")
+    + kpi("clock", "Median answer time", f"{ans.get('p50_latency_ms', 0) / 1000:.1f}s" if ans else "n/a", "budget 8s end to end")
+    + "</div>",
+    unsafe_allow_html=True,
+)
+
+chat_tab, eval_tab, how_tab = st.tabs(["Ask the filings", "Evaluation", "How it works"])
+
+
+def render_sources(state: dict):
+    sources = state.get("sources") or []
+    if not sources:
+        return
+    cited = set(state.get("citations") or [])
+    with st.expander(f"Sources · {len(sources)} retrieved, {len(cited)} cited"):
+        cards = []
+        top = max((float(s.get("score") or 0) for s in sources), default=1.0) or 1.0
+        for s in sources:
+            score = float(s.get("score") or 0)
+            pct = max(4, min(100, int(score / top * 100)))
+            pin = f'<span class="chip llm">{icon("quotes", 12)} cited</span>' if s["n"] in cited else ""
+            cards.append(
+                f'<div class="src {"cited" if s["n"] in cited else ""}"><div class="src-head">'
+                f'<span class="src-n">[{s["n"]}]</span><span class="co {h(s["company"])}">{h(s["company"])}</span>'
+                f'<span>10-K FY2021 · page {h(s["page"])}</span>{pin}'
+                f'<span class="src-item">Item {h(s["item"])} {h(s["item_title"])}</span>'
+                f'<span style="margin-left:auto" class="src-item mono">{score:.2f} <span class="bar"><span style="width:{pct}%"></span></span></span>'
+                f'</div><div class="src-text">{h(s["text"][:1200])}</div></div>'
+            )
+        st.markdown("".join(cards), unsafe_allow_html=True)
 
 
 def render_answer(state: dict):
+    if state.get("llm_error"):
+        st.markdown(
+            f'<div class="notice warn">{icon("warning-circle", 18)}<div><b>Llama call failed, showing an extractive answer.</b> '
+            f'{h(state["llm_error"])}</div></div>', unsafe_allow_html=True)
     if state["route"] == "refused":
-        st.warning(state["answer"], icon="🛑")
-        if state.get("refusal_reason"):
-            st.caption(f"Why: {state['refusal_reason']}")
+        reason = f' <span style="color:var(--muted)">{h(state["refusal_reason"])}</span>' if state.get("refusal_reason") else ""
+        st.markdown(f'<div class="notice bad">{icon("prohibit", 18)}<div><b>{h(state["answer"])}</b>{reason}</div></div>',
+                    unsafe_allow_html=True)
     else:
         st.markdown(md_safe(state["answer"]))
+
     t = state.get("timings_ms", {})
-    bits = [f"{k} {v / 1000:.1f}s" for k, v in t.items() if k != "total"]
-    meta = f"⏱️ {t.get('total', 0) / 1000:.1f}s ({', '.join(bits)})"
+    chips = []
+    gen = state.get("generator")
+    if state["route"] == "refused":
+        chips.append(f'<span class="chip ref">{icon("prohibit", 12)} refused</span>')
+    elif gen == "llm":
+        chips.append(f'<span class="chip llm">{icon("lightning", 12)} {h(config.LLM_MODEL.split("/")[-1])}</span>')
+    elif gen:
+        chips.append(f'<span class="chip ext">{icon("quotes", 12)} extractive</span>')
+    chips.append(f'<span class="chip">{icon("clock", 12)} {t.get("total", 0) / 1000:.1f}s</span>')
     if state.get("top_score") is not None and state.get("sources"):
-        meta += f" · top relevance {state['top_score']:.2f} (gate {state.get('threshold', 0):.2f})"
-    if state.get("generator"):
-        meta += f" · {state['generator']}"
-    st.caption(meta)
-    sources = state.get("sources") or []
-    if sources:
-        cited = set(state.get("citations") or [])
-        with st.expander(f"Sources ({len(sources)} retrieved, {len(cited)} cited)"):
-            for s in sources:
-                mark = "📌 " if s["n"] in cited else ""
-                st.markdown(f"{mark}**[{s['n']}] {s['company']} 10-K FY2021, p.{s['page']}** · "
-                            f"Item {s['item']} {s['item_title']} · score {s['score']}")
-                st.text(s["text"][:1200])
+        chips.append(f'<span class="chip">{icon("target", 12)} relevance {state["top_score"]:.2f} · gate {state.get("threshold", 0):.2f}</span>')
+    steps = " · ".join(f"{k} {v / 1000:.1f}s" for k, v in t.items() if k != "total")
+    if steps:
+        chips.append(f'<span class="chip">{icon("path", 12)} {h(steps)}</span>')
+    st.markdown(f'<div class="meta">{"".join(chips)}</div>', unsafe_allow_html=True)
+    render_sources(state)
 
 
 with chat_tab:
     history = st.session_state.setdefault("history", [])
     if not history:
-        st.markdown("Try one of these, or type your own question below:")
+        st.markdown(
+            f'<div class="empty"><div class="empty-icon">{icon("chat-circle-text", 24)}</div><div>'
+            f'<h3>Start with a question about either filing</h3>'
+            f'<p>Revenue, riders, risks or strategy. Pick a sample below or type your own. '
+            f'Questions outside FY2019 to FY2021 are refused on purpose.</p></div></div>',
+            unsafe_allow_html=True,
+        )
         cols = st.columns(3)
-        for i, q in enumerate(SAMPLES):
-            if cols[i % 3].button(q, key=f"sample{i}", use_container_width=True):
-                st.session_state["pending"] = q
-                st.rerun()
+        for i, (tag, q) in enumerate(SAMPLES):
+            with cols[i % 3]:
+                st.markdown(f'<div class="sample-tag">{h(tag)}</div>', unsafe_allow_html=True)
+                if st.button(q, key=f"sample{i}", use_container_width=True):
+                    st.session_state["pending"] = q
+                    st.rerun()
     for turn in history:
         with st.chat_message("user"):
-            st.markdown(turn["question"])
+            st.markdown(md_safe(turn["question"]))
         with st.chat_message("assistant", avatar="📑"):
             render_answer(turn["state"])
 
-    question = st.chat_input("Ask about Uber or Lyft's 2021 annual report...") or st.session_state.pop("pending", None)
+    question = st.chat_input("Ask about Uber or Lyft's 2021 annual report") or st.session_state.pop("pending", None)
     if question:
-        with st.spinner(f"Retrieving, reranking and answering: {question}"):
+        with st.spinner("Retrieving, reranking and answering"):
             try:
                 state = ask(question, strategy=strategy, reranker=reranker, use_llm=use_llm)
             except Exception as exc:  # surface provider errors instead of a stack trace
-                st.error(f"Something went wrong: {exc}")
+                st.markdown(f'<div class="notice bad">{icon("warning-circle", 18)}<div><b>The question could not be answered.</b> '
+                            f'{h(llm.explain_error(exc))}</div></div>', unsafe_allow_html=True)
                 st.stop()
+        if state.get("llm_error"):
+            st.session_state.pop("llm_status", None)  # recheck the badge on the next run
         history.append({"question": question, "state": state})
         st.rerun()  # redraw so the newest answer sits above the input box
 
 with eval_tab:
-    st.subheader("Chunking × retrieval × reranking comparison")
-    st.caption("25 labelled questions (20 answerable, 5 unanswerable). Reproduce with "
-               "`python eval/run_retrieval_eval.py` and `python eval/run_answer_eval.py`.")
-    for name in ("retrieval.md", "answers.md"):
+    st.markdown(
+        f'<div class="section-title">{icon("chart-bar", 20)} Chunking, retrieval and reranking compared</div>'
+        '<p class="section-sub">25 labelled questions: 20 answerable, 5 unanswerable. Reproduce with '
+        '<code>python eval/run_retrieval_eval.py</code> and <code>python eval/run_answer_eval.py</code>.</p>',
+        unsafe_allow_html=True,
+    )
+    if retr:
+        rows = []
+        for r in retr:
+            cls = ' class="best"' if r is best else ""
+            rows.append(
+                f"<tr{cls}><td>{h(r['strategy'])}</td><td>{h(r['mode'])}</td><td>{h(r['reranker'])}</td>"
+                f"<td class='num'>{r['hit@k']:.2f}</td><td class='num'>{r['recall@k']:.2f}</td>"
+                f"<td class='num'>{r['mrr@10']:.2f}</td><td class='num'>{r['precision@k']:.2f}</td>"
+                f"<td class='num'>{r['p50_latency_ms']:,.0f} ms</td></tr>"
+            )
+        st.markdown(
+            "<table class='tbl'><thead><tr><th>Chunking</th><th>Retrieval</th><th>Reranker</th><th class='num'>Hit@5</th>"
+            "<th class='num'>Recall@5</th><th class='num'>MRR@10</th><th class='num'>Precision@5</th><th class='num'>p50</th>"
+            f"</tr></thead><tbody>{''.join(rows)}</tbody></table>",
+            unsafe_allow_html=True,
+        )
+    else:
+        st.info("retrieval.json not generated yet. Run python eval/run_retrieval_eval.py.")
+    for name, label in (("retrieval.md", "Full retrieval report"), ("answers.md", "Answer quality report")):
         path = RESULTS / name
         if path.exists():
-            st.markdown(path.read_text(encoding="utf-8"))
-        else:
-            st.info(f"{name} not generated yet.")
+            with st.expander(label):
+                st.markdown(md_safe(path.read_text(encoding="utf-8")))
 
 with how_tab:
     st.markdown(
-        """
-**One-liner:** FilingSight helps retail investors and junior equity analysts answer metric, risk and
-strategy questions from the Uber and Lyft FY2021 Form 10-K filings in a cited chat app, targeting
-≥ 90% faithfulness and ≥ 90% hit@5 retrieval relevance within an 8-second answer.
-
-```
-analyze ──(year outside 2019-2021)──────────────► refuse
-   │
-retrieve: per-company hybrid (Chroma dense + BM25, RRF) → rerank → fair top-5
-   │
-gate ──(top relevance < threshold)──────────────► refuse
-   │
-generate (LLM with numbered sources | extractive fallback)
-   │
-validate_citations ──(NOT_FOUND)────────────────► refuse
-   └──(no valid [n] on first try)──► generate again
-```
-
-| Layer | Decision |
-|---|---|
-| Corpus | Uber and Lyft 10-K for FY2021 (SEC filings, PDF, English, 275 body pages after dropping exhibits) |
-| Cleaning | PyMuPDF text, page numbers dropped, table cells re-joined into rows, wrapped lines re-flowed, Item tagged |
-| Chunking | fixed 900/150 chars vs semantic (embedding breakpoints, 85th pct, ≤1,100 chars); header prefix per chunk |
-| Embedding | all-MiniLM-L6-v2, 384-dim, ONNX on CPU (chunk size matched to its 256-token window) |
-| Retrieve | Chroma (cosine) + BM25, weighted RRF, 20 candidates per company, metadata filter by company |
-| Rerank | local sentence-level + key-term reranker (or cross-encoder / LLM), company-balanced top-5 |
-| Refusal | year-scope rule, confidence gate, `NOT_FOUND` from the LLM, citation validation |
-"""
+        f'<div class="section-title">{icon("flow-arrow", 20)} The answer flow</div>'
+        '<p class="section-sub">A LangGraph state machine. The refusal path was designed first, because a wrong number '
+        'in a financial answer is worse than saying the filings do not cover it.</p>',
+        unsafe_allow_html=True,
     )
+    STEPS = [
+        ("funnel", "Analyze", "Detects company, year and question type, and splits comparisons into one query per company.",
+         "Year outside 2019 to 2021: refuse"),
+        ("magnifying-glass", "Retrieve", "Chroma dense search plus BM25 keywords, fused with weighted RRF, 20 candidates per company.", ""),
+        ("arrows-clockwise", "Rerank", "Local sentence and key term reranker (or cross encoder, or Llama) picks a company balanced top 5.", ""),
+        ("shield-check", "Gate", "Checks the best reranked score against the confidence threshold before any answer is written.",
+         "Low relevance: refuse"),
+        ("lightning", "Generate", "Llama 3.3 70B writes from numbered sources. If it is unavailable the top cited sentences are shown.", ""),
+        ("check-circle", "Validate", "Strips citations that point nowhere and retries once if none are valid.", "NOT_FOUND from the model: refuse"),
+    ]
+    cards = []
+    for i, (ic, title, text, exit_) in enumerate(STEPS, 1):
+        ex = f'<div class="exit">{icon("prohibit", 12)} {h(exit_)}</div>' if exit_ else ""
+        cards.append(f'<div class="step"><div class="step-top"><div class="step-icon">{icon(ic, 20)}</div>'
+                     f'<div><div class="step-n">0{i}</div><h4>{h(title)}</h4></div></div><p>{h(text)}</p>{ex}</div>')
+    st.markdown(f'<div class="steps">{"".join(cards)}</div>', unsafe_allow_html=True)
+
+    st.markdown(f'<div class="section-title">{icon("database", 20)} Design decisions</div>', unsafe_allow_html=True)
+    DECISIONS = [
+        ("Corpus", "Uber and Lyft 10-K for FY2021 (SEC filings, PDF, English), 275 body pages after dropping exhibits"),
+        ("Cleaning", "PyMuPDF text, page numbers dropped, table cells joined into rows, wrapped lines reflowed, Item tagged"),
+        ("Chunking", "Fixed 900/150 characters vs semantic (embedding breakpoints, 85th percentile, up to 1,100 characters)"),
+        ("Embedding", f"{EMBEDDING_MODEL_NAME}, 384 dimensions, ONNX on CPU, chunk size matched to its 256 token window"),
+        ("Retrieve", f"Chroma (cosine) plus BM25, weighted RRF, metadata filter by company, top {config.TOP_K}"),
+        ("Refusal", "Year scope rule, confidence gate, NOT_FOUND from the LLM, citation validation"),
+    ]
+    rows = "".join(f"<tr><td style='width:160px;color:var(--muted);font-weight:600'>{h(k)}</td><td>{h(v)}</td></tr>" for k, v in DECISIONS)
+    st.markdown(f"<table class='tbl'><tbody>{rows}</tbody></table>", unsafe_allow_html=True)

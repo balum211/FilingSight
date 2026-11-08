@@ -61,7 +61,21 @@ cp .env.example .env        # add NEBIUS_API_KEY for written answers
 streamlit run app.py
 ```
 
-Without an API key the app still works end to end: retrieval, reranking and refusals run locally, and answers are the top cited passages (extractive mode). With `NEBIUS_API_KEY` set, answers are written by `meta-llama/Llama-3.3-70B-Instruct` on Nebius AI Studio (any OpenAI-compatible endpoint works via `FS_LLM_BASE_URL`).
+Without an API key the app still works end to end: retrieval, reranking and refusals run locally, and answers are the top cited passages (extractive mode). With `NEBIUS_API_KEY` set, answers are written by `meta-llama/Llama-3.3-70B-Instruct` on Nebius Token Factory (the older AI Studio URL is tried automatically as a fallback; any OpenAI-compatible endpoint works via `FS_LLM_BASE_URL`).
+
+### Llama not being used? (troubleshooting)
+
+The sidebar's **Language model** card checks the connection on startup and tells you exactly what is wrong. You can also paste a key there for the current session, or press **Test connection**.
+
+| Card says | Cause | Fix |
+|---|---|---|
+| *A key is in .env.example, but the app only reads .env* | The key was added to `.env.example`. The app never reads that file. | Copy `.env.example` to `.env`, then empty the key in `.env.example` so it is not pushed to GitHub. |
+| *No .env file found* / *NEBIUS_API_KEY is empty* | No key configured | Put `NEBIUS_API_KEY=...` in `.env` (no quotes needed) and restart the app. |
+| *The provider rejected the API key (401)* | Key revoked, expired or mistyped | Create a new key in the Nebius console. |
+| *Model ... was not found (404)* | Model name not served on your endpoint | Set `FS_LLM_MODEL` to a model listed in your Nebius console. |
+| *Could not reach the LLM endpoint* | Network, proxy or firewall | Check your connection, or set `FS_LLM_BASE_URL`. |
+
+If a call fails mid question, the answer falls back to cited passages and shows the reason above it instead of crashing.
 
 The search index (chunks + embeddings for both strategies) is committed in `data/processed/`, so the app starts in seconds. Rebuild it with `python scripts/build_index.py`.
 
@@ -72,7 +86,7 @@ python eval/run_retrieval_eval.py                 # chunking x retrieval x reran
 python eval/run_retrieval_eval.py --rerankers none local cross-encoder   # after: pip install -r requirements-optional.txt
 python eval/run_answer_eval.py                    # end-to-end with LLM + LLM-judge faithfulness (needs a key)
 python eval/run_answer_eval.py --no-llm           # end-to-end, extractive mode
-pytest -q                                         # 19 tests incl. a retrieval-quality regression guard
+pytest -q                                         # 25 tests incl. a retrieval-quality regression guard
 ```
 
 Results land in `eval/results/` and show up in the app's **Evaluation** tab.
