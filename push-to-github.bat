@@ -34,6 +34,6 @@ echo.
 echo Done! Code is at https://github.com/balum211/FilingSight
 echo.
 echo Next (optional): deploy on https://share.streamlit.io  - New app - repo balum211/FilingSight, file app.py
-echo and add NEBIUS_API_KEY under Advanced settings - Secrets.
+echo No secrets are needed.
 start https://github.com/balum211/FilingSight
 pause

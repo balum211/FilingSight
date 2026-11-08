@@ -7,9 +7,13 @@ Use case: **Project 2, Financial Document Intelligence Pipeline**. Track: **Trac
 
 ![stack](https://img.shields.io/badge/stack-LangChain%20·%20LangGraph%20·%20Chroma%20·%20BM25%20·%20Streamlit-blue)
 
+**Live app:** https://filingsight-week2.streamlit.app · **No API key needed:** answers are written by a small open model (Qwen2.5 0.5B Instruct) running on the app's own CPU.
+
 > **One-liner:** FilingSight helps retail investors and junior equity analysts answer metric, risk and strategy questions from the Uber and Lyft FY2021 Form 10-K filings (275 pages) in a cited chat app, with ≥ 90% faithfulness and ≥ 90% hit@5 retrieval relevance, within an 8-second answer.
 
-![chat](docs/screenshots/02_comparison.png)
+![home](docs/screenshots/01_home.png)
+
+Design: the UI follows the [elayadesign/ai-design-skills](https://github.com/elayadesign/ai-design-skills) rules; see [docs/DESIGN.md](docs/DESIGN.md) for each rule and where it is applied.
 
 ## Headline results (25 labelled questions)
 
@@ -32,7 +36,7 @@ retrieve: one hybrid search per company
    ▼
 gate ──(top relevance < 0.60)───────────────────────────► refuse
    │
-generate (Nebius Llama-3.3-70B with numbered sources | extractive fallback)
+generate (local Qwen2.5-0.5B-Instruct with numbered sources, no API key | extractive fallback)
    │
 validate_citations ──(NOT_FOUND)────────────────────────► refuse
    └──(no valid [n] citation on first try)──► generate again
@@ -57,25 +61,14 @@ validate_citations ──(NOT_FOUND)──────────────�
 # or manually:
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-cp .env.example .env        # add NEBIUS_API_KEY for written answers
 streamlit run app.py
 ```
 
-Without an API key the app still works end to end: retrieval, reranking and refusals run locally, and answers are the top cited passages (extractive mode). With `NEBIUS_API_KEY` set, answers are written by `meta-llama/Llama-3.3-70B-Instruct` on Nebius Token Factory (the older AI Studio URL is tried automatically as a fallback; any OpenAI-compatible endpoint works via `FS_LLM_BASE_URL`).
+**No API key, no account.** Written answers come from [`Qwen/Qwen2.5-0.5B-Instruct`](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct) (Apache 2.0), run with Hugging Face `transformers` on CPU. The weights (about 1 GB) download once on the first question and stay cached. On Linux, `requirements.txt` installs the CPU-only torch wheel so the install stays small enough for Streamlit Community Cloud.
 
-### Llama not being used? (troubleshooting)
+If the model cannot load (not enough memory, no network to Hugging Face), the answer falls back to the top cited passages (extractive mode) and the sidebar card says why. Set `FS_LLM=off` to always use extractive mode, or `FS_LOCAL_MODEL` to try another small chat model (for example `HuggingFaceTB/SmolLM2-360M-Instruct`).
 
-The sidebar's **Language model** card checks the connection on startup and tells you exactly what is wrong. You can also paste a key there for the current session, or press **Test connection**.
-
-| Card says | Cause | Fix |
-|---|---|---|
-| *A key is in .env.example, but the app only reads .env* | The key was added to `.env.example`. The app never reads that file. | Copy `.env.example` to `.env`, then empty the key in `.env.example` so it is not pushed to GitHub. |
-| *No .env file found* / *NEBIUS_API_KEY is empty* | No key configured | Put `NEBIUS_API_KEY=...` in `.env` (no quotes needed) and restart the app. |
-| *The provider rejected the API key (401)* | Key revoked, expired or mistyped | Create a new key in the Nebius console. |
-| *Model ... was not found (404)* | Model name not served on your endpoint | Set `FS_LLM_MODEL` to a model listed in your Nebius console. |
-| *Could not reach the LLM endpoint* | Network, proxy or firewall | Check your connection, or set `FS_LLM_BASE_URL`. |
-
-If a call fails mid question, the answer falls back to cited passages and shows the reason above it instead of crashing.
+A 0.5B model is much weaker than a hosted 70B model: expect shorter answers and the occasional missing citation (the app flags uncited answers as unverified). Retrieval quality, which decides most of the result, is unchanged.
 
 The search index (chunks + embeddings for both strategies) is committed in `data/processed/`, so the app starts in seconds. Rebuild it with `python scripts/build_index.py`.
 
@@ -116,6 +109,6 @@ docs/                       evaluation report, prompts and iterations, video scr
 
 ## Deploy (optional)
 
-Push to GitHub with `push-to-github.bat`, then on [share.streamlit.io](https://share.streamlit.io) create an app from `balum211/FilingSight`, main file `app.py`, and add `NEBIUS_API_KEY = "..."` under **Advanced settings → Secrets**.
+Push to GitHub with `push-to-github.bat`, then on [share.streamlit.io](https://share.streamlit.io) create an app from `balum211/FilingSight`, main file `app.py`. No secrets are needed. Live: https://filingsight-week2.streamlit.app
 
 > For learning purposes only, not investment advice. Figures come from FY2021 filings and are not current.

@@ -1,7 +1,7 @@
 """End-to-end answer evaluation through the LangGraph app.
 
-    python eval/run_answer_eval.py              # uses the LLM if NEBIUS_API_KEY / OPENAI_API_KEY is set
-    python eval/run_answer_eval.py --no-llm     # extractive mode, no key needed
+    python eval/run_answer_eval.py              # uses the local open model (no API key)
+    python eval/run_answer_eval.py --no-llm     # extractive mode, no model download
 
 Metrics
 * refusal accuracy      unanswerable questions answered with the refusal message

@@ -40,14 +40,26 @@ SAMPLES = [
 CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');
+/* Two-layer color tokens, as in ai-design-skills/figma-designer: Core Colors (raw palette),
+   then a Color System that aliases them. Light mode mirrors the dark reference shades. */
 :root{
-  --bg:#181818; --surface:#1F1F1F; --card:#272727; --line:#313131; --deep:#131209;
-  --text:#EDEDED; --muted:#9B9B9B; --faint:#6B6B6B;
-  --accent:#7C9DFF; --accent-soft:rgba(124,157,255,.14);
-  --ok:#5BD69A; --ok-soft:rgba(91,214,154,.14);
-  --warn:#F2C35B; --warn-soft:rgba(242,195,91,.14);
-  --bad:#F07A7A; --bad-soft:rgba(240,122,122,.14);
-  --uber:#EDEDED; --lyft:#FF6FD8;
+  /* Core Colors */
+  --grayscale-00:#FFFFFF; --grayscale-50:#FAFAFA; --grayscale-100:#F4F4F5; --grayscale-200:#E4E4E7;
+  --grayscale-300:#D4D4D8; --grayscale-500:#71717A; --grayscale-600:#52525B; --grayscale-900:#18181B;
+  --primary-50:#EEF2FF; --primary-500:#3B5BDB; --primary-600:#2F4AC0;
+  --green-600:#15803D; --yellow-700:#B45309; --red-700:#B91C1C; --pink-600:#C2187A;
+  /* Color System (Light) */
+  --surface-primary:var(--grayscale-50); --surface-primary-subtle:var(--grayscale-00); --surface-secondary:var(--grayscale-100);
+  --border-primary:var(--grayscale-200); --border-action-primary:var(--primary-500);
+  --text-primary:var(--grayscale-900); --text-secondary:var(--grayscale-600); --text-tertiary:var(--grayscale-500);
+  /* short aliases used below */
+  --bg:var(--surface-primary); --surface:var(--surface-primary-subtle); --card:var(--surface-secondary); --line:var(--border-primary);
+  --text:var(--text-primary); --muted:var(--text-secondary); --faint:var(--text-tertiary);
+  --accent:var(--primary-500); --accent-soft:rgba(59,91,219,.08);
+  --ok:var(--green-600); --ok-soft:rgba(21,128,61,.10);
+  --warn:var(--yellow-700); --warn-soft:rgba(180,83,9,.08);
+  --bad:var(--red-700); --bad-soft:rgba(185,28,28,.07);
+  --uber:#000000; --lyft:var(--pink-600);
   --ease:cubic-bezier(0.22,1,0.36,1);
 }
 html, body, .stApp, .stApp p, .stApp label, .stApp li, .stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp div[data-testid="stMarkdownContainer"],
@@ -66,7 +78,7 @@ p, li{text-wrap:pretty;}
 [data-testid="stSidebar"] .block-container{padding-top:24px;}
 .brand{display:flex; gap:12px; align-items:center; margin-bottom:4px;}
 .brand-mark{width:40px; height:40px; border-radius:12px; background:var(--accent-soft); color:var(--accent);
-  display:flex; align-items:center; justify-content:center; border:1px solid rgba(124,157,255,.28);}
+  display:flex; align-items:center; justify-content:center; border:1px solid rgba(59,91,219,.28);}
 .brand-name{font-size:20px; line-height:28px; font-weight:600; color:var(--text);}
 .brand-sub{font-size:12px; line-height:16px; color:var(--muted); font-weight:500;}
 .side-label{font-size:12px; line-height:16px; font-weight:600; color:var(--muted); text-transform:uppercase;
@@ -88,14 +100,14 @@ p, li{text-wrap:pretty;}
 .eyebrow{display:inline-flex; align-items:center; gap:8px; padding:4px 12px; border-radius:999px; border:1px solid var(--line);
   background:var(--surface); color:var(--muted); font-size:12px; line-height:16px; font-weight:500; margin-bottom:16px;}
 .hero h1{font-size:48px; line-height:48px; margin:0 0 16px; max-width:680px; padding:0;
-  background:linear-gradient(90deg,#FFFFFF,#9B9B9B); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  background:linear-gradient(90deg,#000000,#666666); -webkit-background-clip:text; background-clip:text; color:transparent;}
 .hero p{font-size:18px; line-height:28px; color:var(--muted); max-width:680px; margin:0;}
 
 /* kpi cards */
 .kpis{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:0 0 32px;}
-.kpi{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px; display:flex; flex-direction:column; gap:8px;
+.kpi{box-shadow:0 1px 2px rgba(24,24,27,.04); background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px; display:flex; flex-direction:column; gap:8px;
   transition:transform .5s var(--ease), border-color .3s var(--ease);}
-.kpi:hover{transform:translateY(-2px); border-color:#3d3d3d;}
+.kpi:hover{transform:translateY(-2px); border-color:var(--grayscale-300);}
 .kpi-top{display:flex; align-items:center; justify-content:space-between; color:var(--muted); font-size:12px; line-height:16px; font-weight:500;}
 .kpi-icon{width:32px; height:32px; border-radius:8px; background:var(--card); color:var(--accent); display:flex; align-items:center; justify-content:center;}
 .kpi-value{font-size:30px; line-height:36px; font-weight:600; color:var(--text); font-family:'Geist Mono',monospace !important;}
@@ -135,26 +147,26 @@ p, li{text-wrap:pretty;}
 .meta{display:flex; flex-wrap:wrap; gap:8px; margin:12px 0;}
 .chip{display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:999px; border:1px solid var(--line);
   background:var(--card); color:var(--muted); font-size:12px; line-height:16px; font-weight:500;}
-.chip.llm{color:var(--accent); background:var(--accent-soft); border-color:rgba(124,157,255,.3);}
-.chip.ext{color:var(--warn); background:var(--warn-soft); border-color:rgba(242,195,91,.3);}
-.chip.ref{color:var(--bad); background:var(--bad-soft); border-color:rgba(240,122,122,.3);}
+.chip.llm{color:var(--accent); background:var(--accent-soft); border-color:rgba(59,91,219,.3);}
+.chip.ext{color:var(--warn); background:var(--warn-soft); border-color:rgba(180,83,9,.3);}
+.chip.ref{color:var(--bad); background:var(--bad-soft); border-color:rgba(185,28,28,.3);}
 .notice{display:flex; gap:12px; align-items:flex-start; padding:12px; border-radius:12px; margin-bottom:12px;
   font-size:14px; line-height:20px; border:1px solid var(--line);}
-.notice.warn{background:var(--warn-soft); border-color:rgba(242,195,91,.3); color:#F7DCA0;}
-.notice.bad{background:var(--bad-soft); border-color:rgba(240,122,122,.3); color:#F6B4B4;}
+.notice.warn{background:var(--warn-soft); border-color:rgba(180,83,9,.3); color:#7C3A06;}
+.notice.bad{background:var(--bad-soft); border-color:rgba(185,28,28,.3); color:#7F1D1D;}
 .notice b{color:var(--text); font-weight:600;}
 
 /* sources */
 [data-testid="stExpander"] details{border:1px solid var(--line); border-radius:12px; background:var(--bg);}
 [data-testid="stExpander"] summary{font-weight:600; font-size:14px;}
 .src{border:1px solid var(--line); background:var(--surface); border-radius:8px; padding:12px; margin-bottom:8px;}
-.src.cited{border-color:rgba(124,157,255,.45);}
+.src.cited{border-color:rgba(59,91,219,.45);}
 .src-head{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-bottom:8px; font-size:14px; line-height:20px; font-weight:600; color:var(--text);}
 .src-n{font-family:'Geist Mono',monospace; font-size:12px; color:var(--accent); background:var(--accent-soft); border-radius:4px; padding:0 4px;}
 .co{font-size:12px; line-height:16px; font-weight:600; padding:0 8px; border-radius:999px; border:1px solid var(--line);}
-.co.Uber{color:var(--uber);} .co.Lyft{color:var(--lyft); border-color:rgba(255,111,216,.35);}
+.co.Uber{color:var(--uber);} .co.Lyft{color:var(--lyft); border-color:rgba(194,24,122,.3);}
 .src-item{font-size:12px; line-height:16px; color:var(--muted); font-weight:500;}
-.src-text{font-size:14px; line-height:20px; color:#C9C9C9; white-space:pre-wrap; max-height:160px; overflow:auto;}
+.src-text{font-size:14px; line-height:20px; color:var(--muted); white-space:pre-wrap; max-height:160px; overflow:auto;}
 .bar{height:4px; border-radius:999px; background:var(--card); width:96px; overflow:hidden; display:inline-block; vertical-align:middle;}
 .bar > span{display:block; height:100%; background:var(--accent); border-radius:999px;}
 
@@ -191,7 +203,7 @@ p, li{text-wrap:pretty;}
 /* floating nav */
 .topbar{position:sticky; top:12px; z-index:50; margin:0 auto 32px; width:fit-content; max-width:100%;
   display:flex; align-items:center; gap:16px; padding:8px 8px 8px 16px; border-radius:999px;
-  background:rgba(31,31,31,.72); border:1px solid var(--line); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  background:rgba(255,255,255,.72); box-shadow:0 8px 24px rgba(24,24,27,.06); border:1px solid var(--line); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
   animation:rise .6s var(--ease) both;}
 .topbar .tb-brand{display:flex; align-items:center; gap:8px; font-size:14px; font-weight:600; color:var(--text);}
 .topbar .tb-brand .ph{color:var(--accent);}
@@ -209,10 +221,10 @@ p, li{text-wrap:pretty;}
 .preview{background:var(--surface); border:1px solid var(--line); border-radius:24px; padding:16px; display:flex; flex-direction:column; gap:12px;
   animation:rise .8s var(--ease) .1s both;}
 .pv-q{align-self:flex-end; background:var(--card); border:1px solid var(--line); border-radius:16px; padding:8px 12px; font-size:14px; line-height:20px; color:var(--text); max-width:85%;}
-.pv-a{background:var(--bg); border:1px solid var(--line); border-radius:16px; padding:12px; font-size:14px; line-height:20px; color:#D6D6D6;}
+.pv-a{background:var(--bg); border:1px solid var(--line); border-radius:16px; padding:12px; font-size:14px; line-height:20px; color:var(--muted);}
 .pv-a b{color:var(--text); font-weight:600;}
 .pv-cite{font-family:'Geist Mono',monospace; font-size:12px; color:var(--accent); background:var(--accent-soft); border-radius:4px; padding:0 4px;}
-.pv-src{display:flex; align-items:center; gap:8px; border:1px solid rgba(124,157,255,.35); background:var(--surface); border-radius:8px; padding:8px; font-size:12px; line-height:16px; color:var(--muted);}
+.pv-src{display:flex; align-items:center; gap:8px; border:1px solid rgba(59,91,219,.35); background:var(--surface); border-radius:8px; padding:8px; font-size:12px; line-height:16px; color:var(--muted);}
 .pv-src b{color:var(--text); font-weight:600;}
 .hero-grid .hero h1{font-size:36px; line-height:40px;}
 .hero h1 span{display:block; white-space:nowrap;}
@@ -224,9 +236,9 @@ p, li{text-wrap:pretty;}
 .corpus{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:0 0 32px;}
 .co-card{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px; display:flex; gap:16px; align-items:center;
   transition:transform .5s var(--ease), border-color .3s var(--ease);}
-.co-card:hover{transform:translateY(-2px); border-color:#3d3d3d;}
+.co-card:hover{transform:translateY(-2px); border-color:var(--grayscale-300);}
 .co-logo{width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex:none; background:var(--card);}
-.co-card.uber .co-logo{color:var(--uber);} .co-card.lyft .co-logo{color:var(--lyft); background:rgba(255,111,216,.12);}
+.co-card.uber .co-logo{color:var(--uber);} .co-card.lyft .co-logo{color:var(--lyft); background:rgba(194,24,122,.08);}
 .co-name{font-size:18px; line-height:28px; font-weight:600; color:var(--text);}
 .co-meta{font-size:12px; line-height:16px; color:var(--muted);}
 .co-stats{margin-left:auto; display:flex; gap:24px; text-align:right;}
@@ -248,7 +260,7 @@ p, li{text-wrap:pretty;}
 .skel{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px; display:flex; flex-direction:column; gap:12px; margin-bottom:16px;}
 .skel .bar-s{height:12px; border-radius:999px; background:var(--card); position:relative; overflow:hidden;}
 .skel .bar-s::after{content:""; position:absolute; inset:0; transform:translateX(-100%);
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent); animation:shimmer 1.4s var(--ease) infinite;}
+  background:linear-gradient(90deg,transparent,rgba(24,24,27,.06),transparent); animation:shimmer 1.4s var(--ease) infinite;}
 .skel-head{display:flex; align-items:center; gap:8px; font-size:12px; line-height:16px; color:var(--muted); font-weight:500;}
 @keyframes shimmer{to{transform:translateX(100%);}}
 
@@ -260,14 +272,40 @@ p, li{text-wrap:pretty;}
 .foot .links{display:flex; gap:16px;}
 [data-testid="stVegaLiteChart"]{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px; margin-bottom:24px;}
 
+/* background: flat colour plus a dotted SVG pattern (no gradients, per B4) and floating symbols */
+.stApp{background-color:var(--bg);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='2' cy='2' r='1' fill='%23D4D4D8'/%3E%3C/svg%3E");}
+.bg-symbols{position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden;}
+.bg-symbols .s{position:absolute; color:var(--accent); opacity:.13; animation:drift 12s var(--ease) infinite alternate;}
+.bg-symbols .s:nth-child(3n){color:var(--lyft); opacity:.11;}
+.bg-symbols .s:nth-child(4n){color:var(--grayscale-600); opacity:.10;}
+@keyframes drift{from{transform:translateY(0) rotate(0deg);} to{transform:translateY(-24px) rotate(8deg);}}
+[data-testid="stMain"] .block-container{position:relative; z-index:1;}
+[data-testid="stSidebar"]{z-index:2;}
+
 @media (prefers-reduced-motion: reduce){
   *{animation:none !important; transition:opacity .2s linear !important;}
   .kpi:hover, .co-card:hover, .tb-link:hover, .stButton > button:hover{transform:none;}
   .tagline .w{opacity:1 !important; animation:none !important;}
+  .bg-symbols .s{animation:none !important;}
 }
 </style>
 """
 st.markdown(CSS, unsafe_allow_html=True)
+
+# Decorative finance symbols behind the content (aria-hidden, no pointer events).
+_SYMBOLS = [("chart-line-up", 6, 14, 56), ("currency-dollar", 88, 10, 48), ("file-text", 18, 62, 44), ("percent", 74, 44, 40),
+            ("bank", 93, 72, 52), ("coins", 4, 86, 44), ("receipt", 52, 90, 40), ("trend-up", 40, 6, 36),
+            ("chart-pie-slice", 64, 22, 44), ("calculator", 30, 38, 36), ("presentation-chart", 84, 92, 48),
+            ("briefcase", 12, 40, 36), ("hash", 58, 64, 32), ("scales", 96, 34, 40), ("car-simple", 26, 78, 40),
+            ("magnifying-glass", 46, 30, 36), ("quotes", 78, 58, 40), ("book-open", 36, 96, 44), ("target", 70, 4, 36),
+            ("database", 2, 52, 40), ("currency-dollar", 48, 50, 32), ("chart-bar", 98, 54, 36), ("seal-check", 20, 20, 32)]
+st.markdown(
+    '<div class="bg-symbols" aria-hidden="true">' + "".join(
+        f'<span class="s" style="left:{x}%;top:{y}%;animation-delay:-{i * 0.8:.1f}s">{icon(n, size)}</span>'
+        for i, (n, x, y, size) in enumerate(_SYMBOLS)) + "</div>",
+    unsafe_allow_html=True,
+)
 
 
 def h(text) -> str:
@@ -306,36 +344,33 @@ def reranker_options() -> list[str]:
         opts.insert(1, "cross-encoder")
     except ImportError:
         pass
-    if config.llm_available():
-        opts.append("llm")
     return opts
 
 
-def llm_status(force: bool = False) -> llm.LLMStatus:
-    """Check the Llama connection once per session (or on demand) and remember the result."""
-    key = (config.llm_provider(), config.LLM_MODEL, config.llm_api_key()[-6:])
-    cached = st.session_state.get("llm_status")
-    if force or not cached or cached[0] != key:
-        if config.llm_available():
-            with st.spinner("Checking the Llama connection..."):
-                status = llm.check_llm()
-        else:
-            status = llm.check_llm()  # no network call, returns the setup hint
-        st.session_state["llm_status"] = (key, status)
-    return st.session_state["llm_status"][1]
+def llm_status() -> llm.LLMStatus:
+    return llm.check_llm(load=False)
+
+
+@st.cache_resource(show_spinner=False)
+def load_model_once() -> llm.LLMStatus:
+    """Load the local model once per server process (shared by every visitor)."""
+    return llm.check_llm(load=True)
+
+
+def model_label() -> str:
+    return config.LLM_MODEL.split("/")[-1]
 
 
 def status_card(status: llm.LLMStatus) -> str:
-    if status.ok:
-        dot, title, msg = "ok", f"{status.provider} connected", ""
-    elif config.llm_available():
-        dot, title, msg = "bad", "Llama not reachable", status.message
+    if status.ok and status.loaded:
+        dot, title = "ok", "Local model ready"
+    elif status.ok:
+        dot, title = "warn", "Local model, loads on first use"
     else:
-        dot, title, msg = "warn", "No API key found", status.message
-    model = status.model if config.llm_available() else config.DEFAULT_NEBIUS_MODEL
-    body = f'<div class="status-msg">{h(msg)}</div>' if msg else ""
+        dot, title = "bad", "Local model unavailable"
     return (f'<div class="status"><div class="status-head"><span class="dot {dot}"></span>{h(title)}</div>'
-            f'<div class="status-model">{icon("cpu", 14)} {h(model)}</div>{body}</div>')
+            f'<div class="status-model">{icon("cpu", 14)} {h(config.LLM_MODEL)}</div>'
+            f'<div class="status-msg">{icon("key", 12)} No API key needed. Runs on this server\'s CPU. {h(status.message.rstrip('.'))}.</div></div>')
 
 
 # ---------------------------------------------------------------- sidebar
@@ -348,24 +383,17 @@ with st.sidebar:
 
     st.markdown('<div class="side-label">Language model</div>', unsafe_allow_html=True)
     status = llm_status()
+    if status.ok and not status.loaded and st.session_state.get("model_failed"):
+        status = llm.LLMStatus(False, "local", config.LLM_MODEL, st.session_state["model_failed"])
     st.markdown(status_card(status), unsafe_allow_html=True)
-    with st.expander("Paste a key for this session", expanded=not config.llm_available()):
-        typed = st.text_input("Nebius API key", type="password", key="runtime_key",
-                              help="Kept in memory for this browser session only. For a permanent setup put it in .env.")
-        if typed and typed != st.session_state.get("_applied_key"):
-            config.set_runtime_key(typed)
-            llm.reset()
-            st.session_state["_applied_key"] = typed
-            st.session_state.pop("llm_status", None)
-            st.rerun()
-    if config.llm_available() and st.button("Test connection", use_container_width=True):
-        llm.reset()
-        llm_status(force=True)
+    if status.ok and not status.loaded and st.button("Load model now", use_container_width=True):
+        with st.spinner("Downloading and loading the model (about a minute, once per server)..."):
+            res = load_model_once()
+        if not res.ok:
+            st.session_state["model_failed"] = res.message
         st.rerun()
-
-    llm_on = config.llm_available()
-    use_llm = st.toggle("Write answers with Llama", value=llm_on and status.ok, disabled=not llm_on,
-                        help="Off: answers are the top cited sentences (extractive), no LLM call.")
+    use_llm = st.toggle("Write answers with the local model", value=status.ok, disabled=not status.ok,
+                        help="Off: answers are the top cited sentences (extractive). Faster, no model needed.")
 
     st.markdown('<div class="side-label">Retrieval</div>', unsafe_allow_html=True)
     strategy = st.radio(
@@ -384,7 +412,7 @@ best = max(retr, key=lambda r: r.get("hit@k", 0)) if retr else {}
 
 # ---------------------------------------------------------------- nav + hero
 REPO = "https://github.com/balum211/FilingSight"
-mode = (f'<span class="dot ok"></span>{h(config.LLM_MODEL.split("/")[-1])}' if status.ok
+mode = (f'<span class="dot ok"></span>{h(model_label())} · no API key' if status.ok and use_llm
         else '<span class="dot warn"></span>Extractive mode')
 st.markdown(
     f'<nav class="topbar" aria-label="App"><span class="tb-brand">{icon("file-text", 18)}<span>FilingSight</span></span>'
@@ -473,7 +501,7 @@ def render_sources(state: dict):
 def render_answer(state: dict):
     if state.get("llm_error"):
         st.markdown(
-            f'<div class="notice warn">{icon("warning-circle", 18)}<div><b>Llama call failed, showing an extractive answer.</b> '
+            f'<div class="notice warn">{icon("warning-circle", 18)}<div><b>The local model could not answer, showing cited passages instead.</b> '
             f'{h(state["llm_error"])}</div></div>', unsafe_allow_html=True)
     if state["route"] == "refused":
         reason = f' <span style="color:var(--muted)">{h(state["refusal_reason"])}</span>' if state.get("refusal_reason") else ""
@@ -488,7 +516,7 @@ def render_answer(state: dict):
     if state["route"] == "refused":
         chips.append(f'<span class="chip ref">{icon("prohibit", 12)} refused</span>')
     elif gen == "llm":
-        chips.append(f'<span class="chip llm">{icon("lightning", 12)} {h(config.LLM_MODEL.split("/")[-1])}</span>')
+        chips.append(f'<span class="chip llm">{icon("lightning", 12)} {h(model_label())}</span>')
     elif gen:
         chips.append(f'<span class="chip ext">{icon("quotes", 12)} extractive</span>')
     chips.append(f'<span class="chip">{icon("clock", 12)} {t.get("total", 0) / 1000:.1f}s</span>')
@@ -528,8 +556,10 @@ with chat_tab:
     if question:
         skeleton = st.empty()
         skeleton.markdown(
-            f'<div class="skel" aria-busy="true"><div class="skel-head">{icon("magnifying-glass", 14)} Retrieving, reranking and '
-            f'answering: {h(question)}</div><div class="bar-s" style="width:92%"></div><div class="bar-s" style="width:78%"></div>'
+            f'<div class="skel" aria-busy="true"><div class="skel-head">{icon("magnifying-glass", 14)} '
+            + ("Loading the local model for the first time (about a minute), then answering: " if use_llm and not llm.is_loaded()
+               else "Retrieving, reranking and answering: ")
+            + f'{h(question)}</div><div class="bar-s" style="width:92%"></div><div class="bar-s" style="width:78%"></div>'
             '<div class="bar-s" style="width:85%"></div><div class="bar-s" style="width:40%"></div></div>',
             unsafe_allow_html=True,
         )
@@ -565,15 +595,15 @@ with eval_tab:
                         axis=alt.Axis(labelAngle=0)),
                 xOffset="Chunking:N",
                 y=alt.Y("Hit@5:Q", scale=alt.Scale(domain=[0, 1]), title="Hit@5"),
-                color=alt.Color("Chunking:N", scale=alt.Scale(domain=["fixed", "semantic"], range=["#6B6B6B", "#7C9DFF"]),
+                color=alt.Color("Chunking:N", scale=alt.Scale(domain=["fixed", "semantic"], range=["#A1A1AA", "#3B5BDB"]),
                                 legend=alt.Legend(orient="top", title=None)),
                 tooltip=["Chunking", "Configuration", alt.Tooltip("Hit@5:Q", format=".2f")],
             )
             .properties(height=280)
             .configure(background="transparent", font="Manrope")
-            .configure_axis(gridColor="#313131", domainColor="#313131", tickColor="#313131", labelColor="#9B9B9B",
-                            titleColor="#9B9B9B", labelFontSize=12, titleFontSize=12)
-            .configure_legend(labelColor="#9B9B9B", labelFontSize=12)
+            .configure_axis(gridColor="#E4E4E7", domainColor="#E4E4E7", tickColor="#E4E4E7", labelColor="#52525B",
+                            titleColor="#52525B", labelFontSize=12, titleFontSize=12)
+            .configure_legend(labelColor="#52525B", labelFontSize=12)
             .configure_view(strokeWidth=0)
         )
         st.altair_chart(chart, use_container_width=True, theme=None)
@@ -611,10 +641,10 @@ with how_tab:
         ("funnel", "Analyze", "Detects company, year and question type, and splits comparisons into one query per company.",
          "Year outside 2019 to 2021: refuse"),
         ("magnifying-glass", "Retrieve", "Chroma dense search plus BM25 keywords, fused with weighted RRF, 20 candidates per company.", ""),
-        ("arrows-clockwise", "Rerank", "Local sentence and key term reranker (or cross encoder, or Llama) picks a company balanced top 5.", ""),
+        ("arrows-clockwise", "Rerank", "Local sentence and key term reranker (or a cross encoder) picks a company balanced top 5.", ""),
         ("shield-check", "Gate", "Checks the best reranked score against the confidence threshold before any answer is written.",
          "Low relevance: refuse"),
-        ("lightning", "Generate", "Llama 3.3 70B writes from numbered sources. If it is unavailable the top cited sentences are shown.", ""),
+        ("lightning", "Generate", "Qwen2.5 0.5B Instruct writes from numbered sources on this server, with no API key. If it is unavailable the top cited sentences are shown.", ""),
         ("check-circle", "Validate", "Strips citations that point nowhere and retries once if none are valid.", "NOT_FOUND from the model: refuse"),
     ]
     cards = []

@@ -1,6 +1,6 @@
-"""LLM access: key detection, readable errors, and graceful fallback when the provider fails."""
+"""Local model access: readable status, graceful fallback, and the chat wrapper's message handling."""
 from filingsight import config, llm
-from filingsight.graph import ask
+from filingsight.graph import ask, format_sources
 
 
 class _Boom:
@@ -11,52 +11,38 @@ class _Boom:
         raise self.exc
 
 
-class AuthenticationError(Exception):
-    pass
+def test_no_api_key_settings_remain():
+    for name in ("NEBIUS_API_KEY", "OPENAI_API_KEY", "LLM_BASE_URL"):
+        assert not hasattr(config, name)
 
 
-class APIConnectionError(Exception):
-    pass
-
-
-def test_placeholder_and_quoted_keys_are_cleaned():
-    assert config._clean_key('  "abc123"  ') == "abc123"
-    assert config._clean_key("your_key_here") == ""
-    assert config._clean_key(None) == ""
-
-
-def test_nebius_endpoints_include_legacy_fallback(monkeypatch):
-    monkeypatch.setattr(config, "NEBIUS_API_KEY", "k")
-    monkeypatch.setattr(config, "LLM_BASE_URL", "")
-    assert config.llm_base_urls() == [config.NEBIUS_BASE_URL, config.NEBIUS_LEGACY_BASE_URL]
-    monkeypatch.setattr(config, "LLM_BASE_URL", "https://example.test/v1/")
-    assert config.llm_base_urls() == ["https://example.test/v1/"]
-
-
-def test_missing_key_hint_spots_key_left_in_env_example(tmp_path, monkeypatch):
-    (tmp_path / ".env.example").write_text("NEBIUS_API_KEY=v1.realkey\n")
-    monkeypatch.setattr(config, "ROOT", tmp_path)
-    assert "only reads .env" in config.missing_key_hint()
-    (tmp_path / ".env").write_text("NEBIUS_API_KEY=\n")
-    assert "empty" in config.missing_key_hint() or "only reads" in config.missing_key_hint()
+def test_llm_switched_off_reports_reason(monkeypatch):
+    monkeypatch.setattr(config, "LLM_ENABLED", False)
+    status = llm.check_llm()
+    assert not status.ok and "FS_LLM=off" in status.message
 
 
 def test_explain_error_is_actionable():
-    assert "401" in llm.explain_error(AuthenticationError("Error code: 401 invalid api key"))
-    assert "reach" in llm.explain_error(APIConnectionError("Connection error."))
+    assert "memory" in llm.explain_error(MemoryError()).lower()
+    assert "Hugging Face" in llm.explain_error(OSError("Connection error to huggingface.co"))
 
 
 def test_provider_failure_falls_back_to_extractive(monkeypatch):
     monkeypatch.setattr(config, "llm_available", lambda: True)
-    monkeypatch.setattr(llm, "get_chat_model", lambda *a, **k: _Boom(AuthenticationError("401")))
+    monkeypatch.setattr(llm, "get_chat_model", lambda *a, **k: _Boom(MemoryError()))
     s = ask("What was Uber's total revenue in 2021?", use_llm=True)
     assert s["generator"] == "extractive"
-    assert "401" in s["llm_error"]
+    assert "memory" in s["llm_error"].lower()
     assert s["route"] == "answered" and s["citations"]
 
 
-def test_check_llm_without_key_reports_hint(monkeypatch):
-    monkeypatch.setattr(config, "NEBIUS_API_KEY", "")
-    monkeypatch.setattr(config, "OPENAI_API_KEY", "")
-    status = llm.check_llm()
-    assert not status.ok and ".env" in status.message
+def test_chat_message_mapping():
+    chat = llm.LocalChatModel._to_chat([("system", "rules"), ("user", "q"), ("human", "h")])
+    assert [m["role"] for m in chat] == ["system", "user", "user"]
+    assert llm.LocalChatModel._to_chat("hi") == [{"role": "user", "content": "hi"}]
+
+
+def test_sources_are_trimmed_for_the_prompt():
+    src = [{"n": 1, "header": "Uber 10-K", "text": "x" * 2000}]
+    assert len(format_sources(src, 100)) < 150
+    assert len(format_sources(src)) > 2000

@@ -74,8 +74,8 @@ def _source_dict(i: int, doc, score: float) -> dict:
     }
 
 
-def format_sources(sources: list[dict]) -> str:
-    return "\n\n".join(f"[{s['n']}] {s['header']}\n{s['text']}" for s in sources)
+def format_sources(sources: list[dict], max_chars: int | None = None) -> str:
+    return "\n\n".join(f"[{s['n']}] {s['header']}\n{s['text'][:max_chars] if max_chars else s['text']}" for s in sources)
 
 
 # ---------------------------------------------------------------- nodes
@@ -165,7 +165,7 @@ def generate(state: RAGState) -> RAGState:
             system += "\nYour previous answer had no valid [n] citations. Every sentence MUST end with a citation."
         msgs = [
             ("system", system),
-            ("user", ANSWER_USER.format(question=state["question"], sources=format_sources(state["sources"]))),
+            ("user", ANSWER_USER.format(question=state["question"], sources=format_sources(state["sources"], config.LLM_SOURCE_CHARS))),
         ]
         try:
             answer = str(get_chat_model(temperature=0).invoke(msgs).content).strip()

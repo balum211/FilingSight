@@ -1,6 +1,6 @@
 # Demo video script (under 5 minutes)
 
-Record with Loom or the Windows Game Bar (Win + G). Have the app running (`run.bat`) with `NEBIUS_API_KEY` in `.env`, and the GitHub repo open in another tab.
+Record with Loom or the Windows Game Bar (Win + G). Have the app running (`run.bat`) (no API key needed), and the GitHub repo open in another tab.
 
 | Time | Show | Say |
 |---|---|---|

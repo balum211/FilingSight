@@ -109,5 +109,5 @@ With an LLM key, `python eval/run_answer_eval.py` adds two LLM-judge metrics per
 ```bash
 python eval/run_retrieval_eval.py          # sections 1 to 3
 python eval/run_answer_eval.py --no-llm    # section 4, extractive
-python eval/run_answer_eval.py             # section 4 with LLM + judge (needs NEBIUS_API_KEY)
+python eval/run_answer_eval.py             # section 4 with LLM + judge (local model, no API key)
 ```
