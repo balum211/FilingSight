@@ -1,0 +1,12 @@
+name: Probe keyless endpoints
+on:
+  push:
+    branches: [local-model]
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          curl -sS -m 60 https://text.pollinations.ai/openai -H 'Content-Type: application/json' \
+            -d '{"model":"openai","messages":[{"role":"system","content":"Answer only from the sources and cite [n]."},{"role":"user","content":"Sources:\n[1] Uber revenue was $17,455 million in 2021, up 57%.\n\nQuestion: What was Uber revenue in 2021?"}]}' | head -c 1500; echo
+          echo ---; curl -sS -m 30 https://text.pollinations.ai/models | head -c 1500; echo
