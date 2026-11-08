@@ -233,7 +233,9 @@ def validate_citations(state: RAGState) -> RAGState:
     cited = sorted({int(n) for n in _CITE.findall(answer)})
     good = [n for n in cited if n in valid]
     # Drop citations that point at sources that do not exist.
-    cleaned = _CITE.sub(lambda m: m.group(0) if int(m.group(1)) in valid else "", answer)
+    from .llm import clean_answer
+
+    cleaned = clean_answer(_CITE.sub(lambda m: m.group(0) if int(m.group(1)) in valid else "", answer))
     out: RAGState = {"answer": cleaned, "citations": good}
     if good:
         out["route"] = "answered"

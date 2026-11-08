@@ -32,7 +32,7 @@ for i, q in enumerate(["What was Uber's total revenue in 2021?",
     t = time.perf_counter()
     s = ask(q, use_llm=True)
     print(f"\nQ: {q}\n  route={s['route']} generator={s.get('generator')} citations={s.get('citations')} "
-          f"llm_error={s.get('llm_error')} {time.perf_counter() - t:.1f}s\n  A: {s['answer'][:600]}")
+          f"llm_error={s.get('llm_error')} {time.perf_counter() - t:.1f}s\n  A: {s['answer'][:600]!r}")
     assert s.get("generator") == "llm", s.get("llm_error")
     assert s["route"] == "answered" and s.get("citations"), "the free model gave no cited answer"
 rss_mb = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024

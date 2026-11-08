@@ -35,7 +35,9 @@ Rules:
    If a table is "in thousands", you may also restate the value in millions or billions.
 4. If the question names no company, answer for each company separately.
 5. For comparisons, give each company's figure with its own citation, then one sentence comparing them.
-6. If the sources do not contain the answer, reply with exactly: NOT_FOUND
+6. If the sources contain none of the answer, reply with exactly: NOT_FOUND
+   If they answer only part of it, answer that part with citations and add one sentence
+   saying what the sources do not show.
 7. At most 6 sentences. No preamble, no investment advice.
 ```
 
