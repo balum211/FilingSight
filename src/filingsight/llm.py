@@ -19,6 +19,7 @@ from . import config
 
 _FULLWIDTH_CITE = re.compile(r"【\s*(\d+)[^】]*】")
 _DUP_CITE = re.compile(r"\[(\d+)\]([.!?,;]?)\s*\[\1\]")
+_STRAY_CITE = re.compile(r"(\[\d+\])([.!?])\s*(\[\d+\])(?=\s|$)")
 _RETRY_AFTER = re.compile(r"retry after (\d+)\s*s", re.I)
 
 
@@ -34,7 +35,7 @@ def clean_answer(text: str) -> str:
     """Turn 【1】 into [1] and collapse a repeated marker such as "[1]. [1]" into "[1]."."""
     text = _FULLWIDTH_CITE.sub(r"[\1]", text)
     while True:
-        new = _DUP_CITE.sub(r"[\1]\2", text)
+        new = _STRAY_CITE.sub(r"\1\3\2", _DUP_CITE.sub(r"[\1]\2", text))
         if new == text:
             return text.strip()
         text = new

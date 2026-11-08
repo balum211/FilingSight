@@ -96,3 +96,4 @@ def test_free_limit_is_explained_and_not_retried(monkeypatch):
 def test_repeated_citation_is_collapsed():
     assert llm.clean_answer("was $17,455 million [1]. [1]") == "was $17,455 million [1]."
     assert llm.clean_answer("x【2】【2】") == "x[2]"
+    assert llm.clean_answer("developing [4]. [1]") == "developing [4][1]."
