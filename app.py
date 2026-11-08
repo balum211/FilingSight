@@ -283,9 +283,51 @@ p, li{text-wrap:pretty;}
 [data-testid="stMain"] .block-container{position:relative; z-index:1;}
 [data-testid="stSidebar"]{z-index:2;}
 
+/* ---------- richer layer borrowed from the DealRoom app (same ai-design-skills tokens) ---------- */
+:root{--shadow:0 1px 2px rgba(24,24,27,.04), 0 8px 24px rgba(24,24,27,.06);
+  --shadow-lg:0 2px 4px rgba(24,24,27,.05), 0 18px 40px rgba(59,91,219,.14); --violet:#7C3AED; --amber:#E8A317;}
+/* soft colour glows behind everything (decoration layer, not a surface fill) */
+.bg-symbols .blob{position:absolute; width:46vmax; height:46vmax; border-radius:50%; filter:blur(80px); opacity:.35; animation:none;}
+.bg-symbols .b1{left:-16vmax; top:-18vmax; background:#C7D2FE;}
+.bg-symbols .b2{right:-18vmax; top:20vh; background:#FBCFE8; opacity:.28;}
+.bg-symbols .b3{left:30vw; bottom:-30vmax; background:#FDE68A; opacity:.25;}
+/* hero becomes one white card with a brand stripe on top */
+.hero-grid{background:rgba(255,255,255,.92); border:1px solid var(--line); border-radius:24px; padding:48px 40px; margin-bottom:24px;
+  box-shadow:var(--shadow); position:relative; overflow:hidden; animation:rise .7s var(--ease) both;}
+.hero-grid::before{content:""; position:absolute; inset:0 0 auto 0; height:4px; background:linear-gradient(90deg,var(--accent),var(--violet),var(--lyft));}
+.hero-grid .preview{background:var(--bg); box-shadow:var(--shadow-lg); transform:rotate(-1deg); transition:transform .5s var(--ease);}
+.hero-grid .preview:hover{transform:rotate(0deg) translateY(-4px);}
+.eyebrow{color:var(--accent) !important; background:var(--accent-soft) !important; border-color:rgba(59,91,219,.22) !important;
+  text-transform:uppercase; letter-spacing:.08em; font-size:12px; line-height:16px; font-weight:500;}
+.brand-mark{background:var(--accent) !important; color:#fff !important; box-shadow:0 6px 16px rgba(59,91,219,.3);}
+/* shadowed cards everywhere, lift on hover */
+.kpi, .co-card, .step, .src, .skel, [data-testid="stChatMessage"], [data-testid="stVegaLiteChart"], [data-testid="stExpander"] details{box-shadow:var(--shadow);}
+.kpi:hover, .co-card:hover, .step:hover{box-shadow:var(--shadow-lg); border-color:rgba(59,91,219,.35); transform:translateY(-3px);}
+.step{transition:transform .5s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease);}
+.kpi-icon, .step-icon{background:var(--accent-soft);}
+.co-card.uber{box-shadow:inset 3px 0 0 var(--uber), var(--shadow);} .co-card.lyft{box-shadow:inset 3px 0 0 var(--lyft), var(--shadow);}
+.src{border-radius:12px; padding:16px;} .src.cited{box-shadow:inset 3px 0 0 var(--accent), var(--shadow);}
+/* tabs: segmented pill with a filled active tab */
+.stTabs [data-baseweb="tab-list"], [data-testid="stTabs"] [role="tablist"]{gap:4px; background:#fff; padding:4px; border-radius:16px;
+  border:1px solid var(--line); width:fit-content; max-width:100%; box-shadow:var(--shadow); overflow-x:auto; scrollbar-width:none;}
+.stTabs [data-baseweb="tab"], [data-testid="stTabs"] [role="tab"]{border-radius:12px; padding:8px 16px; height:auto; flex-shrink:0;
+  transition:background-color .3s var(--ease), color .3s var(--ease);}
+.stTabs [role="tab"] p{white-space:nowrap; font-weight:500;}
+.stTabs [aria-selected="true"], [data-testid="stTabs"] [role="tab"][aria-selected="true"]{background:var(--accent) !important;}
+.stTabs [aria-selected="true"] p{color:#fff !important;}
+.stTabs [data-baseweb="tab-highlight"], .stTabs [data-baseweb="tab-border"]{display:none;}
+/* buttons: soft shadow, accent lift */
+.stButton > button{box-shadow:var(--shadow); transition:background-color .3s var(--ease), border-color .3s var(--ease), color .3s var(--ease), transform .5s var(--ease), box-shadow .3s var(--ease);}
+.stButton > button:hover{box-shadow:var(--shadow-lg); color:var(--accent);}
+[class*="st-key-sample"] .stButton > button:hover{transform:translateY(-3px);}
+[data-testid="stChatInput"]{box-shadow:var(--shadow-lg); border-radius:16px;}
+@media (max-width:900px){.hero-grid{padding:32px 24px;} .hero-grid .preview{transform:none;}}
+.hero-grid > *{min-width:0;}
+@media (max-width:600px){.hero-grid{padding:24px 16px;} .hero h1 span{white-space:normal;}}
+
 @media (prefers-reduced-motion: reduce){
   *{animation:none !important; transition:opacity .2s linear !important;}
-  .kpi:hover, .co-card:hover, .tb-link:hover, .stButton > button:hover{transform:none;}
+  .kpi:hover, .co-card:hover, .step:hover, .tb-link:hover, .stButton > button:hover, .hero-grid .preview, .hero-grid .preview:hover{transform:none;}
   .tagline .w{opacity:1 !important; animation:none !important;}
   .bg-symbols .s{animation:none !important;}
 }
@@ -301,7 +343,7 @@ _SYMBOLS = [("chart-line-up", 6, 14, 56), ("currency-dollar", 88, 10, 48), ("fil
             ("magnifying-glass", 46, 30, 36), ("quotes", 78, 58, 40), ("book-open", 36, 96, 44), ("target", 70, 4, 36),
             ("database", 2, 52, 40), ("currency-dollar", 48, 50, 32), ("chart-bar", 98, 54, 36), ("seal-check", 20, 20, 32)]
 st.markdown(
-    '<div class="bg-symbols" aria-hidden="true">' + "".join(
+    '<div class="bg-symbols" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>' + "".join(
         f'<span class="s" style="left:{x}%;top:{y}%;animation-delay:-{i * 0.8:.1f}s">{icon(n, size)}</span>'
         for i, (n, x, y, size) in enumerate(_SYMBOLS)) + "</div>",
     unsafe_allow_html=True,
