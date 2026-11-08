@@ -1,8 +1,8 @@
-name: Local model smoke
+name: Free model smoke (no API key)
 on:
   workflow_dispatch:
   push:
-    branches: [local-model]
+    branches: [main, local-model]
 jobs:
   smoke:
     runs-on: ubuntu-latest

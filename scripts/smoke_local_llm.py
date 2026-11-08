@@ -1,4 +1,4 @@
-"""Smoke test for the local answer model: loads it, answers three questions, reports memory and latency.
+"""Smoke test for the free answer model (no API key): answers three questions end to end.
 
     python scripts/smoke_local_llm.py
 """
@@ -22,7 +22,7 @@ load_index("semantic")
 print(f"peak RSS after index {rss():.0f} MB")
 status = llm.check_llm(load=True)
 print(f"peak RSS after model {rss():.0f} MB")
-print(f"model={config.LLM_MODEL} file={config.LLM_ONNX_FILE} ok={status.ok} msg={status.message}")
+print(f"model={config.LLM_MODEL_LABEL} url={config.LLM_URL} ok={status.ok} msg={status.message}")
 assert status.ok, status.message
 for q in ["What was Uber's total revenue in 2021?",
           "What did Lyft sell to Woven Planet?",

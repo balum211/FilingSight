@@ -9,7 +9,4 @@ pymupdf>=1.24          # PDF text extraction (only needed to rebuild the index)
 numpy>=1.26
 python-dotenv>=1.0
 streamlit>=1.40,<2
-# Local answer model (no API key): Qwen2.5-0.5B-Instruct, int8 ONNX, run with ONNX Runtime (no torch)
-onnxruntime>=1.17
-tokenizers>=0.15
-huggingface_hub>=0.23
+requests>=2.31          # answers from a free open model endpoint (no API key)

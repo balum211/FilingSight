@@ -7,7 +7,7 @@ Use case: **Project 2, Financial Document Intelligence Pipeline**. Track: **Trac
 
 ![stack](https://img.shields.io/badge/stack-LangChain%20·%20LangGraph%20·%20Chroma%20·%20BM25%20·%20Streamlit-blue)
 
-**Live app:** https://filingsight-week2.streamlit.app · **No API key needed:** answers are written by a small open model (Qwen2.5 0.5B Instruct) running on the app's own CPU.
+**Live app:** https://filingsight-week2.streamlit.app · **No API key needed:** answers are written by GPT-OSS 20B, an open-weights model, through a free endpoint.
 
 > **One-liner:** FilingSight helps retail investors and junior equity analysts answer metric, risk and strategy questions from the Uber and Lyft FY2021 Form 10-K filings (275 pages) in a cited chat app, with ≥ 90% faithfulness and ≥ 90% hit@5 retrieval relevance, within an 8-second answer.
 
@@ -36,7 +36,7 @@ retrieve: one hybrid search per company
    ▼
 gate ──(top relevance < 0.60)───────────────────────────► refuse
    │
-generate (local Qwen2.5-0.5B-Instruct with numbered sources, no API key | extractive fallback)
+generate (GPT-OSS 20B via free endpoint, no API key | extractive fallback)
    │
 validate_citations ──(NOT_FOUND)────────────────────────► refuse
    └──(no valid [n] citation on first try)──► generate again
@@ -64,11 +64,11 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-**No API key, no account.** Written answers come from [Qwen2.5-0.5B-Instruct](https://huggingface.co/onnx-community/Qwen2.5-0.5B-Instruct) (Apache 2.0) as an int8 ONNX model, run with ONNX Runtime on CPU (the same runtime Chroma uses for embeddings, so no torch). The weights (about 500 MB) download once on the first question and stay cached.
+**No API key, no account.** Written answers come from **GPT-OSS 20B** (open weights, Apache 2.0) through the free anonymous tier of [Pollinations](https://pollinations.ai)' OpenAI-compatible endpoint. Only the question and the retrieved excerpts of the public filings are sent. It is a free community service with rate limits, so if it is busy, slow or down the answer falls back to the top cited passages (extractive mode) and the sidebar says why. Set `FS_LLM=off` to never call it, or `FS_LLM_URL` / `FS_LLM_MODEL` to point at any other OpenAI-compatible endpoint.
 
-If the model cannot load (not enough memory, no network to Hugging Face), the answer falls back to the top cited passages (extractive mode) and the sidebar card says why. Set `FS_LLM=off` to always use extractive mode, or `FS_LOCAL_MODEL` / `FS_LOCAL_ONNX_FILE` to try another ONNX chat model.
+Why not a model on the app's own CPU? I tried Qwen2.5 0.5B Instruct in GitHub Actions: with torch it needed about 2.5 GB of RAM and 100 seconds per answer; as an int8 ONNX model it used even more memory and wrote poor answers. Neither fits Streamlit Community Cloud's free tier.
 
-A 0.5B model is much weaker than a hosted 70B model: expect short answers. It often states a figure without the [n] marker, so the app links each uncited sentence to the source that contains its numbers and words, and flags anything it cannot link as unverified. Retrieval quality, which decides most of the result, is unchanged.
+Models sometimes state a figure without the [n] marker, so the app links each uncited sentence to the source that contains its numbers and words, and flags anything it cannot link as unverified.
 
 The search index (chunks + embeddings for both strategies) is committed in `data/processed/`, so the app starts in seconds. Rebuild it with `python scripts/build_index.py`.
 

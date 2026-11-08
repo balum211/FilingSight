@@ -348,29 +348,26 @@ def reranker_options() -> list[str]:
 
 
 def llm_status() -> llm.LLMStatus:
+    """Status for the sidebar: the last real call's result if a question failed, otherwise ready."""
+    if st.session_state.get("llm_last_error"):
+        return llm.LLMStatus(False, "free", config.LLM_MODEL_LABEL, st.session_state["llm_last_error"])
     return llm.check_llm(load=False)
 
 
-@st.cache_resource(show_spinner=False)
-def load_model_once() -> llm.LLMStatus:
-    """Load the local model once per server process (shared by every visitor)."""
-    return llm.check_llm(load=True)
-
-
 def model_label() -> str:
-    return config.LLM_MODEL.split("/")[-1]
+    return config.LLM_MODEL_LABEL.split(" (")[0]
 
 
 def status_card(status: llm.LLMStatus) -> str:
-    if status.ok and status.loaded:
-        dot, title = "ok", "Local model ready"
-    elif status.ok:
-        dot, title = "warn", "Local model, loads on first use"
+    if status.ok:
+        dot, title, msg = "ok", "Free open model, no API key", "Nothing to set up. If the free service is busy, answers fall back to cited passages."
+    elif config.llm_available():
+        dot, title, msg = "warn", "Free model busy, using cited passages", status.message
     else:
-        dot, title = "bad", "Local model unavailable"
+        dot, title, msg = "warn", "Written answers off", status.message
     return (f'<div class="status"><div class="status-head"><span class="dot {dot}"></span>{h(title)}</div>'
-            f'<div class="status-model">{icon("cpu", 14)} {h(config.LLM_MODEL)}</div>'
-            f'<div class="status-msg">{icon("key", 12)} No API key needed. Runs on this server\'s CPU. {h(status.message.rstrip('.'))}.</div></div>')
+            f'<div class="status-model">{icon("cpu", 14)} {h(config.LLM_MODEL_LABEL)}</div>'
+            f'<div class="status-msg">{icon("key", 12)} {h(msg)}</div></div>')
 
 
 # ---------------------------------------------------------------- sidebar
@@ -383,17 +380,13 @@ with st.sidebar:
 
     st.markdown('<div class="side-label">Language model</div>', unsafe_allow_html=True)
     status = llm_status()
-    if status.ok and not status.loaded and st.session_state.get("model_failed"):
-        status = llm.LLMStatus(False, "local", config.LLM_MODEL, st.session_state["model_failed"])
     st.markdown(status_card(status), unsafe_allow_html=True)
-    if status.ok and not status.loaded and st.button("Load model now", use_container_width=True):
-        with st.spinner("Downloading and loading the model (about a minute, once per server)..."):
-            res = load_model_once()
-        if not res.ok:
-            st.session_state["model_failed"] = res.message
+    if not status.ok and config.llm_available() and st.button("Try the free model again", use_container_width=True):
+        st.session_state.pop("llm_last_error", None)
         st.rerun()
-    use_llm = st.toggle("Write answers with the local model", value=status.ok, disabled=not status.ok,
-                        help="Off: answers are the top cited sentences (extractive). Faster, no model needed.")
+    use_llm = st.toggle("Write answers with the free model", value=config.llm_available(), disabled=not config.llm_available(),
+                        help="Sends the question and the retrieved filing excerpts to a free public endpoint. "
+                             "Off: answers are the top cited sentences (extractive), nothing leaves the app.")
 
     st.markdown('<div class="side-label">Retrieval</div>', unsafe_allow_html=True)
     strategy = st.radio(
@@ -501,7 +494,7 @@ def render_sources(state: dict):
 def render_answer(state: dict):
     if state.get("llm_error"):
         st.markdown(
-            f'<div class="notice warn">{icon("warning-circle", 18)}<div><b>The local model could not answer, showing cited passages instead.</b> '
+            f'<div class="notice warn">{icon("warning-circle", 18)}<div><b>The free model could not answer, showing cited passages instead.</b> '
             f'{h(state["llm_error"])}</div></div>', unsafe_allow_html=True)
     if state["route"] == "refused":
         reason = f' <span style="color:var(--muted)">{h(state["refusal_reason"])}</span>' if state.get("refusal_reason") else ""
@@ -557,8 +550,7 @@ with chat_tab:
         skeleton = st.empty()
         skeleton.markdown(
             f'<div class="skel" aria-busy="true"><div class="skel-head">{icon("magnifying-glass", 14)} '
-            + ("Loading the local model for the first time (about a minute), then answering: " if use_llm and not llm.is_loaded()
-               else "Retrieving, reranking and answering: ")
+            + "Retrieving, reranking and answering: "
             + f'{h(question)}</div><div class="bar-s" style="width:92%"></div><div class="bar-s" style="width:78%"></div>'
             '<div class="bar-s" style="width:85%"></div><div class="bar-s" style="width:40%"></div></div>',
             unsafe_allow_html=True,
@@ -571,7 +563,9 @@ with chat_tab:
                         f'{h(llm.explain_error(exc))}</div></div>', unsafe_allow_html=True)
             st.stop()
         if state.get("llm_error"):
-            st.session_state.pop("llm_status", None)  # recheck the badge on the next run
+            st.session_state["llm_last_error"] = state["llm_error"]
+        elif state.get("generator") == "llm":
+            st.session_state.pop("llm_last_error", None)
         history.append({"question": question, "state": state})
         st.rerun()  # redraw so the newest answer sits above the input box
 
@@ -644,7 +638,7 @@ with how_tab:
         ("arrows-clockwise", "Rerank", "Local sentence and key term reranker (or a cross encoder) picks a company balanced top 5.", ""),
         ("shield-check", "Gate", "Checks the best reranked score against the confidence threshold before any answer is written.",
          "Low relevance: refuse"),
-        ("lightning", "Generate", "Qwen2.5 0.5B Instruct writes from numbered sources on this server, with no API key. If it is unavailable the top cited sentences are shown.", ""),
+        ("lightning", "Generate", "GPT-OSS 20B (open weights) writes from numbered sources through a free endpoint, with no API key. If it is busy the top cited sentences are shown.", ""),
         ("check-circle", "Validate", "Strips citations that point nowhere and retries once if none are valid.", "NOT_FOUND from the model: refuse"),
     ]
     cards = []

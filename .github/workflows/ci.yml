@@ -27,5 +27,3 @@ jobs:
           assert not at.exception, at.exception
           print("ok")
           PY
-      - name: Local answer model (Qwen2.5-0.5B, no API key) end to end
-        run: python scripts/smoke_local_llm.py

@@ -82,28 +82,21 @@ MIN_CONFIDENCE_CE = _env_float("FS_MIN_CONFIDENCE_CE", 0.05)  # cross-encoder si
 # Default strategy used by the app (the evaluation picks the winner).
 DEFAULT_CHUNKING = os.getenv("FS_CHUNKING", "semantic")
 
-# LLM: a small open model that runs on the app's own CPU. No API key, no account.
-# Qwen2.5-0.5B-Instruct (Apache 2.0), int8 ONNX export (about 500 MB), run with ONNX
-# Runtime, which Chroma already installs. No torch, so it fits the Streamlit Community
-# Cloud free tier. The weights download from Hugging Face on first use and are cached.
-# If the model cannot load, answers fall back to extractive mode (top cited sentences).
-LLM_MODEL = os.getenv("FS_LOCAL_MODEL", "onnx-community/Qwen2.5-0.5B-Instruct")
-LLM_ONNX_FILE = os.getenv("FS_LOCAL_ONNX_FILE", "onnx/model_quantized.onnx")
-LLM_MAX_NEW_TOKENS = _env_int("FS_MAX_NEW_TOKENS", 160)
-LLM_SOURCE_CHARS = _env_int("FS_SOURCE_CHARS", 600)  # per source in the prompt, keeps CPU latency down
-LLM_ENABLED = os.getenv("FS_LLM", "local").lower() != "off"
+# LLM: an open-weights model (GPT-OSS 20B, Apache 2.0) on a free, anonymous,
+# OpenAI-compatible endpoint (Pollinations). No API key, no account. If the service
+# is busy or down, answers fall back to extractive mode (top cited sentences).
+# Only the question and the retrieved public-filing excerpts are sent.
+LLM_URL = os.getenv("FS_LLM_URL", "https://text.pollinations.ai/openai")
+LLM_MODEL = os.getenv("FS_LLM_MODEL", "openai")  # Pollinations alias for gpt-oss-20b
+LLM_MODEL_LABEL = os.getenv("FS_LLM_LABEL", "GPT-OSS 20B (open weights)")
+LLM_TIMEOUT = _env_float("FS_LLM_TIMEOUT", 45)
+LLM_SOURCE_CHARS = _env_int("FS_SOURCE_CHARS", 1200)  # per source in the prompt
+LLM_ENABLED = os.getenv("FS_LLM", "free").lower() != "off"
 JUDGE_MODEL = os.getenv("FS_JUDGE_MODEL", LLM_MODEL)
 
 
-def llm_installed() -> bool:
-    """True when the local runtime packages are importable (they are in requirements.txt)."""
-    import importlib.util
-
-    return all(importlib.util.find_spec(m) is not None for m in ("onnxruntime", "tokenizers", "huggingface_hub"))
-
-
 def llm_available() -> bool:
-    return LLM_ENABLED and llm_installed()
+    return LLM_ENABLED
 
 
 # Latency budget from the one-liner (seconds, end to end).
