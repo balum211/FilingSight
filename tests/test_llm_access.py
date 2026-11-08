@@ -73,3 +73,26 @@ def test_ground_citations_links_supported_sentences_only():
     out = ground_citations("Uber's total revenue in 2021 was $17,455 million. Uber plans to fly to Mars.", src)
     assert "$17,455 million [2]." in out
     assert "Mars." in out and "Mars. [" not in out and "Mars [" not in out
+
+
+def test_free_limit_is_explained_and_not_retried(monkeypatch):
+    calls = []
+
+    class R:
+        status_code = 402
+        text = '{"error":{"code":"FREE_LIMIT","message":"Free limit reached: 1 reply every 45 seconds per IP. Retry after 29s"}}'
+
+    import requests
+
+    monkeypatch.setattr(requests, "post", lambda *a, **k: calls.append(1) or R())
+    try:
+        llm.get_chat_model().invoke("q")
+    except llm.FreeLimitError as exc:
+        msg = llm.explain_error(exc)
+    assert len(calls) == 1
+    assert "45 seconds" in msg and "29 seconds" in msg
+
+
+def test_repeated_citation_is_collapsed():
+    assert llm.clean_answer("was $17,455 million [1]. [1]") == "was $17,455 million [1]."
+    assert llm.clean_answer("x【2】【2】") == "x[2]"

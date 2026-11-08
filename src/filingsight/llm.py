@@ -18,6 +18,26 @@ from types import SimpleNamespace
 from . import config
 
 _FULLWIDTH_CITE = re.compile(r"【\s*(\d+)[^】]*】")
+_DUP_CITE = re.compile(r"\[(\d+)\]([.!?,;]?)\s*\[\1\]")
+_RETRY_AFTER = re.compile(r"retry after (\d+)\s*s", re.I)
+
+
+class FreeLimitError(RuntimeError):
+    """The anonymous tier allows one reply every 45 seconds per IP address."""
+
+    def __init__(self, retry_after: int | None):
+        self.retry_after = retry_after
+        super().__init__(f"free limit reached, retry after {retry_after}s" if retry_after else "free limit reached")
+
+
+def clean_answer(text: str) -> str:
+    """Turn 【1】 into [1] and collapse a repeated marker such as "[1]. [1]" into "[1]."."""
+    text = _FULLWIDTH_CITE.sub(r"[\1]", text)
+    while True:
+        new = _DUP_CITE.sub(r"[\1]\2", text)
+        if new == text:
+            return text.strip()
+        text = new
 
 
 @dataclass
@@ -52,12 +72,17 @@ class FreeChatModel:
         for attempt in range(2):  # one retry for rate limits and blips
             try:
                 r = requests.post(self.url, json=body, timeout=self.timeout)
+                if r.status_code == 402:
+                    m = _RETRY_AFTER.search(r.text)
+                    raise FreeLimitError(int(m.group(1)) if m else None)  # retrying now would fail too
                 if r.status_code == 429 and attempt == 0:
                     time.sleep(3)
                     continue
                 r.raise_for_status()
                 text = r.json()["choices"][0]["message"]["content"] or ""
-                return SimpleNamespace(content=_FULLWIDTH_CITE.sub(r"[\1]", text).strip())
+                return SimpleNamespace(content=clean_answer(text))
+            except FreeLimitError:
+                raise
             except Exception as exc:  # noqa: BLE001 - retried once, then raised for the caller
                 last = exc
                 if attempt == 0:
@@ -81,6 +106,10 @@ def explain_error(exc: Exception) -> str:
     name = type(exc).__name__
     text = str(exc)
     low = text.lower()
+    if isinstance(exc, FreeLimitError):
+        wait = f" Try again in about {exc.retry_after} seconds." if exc.retry_after else " Try again in a minute."
+        return ("The free model allows one written answer every 45 seconds, and it was just used." + wait
+                + " This answer uses cited passages.")
     if "429" in text or "rate" in low:
         return "The free model is busy (rate limited). Try again in a few seconds; this answer uses cited passages."
     if "timed out" in low or name in {"Timeout", "ReadTimeout", "ConnectTimeout"}:
@@ -93,7 +122,11 @@ def explain_error(exc: Exception) -> str:
 
 
 def check_llm(load: bool = False) -> LLMStatus:
-    """Report readiness. With load=True, send a tiny request to confirm the service answers."""
+    """Report readiness. With load=True, send a tiny request to confirm the service answers.
+
+    The free tier allows one reply every 45 seconds, so the app never calls this with load=True
+    on its own; a check uses up the next answer.
+    """
     if not config.llm_available():
         return LLMStatus(False, "free", config.LLM_MODEL_LABEL, explain_unavailable())
     if not load:

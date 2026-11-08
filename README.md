@@ -64,7 +64,7 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-**No API key, no account.** Written answers come from **GPT-OSS 20B** (open weights, Apache 2.0) through the free anonymous tier of [Pollinations](https://pollinations.ai)' OpenAI-compatible endpoint. Only the question and the retrieved excerpts of the public filings are sent. It is a free community service with rate limits, so if it is busy, slow or down the answer falls back to the top cited passages (extractive mode) and the sidebar says why. Set `FS_LLM=off` to never call it, or `FS_LLM_URL` / `FS_LLM_MODEL` to point at any other OpenAI-compatible endpoint.
+**No API key, no account.** Written answers come from **GPT-OSS 20B** (open weights, Apache 2.0) through the free anonymous tier of [Pollinations](https://pollinations.ai)' OpenAI-compatible endpoint. Only the question and the retrieved excerpts of the public filings are sent. The free tier allows one written answer every 45 seconds per server IP (the live app shares one IP across visitors), so if it is busy, slow or down the answer falls back to the top cited passages (extractive mode) and the sidebar says why. Set `FS_LLM=off` to never call it, or `FS_LLM_URL` / `FS_LLM_MODEL` to point at any other OpenAI-compatible endpoint.
 
 Why not a model on the app's own CPU? I tried Qwen2.5 0.5B Instruct in GitHub Actions: with torch it needed about 2.5 GB of RAM and 100 seconds per answer; as an int8 ONNX model it used even more memory and wrote poor answers. Neither fits Streamlit Community Cloud's free tier.
 
