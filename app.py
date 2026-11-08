@@ -187,9 +187,83 @@ p, li{text-wrap:pretty;}
 .step .exit{font-size:12px; line-height:16px; color:var(--bad); display:flex; gap:4px; align-items:center;}
 @media (max-width:900px){.steps{grid-template-columns:1fr;}}
 
+
+/* floating nav */
+.topbar{position:sticky; top:12px; z-index:50; margin:0 auto 32px; width:fit-content; max-width:100%;
+  display:flex; align-items:center; gap:16px; padding:8px 8px 8px 16px; border-radius:999px;
+  background:rgba(31,31,31,.72); border:1px solid var(--line); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  animation:rise .6s var(--ease) both;}
+.topbar .tb-brand{display:flex; align-items:center; gap:8px; font-size:14px; font-weight:600; color:var(--text);}
+.topbar .tb-brand .ph{color:var(--accent);}
+.tb-pill{white-space:nowrap; display:inline-flex; align-items:center; gap:8px; font-size:12px; line-height:16px; font-weight:500; color:var(--muted);
+  padding:4px 12px; border-radius:999px; background:var(--card); border:1px solid var(--line);}
+.tb-link{display:inline-flex; align-items:center; gap:4px; font-size:14px; line-height:20px; font-weight:600; color:var(--text) !important;
+  text-decoration:none !important; padding:8px 12px; border-radius:999px; background:var(--card); border:1px solid var(--line);
+  transition:background-color .3s var(--ease), border-color .3s var(--ease), transform .5s var(--ease);}
+.tb-link:hover{border-color:var(--accent); transform:translateY(-1px);}
+.tb-link:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+
+/* hero grid + preview card */
+.hero-grid{display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:32px; align-items:center; padding-bottom:32px;}
+.hero-grid .hero{padding:0;}
+.preview{background:var(--surface); border:1px solid var(--line); border-radius:24px; padding:16px; display:flex; flex-direction:column; gap:12px;
+  animation:rise .8s var(--ease) .1s both;}
+.pv-q{align-self:flex-end; background:var(--card); border:1px solid var(--line); border-radius:16px; padding:8px 12px; font-size:14px; line-height:20px; color:var(--text); max-width:85%;}
+.pv-a{background:var(--bg); border:1px solid var(--line); border-radius:16px; padding:12px; font-size:14px; line-height:20px; color:#D6D6D6;}
+.pv-a b{color:var(--text); font-weight:600;}
+.pv-cite{font-family:'Geist Mono',monospace; font-size:12px; color:var(--accent); background:var(--accent-soft); border-radius:4px; padding:0 4px;}
+.pv-src{display:flex; align-items:center; gap:8px; border:1px solid rgba(124,157,255,.35); background:var(--surface); border-radius:8px; padding:8px; font-size:12px; line-height:16px; color:var(--muted);}
+.pv-src b{color:var(--text); font-weight:600;}
+.hero-grid .hero h1{font-size:36px; line-height:40px;}
+.hero h1 span{display:block; white-space:nowrap;}
+.hero h1{padding:0 !important; margin:0 0 16px !important;} .hero h1 [data-testid="stHeaderActionElements"], .hero h1 a{display:none !important;}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr;}}
+@media (max-width:600px){.hero-grid .hero h1{font-size:30px; line-height:36px;} .tagline p{font-size:24px; line-height:32px;} .tb-brand span{display:none;} .co-stats{gap:12px;}}
+
+/* corpus cards */
+.corpus{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:0 0 32px;}
+.co-card{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px; display:flex; gap:16px; align-items:center;
+  transition:transform .5s var(--ease), border-color .3s var(--ease);}
+.co-card:hover{transform:translateY(-2px); border-color:#3d3d3d;}
+.co-logo{width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex:none; background:var(--card);}
+.co-card.uber .co-logo{color:var(--uber);} .co-card.lyft .co-logo{color:var(--lyft); background:rgba(255,111,216,.12);}
+.co-name{font-size:18px; line-height:28px; font-weight:600; color:var(--text);}
+.co-meta{font-size:12px; line-height:16px; color:var(--muted);}
+.co-stats{margin-left:auto; display:flex; gap:24px; text-align:right;}
+.co-stat .v{font-family:'Geist Mono',monospace; font-size:20px; line-height:28px; color:var(--text);}
+.co-stat .l{font-size:12px; line-height:16px; color:var(--faint);}
+@media (max-width:900px){.corpus{grid-template-columns:1fr;}}
+
+/* tagline reveal */
+.tagline{padding:96px 0 64px; display:flex; justify-content:center;}
+.tagline p{max-width:800px; margin:0; font-size:36px; line-height:40px; font-weight:600; text-align:left; text-wrap:balance; color:var(--text);}
+.tagline .w{opacity:.3; display:inline-block; animation:wordin .8s var(--ease) both; animation-delay:calc(var(--i) * 60ms + .4s);}
+@supports (animation-timeline: view()){
+  .tagline .w{animation-delay:0s; animation-timeline:view();
+    animation-range:entry calc(var(--i) * 2.5%) cover calc(25% + var(--i) * 2.5%);}
+}
+@keyframes wordin{from{opacity:.3;} to{opacity:1;}}
+
+/* skeleton */
+.skel{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px; display:flex; flex-direction:column; gap:12px; margin-bottom:16px;}
+.skel .bar-s{height:12px; border-radius:999px; background:var(--card); position:relative; overflow:hidden;}
+.skel .bar-s::after{content:""; position:absolute; inset:0; transform:translateX(-100%);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent); animation:shimmer 1.4s var(--ease) infinite;}
+.skel-head{display:flex; align-items:center; gap:8px; font-size:12px; line-height:16px; color:var(--muted); font-weight:500;}
+@keyframes shimmer{to{transform:translateX(100%);}}
+
+/* footer */
+.foot{margin-top:32px; padding:24px 0; border-top:1px solid var(--line); display:flex; flex-wrap:wrap; gap:16px; align-items:center;
+  justify-content:space-between; font-size:12px; line-height:16px; color:var(--faint);}
+.foot a{color:var(--muted) !important; text-decoration:none !important; display:inline-flex; align-items:center; gap:4px;}
+.foot a:hover{color:var(--text) !important;}
+.foot .links{display:flex; gap:16px;}
+[data-testid="stVegaLiteChart"]{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px; margin-bottom:24px;}
+
 @media (prefers-reduced-motion: reduce){
   *{animation:none !important; transition:opacity .2s linear !important;}
-  .kpi:hover, .stButton > button:hover{transform:none;}
+  .kpi:hover, .co-card:hover, .tb-link:hover, .stButton > button:hover{transform:none;}
+  .tagline .w{opacity:1 !important; animation:none !important;}
 }
 </style>
 """
@@ -308,12 +382,26 @@ with st.sidebar:
 retr, ans = eval_summary()
 best = max(retr, key=lambda r: r.get("hit@k", 0)) if retr else {}
 
-# ---------------------------------------------------------------- hero
+# ---------------------------------------------------------------- nav + hero
+REPO = "https://github.com/balum211/FilingSight"
+mode = (f'<span class="dot ok"></span>{h(config.LLM_MODEL.split("/")[-1])}' if status.ok
+        else '<span class="dot warn"></span>Extractive mode')
 st.markdown(
-    f"""<div class="hero"><div class="eyebrow">{icon("book-open", 14)} Uber and Lyft · FY2021 Form 10-K</div>
-<h1>Ask the annual reports.<br>Get answers you can cite.</h1>
+    f'<nav class="topbar" aria-label="App"><span class="tb-brand">{icon("file-text", 18)}<span>FilingSight</span></span>'
+    f'<span class="tb-pill" title="Language model status">{mode}</span>'
+    f'<a class="tb-link" href="{REPO}" target="_blank" rel="noopener">{icon("github-logo", 16)} GitHub</a></nav>',
+    unsafe_allow_html=True,
+)
+st.markdown(
+    f"""<div class="hero-grid"><div class="hero"><div class="eyebrow">{icon("book-open", 14)} Uber and Lyft · FY2021 Form 10-K</div>
+<h1><span>Ask the annual reports.</span><span>Get answers you can cite.</span></h1>
 <p>Hybrid search, reranking and a refusal gate over 275 filing pages,
-so every number points back to the page it came from.</p></div>""",
+so every number points back to the page it came from.</p></div>
+<div class="preview" aria-label="Example answer"><div class="pv-q">How did Uber's revenue change in 2021?</div>
+<div class="pv-a"><b>Uber:</b> Revenue increased &#36;6.3 billion, or 57%, primarily attributable to an increase in Gross Bookings of 56%. <span class="pv-cite">[1]</span></div>
+<div class="pv-src">{icon("seal-check", 16)}<span><b>[1] Uber 10-K FY2021 · page 57</b> · Item 7 MD&amp;A</span></div>
+<div class="meta" style="margin:0"><span class="chip">{icon("target", 12)} relevance 0.60 · gate 0.60</span><span class="chip">{icon("clock", 12)} about 4s</span></div>
+</div></div>""",
     unsafe_allow_html=True,
 )
 
@@ -331,6 +419,28 @@ st.markdown(
     + kpi("stack", "Chunks indexed", f"{n_chunks:,}", f"{strategy} chunking")
     + kpi("clock", "Median answer time", f"{ans.get('p50_latency_ms', 0) / 1000:.1f}s" if ans else "n/a", "budget 8s end to end")
     + "</div>",
+    unsafe_allow_html=True,
+)
+
+@st.cache_data
+def company_chunks(strategy: str) -> dict:
+    counts: dict = {}
+    for d in load_index(strategy).docs:
+        c = d.metadata.get("company", "?")
+        counts[c] = counts.get(c, 0) + 1
+    return counts
+
+
+cc = company_chunks(strategy)
+CORPUS = [("uber", "Uber", "Uber Technologies, Inc.", "car-simple", 150, 307),
+          ("lyft", "Lyft", "Lyft, Inc.", "car-simple", 125, 238)]
+st.markdown(
+    '<div class="corpus">' + "".join(
+        f'<div class="co-card {k}"><div class="co-logo">{icon(ic, 24)}</div><div><div class="co-name">{name}</div>'
+        f'<div class="co-meta">{h(full)} · Form 10-K FY2021</div></div><div class="co-stats">'
+        f'<div class="co-stat"><div class="v">{body}</div><div class="l">body pages</div></div>'
+        f'<div class="co-stat"><div class="v">{cc.get(name, 0):,}</div><div class="l">chunks</div></div></div></div>'
+        for k, name, full, ic, body, _pdf in CORPUS) + "</div>",
     unsafe_allow_html=True,
 )
 
@@ -416,13 +526,20 @@ with chat_tab:
 
     question = st.chat_input("Ask about Uber or Lyft's 2021 annual report") or st.session_state.pop("pending", None)
     if question:
-        with st.spinner("Retrieving, reranking and answering"):
-            try:
-                state = ask(question, strategy=strategy, reranker=reranker, use_llm=use_llm)
-            except Exception as exc:  # surface provider errors instead of a stack trace
-                st.markdown(f'<div class="notice bad">{icon("warning-circle", 18)}<div><b>The question could not be answered.</b> '
-                            f'{h(llm.explain_error(exc))}</div></div>', unsafe_allow_html=True)
-                st.stop()
+        skeleton = st.empty()
+        skeleton.markdown(
+            f'<div class="skel" aria-busy="true"><div class="skel-head">{icon("magnifying-glass", 14)} Retrieving, reranking and '
+            f'answering: {h(question)}</div><div class="bar-s" style="width:92%"></div><div class="bar-s" style="width:78%"></div>'
+            '<div class="bar-s" style="width:85%"></div><div class="bar-s" style="width:40%"></div></div>',
+            unsafe_allow_html=True,
+        )
+        try:
+            state = ask(question, strategy=strategy, reranker=reranker, use_llm=use_llm)
+        except Exception as exc:  # surface provider errors instead of a stack trace
+            skeleton.empty()
+            st.markdown(f'<div class="notice bad">{icon("warning-circle", 18)}<div><b>The question could not be answered.</b> '
+                        f'{h(llm.explain_error(exc))}</div></div>', unsafe_allow_html=True)
+            st.stop()
         if state.get("llm_error"):
             st.session_state.pop("llm_status", None)  # recheck the badge on the next run
         history.append({"question": question, "state": state})
@@ -436,6 +553,30 @@ with eval_tab:
         unsafe_allow_html=True,
     )
     if retr:
+        import altair as alt
+        import pandas as pd
+
+        df = pd.DataFrame([{"Configuration": f"{r['mode']} + {r['reranker']} rerank" if r["reranker"] != "none" else r["mode"],
+                            "Chunking": r["strategy"], "Hit@5": r["hit@k"]} for r in retr])
+        chart = (
+            alt.Chart(df).mark_bar(cornerRadiusTopLeft=4, cornerRadiusTopRight=4)
+            .encode(
+                x=alt.X("Configuration:N", sort=["dense", "bm25", "hybrid", "hybrid + local rerank"], title=None,
+                        axis=alt.Axis(labelAngle=0)),
+                xOffset="Chunking:N",
+                y=alt.Y("Hit@5:Q", scale=alt.Scale(domain=[0, 1]), title="Hit@5"),
+                color=alt.Color("Chunking:N", scale=alt.Scale(domain=["fixed", "semantic"], range=["#6B6B6B", "#7C9DFF"]),
+                                legend=alt.Legend(orient="top", title=None)),
+                tooltip=["Chunking", "Configuration", alt.Tooltip("Hit@5:Q", format=".2f")],
+            )
+            .properties(height=280)
+            .configure(background="transparent", font="Manrope")
+            .configure_axis(gridColor="#313131", domainColor="#313131", tickColor="#313131", labelColor="#9B9B9B",
+                            titleColor="#9B9B9B", labelFontSize=12, titleFontSize=12)
+            .configure_legend(labelColor="#9B9B9B", labelFontSize=12)
+            .configure_view(strokeWidth=0)
+        )
+        st.altair_chart(chart, use_container_width=True, theme=None)
         rows = []
         for r in retr:
             cls = ' class="best"' if r is best else ""
@@ -494,3 +635,20 @@ with how_tab:
     ]
     rows = "".join(f"<tr><td style='width:160px;color:var(--muted);font-weight:600'>{h(k)}</td><td>{h(v)}</td></tr>" for k, v in DECISIONS)
     st.markdown(f"<table class='tbl'><tbody>{rows}</tbody></table>", unsafe_allow_html=True)
+
+# ---------------------------------------------------------------- tagline + footer
+TAGLINE_LINES = ["Retrieval decided quality, not the model.", "Hit@5 went from 0.65 to 0.95", "without touching the LLM."]
+st.markdown(
+    '<section class="tagline" aria-label="Key finding"><p>'
+    + "<br>".join(" ".join(f'<span class="w" style="--i:{i + 8 * n}">{h(w)}</span>' for i, w in enumerate(line.split()))
+                  for n, line in enumerate(TAGLINE_LINES))
+    + "</p></section>",
+    unsafe_allow_html=True,
+)
+st.markdown(
+    f'<footer class="foot"><span>For learning purposes only, not investment advice. Figures come from FY2021 filings.</span>'
+    f'<span class="links"><a href="{REPO}" target="_blank" rel="noopener">{icon("github-logo", 14)} Source code</a>'
+    f'<a href="https://www.sec.gov/edgar/search/" target="_blank" rel="noopener">{icon("arrow-up-right", 14)} SEC EDGAR</a>'
+    f'<a href="https://github.com/elayadesign/ai-design-skills" target="_blank" rel="noopener">{icon("sparkle", 14)} Design rules</a></span></footer>',
+    unsafe_allow_html=True,
+)

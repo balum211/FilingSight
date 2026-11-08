@@ -9,3 +9,6 @@ baseRadius = "12px"
 
 [server]
 headless = true
+
+[client]
+toolbarMode = "minimal"
