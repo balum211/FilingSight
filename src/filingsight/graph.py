@@ -78,6 +78,44 @@ def format_sources(sources: list[dict], max_chars: int | None = None) -> str:
     return "\n\n".join(f"[{s['n']}] {s['header']}\n{s['text'][:max_chars] if max_chars else s['text']}" for s in sources)
 
 
+_NUM = re.compile(r"\d[\d,.]*\d|\d")
+_WORD = re.compile(r"[a-z]{4,}")
+
+
+def ground_citations(answer: str, sources: list[dict]) -> str:
+    """Add a [n] to sentences the model left uncited, but only when a source supports them.
+
+    Small local models often state the right figure without the [n] marker. A sentence
+    is linked to a source when every number in it appears in that source and most of its
+    content words do too. Sentences with no supporting source stay uncited, so the
+    validator still flags them.
+    """
+    if not sources or answer.strip().upper().startswith("NOT_FOUND"):
+        return answer
+    out = []
+    for sent in re.split(r"(?<=[.!?])\s+", answer.strip()):
+        if not sent or _CITE.search(sent):
+            out.append(sent)
+            continue
+        nums = {n.replace(",", "").rstrip(".") for n in _NUM.findall(sent)}
+        words = set(_WORD.findall(sent.lower()))
+        if not nums and len(words) < 3:
+            out.append(sent)  # too little content to verify against a source
+            continue
+        best, best_score = None, 0.0
+        for s in sources:
+            text = s["text"].lower().replace(",", "")
+            if any(n not in text for n in nums):
+                continue
+            score = len([w for w in words if w in text]) / max(1, len(words))
+            if score > best_score:
+                best, best_score = s["n"], score
+        if best is not None and best_score >= (0.4 if nums else 0.6):
+            sent = re.sub(r"([.!?])?$", lambda m: f" [{best}]" + (m.group(1) or ""), sent, count=1)
+        out.append(sent)
+    return " ".join(out)
+
+
 # ---------------------------------------------------------------- nodes
 def analyze(state: RAGState) -> RAGState:
     plan = plan_query(state["question"])
@@ -168,7 +206,7 @@ def generate(state: RAGState) -> RAGState:
             ("user", ANSWER_USER.format(question=state["question"], sources=format_sources(state["sources"], config.LLM_SOURCE_CHARS))),
         ]
         try:
-            answer = str(get_chat_model(temperature=0).invoke(msgs).content).strip()
+            answer = ground_citations(str(get_chat_model(temperature=0).invoke(msgs).content).strip(), state["sources"])
             generator = "llm"
         except Exception as exc:  # noqa: BLE001 - never lose the answer because the provider failed
             from .llm import explain_error

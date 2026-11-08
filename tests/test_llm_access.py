@@ -12,7 +12,7 @@ class _Boom:
 
 
 def test_no_api_key_settings_remain():
-    for name in ("NEBIUS_API_KEY", "OPENAI_API_KEY", "LLM_BASE_URL"):
+    for name in ("NEBIUS_API_KEY", "OPENAI_API_KEY", "LLM_BASE_URL", "LLM_DTYPE"):
         assert not hasattr(config, name)
 
 
@@ -46,3 +46,18 @@ def test_sources_are_trimmed_for_the_prompt():
     src = [{"n": 1, "header": "Uber 10-K", "text": "x" * 2000}]
     assert len(format_sources(src, 100)) < 150
     assert len(format_sources(src)) > 2000
+
+
+def test_ground_citations_links_supported_sentences_only():
+    from filingsight.graph import ground_citations
+
+    src = [{"n": 1, "text": "Lyft revenue was 3,208.3 million in 2021."},
+           {"n": 2, "text": "Uber revenue was $17,455 million in 2021, up 57%."}]
+    out = ground_citations("Uber's total revenue in 2021 was $17,455 million. Uber plans to fly to Mars.", src)
+    assert "$17,455 million [2]." in out
+    assert "Mars." in out and "Mars. [" not in out and "Mars [" not in out
+
+
+def test_chatml_prompt_shape():
+    p = llm.LocalChatModel._chatml([{"role": "user", "content": "hi"}])
+    assert p.startswith("<|im_start|>system\n") and p.endswith("<|im_start|>assistant\n")

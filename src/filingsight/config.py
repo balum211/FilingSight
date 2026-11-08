@@ -83,23 +83,23 @@ MIN_CONFIDENCE_CE = _env_float("FS_MIN_CONFIDENCE_CE", 0.05)  # cross-encoder si
 DEFAULT_CHUNKING = os.getenv("FS_CHUNKING", "semantic")
 
 # LLM: a small open model that runs on the app's own CPU. No API key, no account.
-# Qwen2.5-0.5B-Instruct (Apache 2.0) is about 1 GB in bfloat16, which fits the
-# Streamlit Community Cloud free tier. The weights download from Hugging Face on
-# first use and are cached. If the model cannot load, answers fall back to
-# extractive mode (the top cited sentences), so the app always works.
-LLM_MODEL = os.getenv("FS_LOCAL_MODEL", "Qwen/Qwen2.5-0.5B-Instruct")
-LLM_DTYPE = os.getenv("FS_LOCAL_DTYPE", "bfloat16")  # bfloat16 | float32
-LLM_MAX_NEW_TOKENS = _env_int("FS_MAX_NEW_TOKENS", 220)
-LLM_SOURCE_CHARS = _env_int("FS_SOURCE_CHARS", 900)  # per source in the prompt, keeps CPU latency down
+# Qwen2.5-0.5B-Instruct (Apache 2.0), int8 ONNX export (about 500 MB), run with ONNX
+# Runtime, which Chroma already installs. No torch, so it fits the Streamlit Community
+# Cloud free tier. The weights download from Hugging Face on first use and are cached.
+# If the model cannot load, answers fall back to extractive mode (top cited sentences).
+LLM_MODEL = os.getenv("FS_LOCAL_MODEL", "onnx-community/Qwen2.5-0.5B-Instruct")
+LLM_ONNX_FILE = os.getenv("FS_LOCAL_ONNX_FILE", "onnx/model_quantized.onnx")
+LLM_MAX_NEW_TOKENS = _env_int("FS_MAX_NEW_TOKENS", 160)
+LLM_SOURCE_CHARS = _env_int("FS_SOURCE_CHARS", 600)  # per source in the prompt, keeps CPU latency down
 LLM_ENABLED = os.getenv("FS_LLM", "local").lower() != "off"
 JUDGE_MODEL = os.getenv("FS_JUDGE_MODEL", LLM_MODEL)
 
 
 def llm_installed() -> bool:
-    """True when torch and transformers are importable (they are in requirements.txt)."""
+    """True when the local runtime packages are importable (they are in requirements.txt)."""
     import importlib.util
 
-    return all(importlib.util.find_spec(m) is not None for m in ("torch", "transformers"))
+    return all(importlib.util.find_spec(m) is not None for m in ("onnxruntime", "tokenizers", "huggingface_hub"))
 
 
 def llm_available() -> bool:

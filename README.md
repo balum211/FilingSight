@@ -64,11 +64,11 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-**No API key, no account.** Written answers come from [`Qwen/Qwen2.5-0.5B-Instruct`](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct) (Apache 2.0), run with Hugging Face `transformers` on CPU. The weights (about 1 GB) download once on the first question and stay cached. On Linux, `requirements.txt` installs the CPU-only torch wheel so the install stays small enough for Streamlit Community Cloud.
+**No API key, no account.** Written answers come from [Qwen2.5-0.5B-Instruct](https://huggingface.co/onnx-community/Qwen2.5-0.5B-Instruct) (Apache 2.0) as an int8 ONNX model, run with ONNX Runtime on CPU (the same runtime Chroma uses for embeddings, so no torch). The weights (about 500 MB) download once on the first question and stay cached.
 
-If the model cannot load (not enough memory, no network to Hugging Face), the answer falls back to the top cited passages (extractive mode) and the sidebar card says why. Set `FS_LLM=off` to always use extractive mode, or `FS_LOCAL_MODEL` to try another small chat model (for example `HuggingFaceTB/SmolLM2-360M-Instruct`).
+If the model cannot load (not enough memory, no network to Hugging Face), the answer falls back to the top cited passages (extractive mode) and the sidebar card says why. Set `FS_LLM=off` to always use extractive mode, or `FS_LOCAL_MODEL` / `FS_LOCAL_ONNX_FILE` to try another ONNX chat model.
 
-A 0.5B model is much weaker than a hosted 70B model: expect shorter answers and the occasional missing citation (the app flags uncited answers as unverified). Retrieval quality, which decides most of the result, is unchanged.
+A 0.5B model is much weaker than a hosted 70B model: expect short answers. It often states a figure without the [n] marker, so the app links each uncited sentence to the source that contains its numbers and words, and flags anything it cannot link as unverified. Retrieval quality, which decides most of the result, is unchanged.
 
 The search index (chunks + embeddings for both strategies) is committed in `data/processed/`, so the app starts in seconds. Rebuild it with `python scripts/build_index.py`.
 
