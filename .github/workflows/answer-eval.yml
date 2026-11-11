@@ -1,0 +1,21 @@
+name: Answer eval with the free model
+on:
+  workflow_dispatch:
+  push:
+    branches: [answer-eval]
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      FS_LLM_MIN_INTERVAL: "47"   # free tier: one reply every 45 seconds per IP
+      FS_LLM_TIMEOUT: "90"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: python eval/run_answer_eval.py
+      - run: cat eval/results/answers.md

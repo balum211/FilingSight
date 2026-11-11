@@ -51,7 +51,14 @@ class LLMStatus:
 
 
 class FreeChatModel:
-    """Minimal OpenAI-compatible chat client (requests only, no key)."""
+    """Minimal OpenAI-compatible chat client (requests only, no key).
+
+    FS_LLM_MIN_INTERVAL (seconds) spaces out calls, for batch jobs such as the answer
+    evaluation that must stay inside the free tier's one reply per 45 seconds.
+    """
+
+    _last_call = 0.0
+    paced_seconds = 0.0  # total time spent waiting for the interval (excluded from eval latency)
 
     def __init__(self, url: str, model: str, timeout: float):
         self.url, self.model, self.timeout = url, model, timeout
@@ -69,6 +76,11 @@ class FreeChatModel:
         body = {"model": self.model, "messages": self._to_chat(messages), "seed": 42, "private": True}
         if max_tokens:
             body["max_tokens"] = max_tokens
+        wait = config.LLM_MIN_INTERVAL - (time.monotonic() - FreeChatModel._last_call)
+        if wait > 0:
+            FreeChatModel.paced_seconds += wait
+            time.sleep(wait)
+        FreeChatModel._last_call = time.monotonic()
         last = None
         for attempt in range(2):  # one retry for rate limits and blips
             try:

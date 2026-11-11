@@ -39,10 +39,14 @@ RESULTS = ROOT / "eval" / "results"
 def judge(q: dict, state: dict) -> dict:
     from filingsight.llm import get_chat_model
 
-    msg = get_chat_model(temperature=0, model=config.JUDGE_MODEL).invoke(
-        JUDGE_PROMPT.format(question=q["question"], reference=q["answer"],
-                            sources=format_sources(state.get("sources", [])), answer=state["answer"])
-    )
+    try:
+        msg = get_chat_model(temperature=0, model=config.JUDGE_MODEL).invoke(
+            JUDGE_PROMPT.format(question=q["question"], reference=q["answer"],
+                                sources=format_sources(state.get("sources", []), config.LLM_SOURCE_CHARS),
+                                answer=state["answer"])
+        )
+    except Exception as exc:  # noqa: BLE001 - a failed judge call leaves the row unjudged
+        return {"faithfulness": None, "correct": None, "notes": f"judge failed: {exc}"[:120]}
     try:
         return json.loads(re.search(r"\{.*\}", str(msg.content), re.S).group(0))
     except Exception:
@@ -69,13 +73,18 @@ def main() -> None:
 
     rows = []
     for q in load_questions():
+        from filingsight.llm import FreeChatModel
+
+        paced = FreeChatModel.paced_seconds
         state = ask(q["question"], strategy=args.strategy, reranker=args.reranker, use_llm=use_llm)
+        paced = FreeChatModel.paced_seconds - paced
         row = {
             "id": q["id"], "category": q["category"], "question": q["question"], "reference": q["answer"],
             "answer": state["answer"], "route": state["route"], "refusal_reason": state.get("refusal_reason", ""),
             "citations": state.get("citations", []),
             "sources": [f"[{s['n']}] {s['company']} p.{s['page']} (Item {s['item']})" for s in state.get("sources", [])],
-            "latency_ms": round(state["timings_ms"]["total"]),
+            "latency_ms": round(state["timings_ms"]["total"] - 1000 * paced),
+            "generator": state.get("generator", ""),
         }
         if q["evidence"] and state["route"] == "answered":
             row["cited_evidence"] = cited_evidence(q, state)
@@ -90,6 +99,7 @@ def main() -> None:
     lat = sorted(r["latency_ms"] for r in rows)
     summary = {
         "generator": "llm:" + config.LLM_MODEL if use_llm else "extractive (no LLM)",
+        "llm_answers": sum(r["generator"] == "llm" for r in rows),
         "strategy": args.strategy, "reranker": args.reranker,
         "refusal_accuracy": statistics.mean(r["route"] == "refused" for r in una),
         "false_refusal_rate": statistics.mean(r["route"] == "refused" for r in ans),

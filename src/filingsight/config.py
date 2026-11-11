@@ -91,6 +91,7 @@ LLM_MODEL = os.getenv("FS_LLM_MODEL", "openai")  # Pollinations alias for gpt-os
 LLM_MODEL_LABEL = os.getenv("FS_LLM_LABEL", "GPT-OSS 20B (open weights)")
 LLM_TIMEOUT = _env_float("FS_LLM_TIMEOUT", 45)
 LLM_SOURCE_CHARS = _env_int("FS_SOURCE_CHARS", 1200)  # per source in the prompt
+LLM_MIN_INTERVAL = float(os.getenv("FS_LLM_MIN_INTERVAL", "0"))  # seconds between calls (batch jobs)
 LLM_ENABLED = os.getenv("FS_LLM", "free").lower() != "off"
 JUDGE_MODEL = os.getenv("FS_JUDGE_MODEL", LLM_MODEL)
 
