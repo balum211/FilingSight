@@ -1,6 +1,6 @@
 # Demo video script (under 5 minutes)
 
-Record with Loom or the Windows Game Bar (Win + G). Have the app running (`run.bat`) (no API key needed), and the GitHub repo open in another tab.
+Record with Loom or the Windows Game Bar (Win + G). Use the live app at https://filingsight-week2.streamlit.app/ (or run it locally with `run.bat`; no API key needed), and have the GitHub repo open in another tab. The free model allows one written answer every 45 seconds, so pause about a minute between questions; if you ask sooner the app shows cited passages and says why.
 
 | Time | Show | Say |
 |---|---|---|

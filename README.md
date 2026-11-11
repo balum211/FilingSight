@@ -13,7 +13,9 @@ Use case: **Project 2, Financial Document Intelligence Pipeline**. Track: **Trac
 
 ![home](docs/screenshots/01_home.png)
 
-Design: the UI follows the [elayadesign/ai-design-skills](https://github.com/elayadesign/ai-design-skills) rules; see [docs/DESIGN.md](docs/DESIGN.md) for each rule and where it is applied.
+![answer](docs/screenshots/06_answer.png)
+
+Design: a light theme that follows the [elayadesign/ai-design-skills](https://github.com/elayadesign/ai-design-skills) rules, with the same look as the Team 24 DealRoom app; see [docs/DESIGN.md](docs/DESIGN.md) for each rule and where it is applied. Screenshots are taken in GitHub Actions with the free model answering (`.github/workflows/screenshots.yml`).
 
 ## Headline results (25 labelled questions)
 
@@ -77,12 +79,12 @@ The search index (chunks + embeddings for both strategies) is committed in `data
 ```bash
 python eval/run_retrieval_eval.py                 # chunking x retrieval x reranking matrix (no key needed)
 python eval/run_retrieval_eval.py --rerankers none local cross-encoder   # after: pip install -r requirements-optional.txt
-python eval/run_answer_eval.py                    # end-to-end with LLM + LLM-judge faithfulness (needs a key)
+FS_LLM_MIN_INTERVAL=47 python eval/run_answer_eval.py   # end-to-end with the free model + LLM-judge faithfulness (paced for the free tier, ~40 min)
 python eval/run_answer_eval.py --no-llm           # end-to-end, extractive mode
-pytest -q                                         # 25 tests incl. a retrieval-quality regression guard
+pytest -q                                         # 29 tests incl. a retrieval-quality regression guard
 ```
 
-Results land in `eval/results/` and show up in the app's **Evaluation** tab.
+Results land in `eval/results/` and show up in the app's **Evaluation** tab. GitHub Actions runs CI on every push, a free-model smoke test on `main`, and on demand the answer evaluation (`answer-eval.yml`) and the screenshots (`screenshots.yml`).
 
 ## Project layout
 
@@ -99,12 +101,15 @@ src/filingsight/
   pipeline.py               plan -> retrieve -> rerank -> select (shared by app and eval)
   graph.py                  LangGraph state machine (analyze, retrieve, gate, generate, validate, refuse)
   prompts.py                every prompt
+  llm.py                    keyless free-model client (GPT-OSS 20B), limit handling, citation clean-up
+  icons.py                  inline Phosphor icons for the UI
   evaluation.py             evidence-phrase metrics (fair across chunkers)
 data/raw/                   the two 10-K PDFs
 data/processed/             committed chunks + embeddings
 data/eval/questions.json    25 questions with reference answers and evidence labels
 eval/                       evaluation scripts and results
-docs/                       evaluation report, prompts and iterations, video script, screenshots
+docs/                       evaluation report, prompts and iterations, design rules, video script, screenshots
+.claude/skills/             vendored ai-design-skills (landing-page-design, figma-designer)
 ```
 
 ## Deploy (optional)

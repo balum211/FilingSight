@@ -77,14 +77,23 @@ Honest caveats: the threshold (0.60) was set by looking at this same set's score
 
 ## 4. End-to-end answers
 
-| Metric | Extractive mode (no LLM, measured) |
-|---|---|
-| Unanswerable correctly refused | 100% (5/5) |
-| Answerable wrongly refused | 0% (0/20) |
-| Gold evidence inside a cited source | 90% (18/20) |
-| Latency p50 / p95 | 3.2 s / 5.9 s |
+| Metric | Extractive mode (no model) | Free model, GPT-OSS 20B (Nov 11, 2026) |
+|---|---|---|
+| Unanswerable correctly refused | 100% (5/5) | 100% (5/5) |
+| Answerable wrongly refused | 0% (0/20) | 0% (0/20) |
+| Gold evidence inside a cited source | 90% (18/20) | 90% (18/20) |
+| Faithfulness (LLM judge, claims supported by the sources) | n/a | 98% (target ≥ 90%) |
+| Correct vs reference answer (LLM judge) | n/a | 80% (16/20) |
+| Latency p50 / p95 | 3.2 s / 5.9 s | 10.6 s / 22.8 s |
 
-With an LLM key, `python eval/run_answer_eval.py` adds two LLM-judge metrics per answer: **faithfulness** (share of claims supported by the retrieved sources; target ≥ 90%) and **correctness** against the human reference answer, and writes them into `eval/results/answers.md`.
+The free-model column comes from the `Answer eval with the free model` workflow (`.github/workflows/answer-eval.yml`), which paces calls to the free tier's one reply every 45 seconds; the waiting time is excluded from latency. The judge is the same free model, so treat its scores as indicative.
+
+What the 4 incorrect answers show:
+* **Units on Lyft's tables (A01, L02).** Lyft reports in thousands; the model wrote a net loss of "$(1,009,359) million" and "18,728 active riders" without "thousand". Next step: put the table's unit in each chunk header and check units in the validator.
+* **C01 (compare revenue growth).** Retrieval still misses Lyft's growth chunk; the model now answers Uber's 57% and says Lyft's figure is not in the sources instead of refusing.
+* **U01.** The answer ("$17,455 million in 2021") is right but the judge marked it too terse.
+
+Latency is above the 8-second target because the free endpoint is slower than a paid one; extractive mode stays inside it.
 
 ## 5. Failure analysis (what still goes wrong)
 
@@ -109,5 +118,5 @@ With an LLM key, `python eval/run_answer_eval.py` adds two LLM-judge metrics per
 ```bash
 python eval/run_retrieval_eval.py          # sections 1 to 3
 python eval/run_answer_eval.py --no-llm    # section 4, extractive
-python eval/run_answer_eval.py             # section 4 with LLM + judge (local model, no API key)
+FS_LLM_MIN_INTERVAL=47 python eval/run_answer_eval.py   # section 4 with the free model + judge (no API key, ~40 min)
 ```
